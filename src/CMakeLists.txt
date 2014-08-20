@@ -5,14 +5,7 @@ add_definitions (-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 
 # handwritten source code...
 set (SERVICE_LIB_HANDWRITTEN_SOURCES
-     rotation-lock.cpp
-     #controller.cpp
-     #model.cpp
-     #display.cpp
-     #view.cpp
-     #view-gmenu.cpp
-     #world.cpp
-     #world-dbus.cpp)
+     rotation-lock.cpp)
 
 add_library (${SERVICE_LIB} STATIC
              ${SERVICE_LIB_HANDWRITTEN_SOURCES})

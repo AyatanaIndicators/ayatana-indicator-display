@@ -1,0 +1,26 @@
+
+Test-case indicator-transfer/simple-download-check
+<dl>
+    <dt>Ensure indicator-transfer-service is running<dt>
+            <dd>The indicator should be visible in the panel</dd>
+
+            <dt>Run the script tests/simple-download.py and, immediately afterwards,
+                click or pull down on the indicator so that its menu is visible
+                and its menuitems can be observed while the downloads run.</dt>
+                    <dd>In the 'Ongoing Transfers' section, the transfers should appear</dd>
+                    <dd>In the 'Ongoing Transfers' section, a 'Pause all' button should appear</dd>
+                    <dd>While transfers are active, the indicator's icon should indicate activity</dd>
+                    <dd>As each transfer finishes, its menuitem should move from the 'Ongoing' to 'Successful' section</dd>
+                    <dd>As the first transfer is moved to the 'Successful' section, a 'Clear all' button should appear</dd>
+                    <dd>As the last transfer finishes, the indicator's icon should change to indicate an idle state</dd>
+                    <dd>As the last transfer finishes, the 'Pause all' button should disappear</dd>
+
+            <dt>After all the transfers finish, press the 'Clear all' button.</dt>
+                    <dd>All three transfers should be cleared from the menu.</dd>
+                    <dd>The 'Clear all' button should disappear</dd>
+</dt>
+
+<strong>
+    If all actions produce the expected results listed, please <a href="results#add_result">submit</a> a 'passed' result.
+    If an action fails, or produces an unexpected result, please <a href="results#add_result">submit</a> a 'failed' result and <a href="../../buginstructions">file a bug</a>. Please be sure to include the bug number when you <a href="results#add_result">submit</a> your result</strong>.
+
