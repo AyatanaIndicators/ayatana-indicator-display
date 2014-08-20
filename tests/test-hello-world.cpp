@@ -43,6 +43,6 @@ protected:
 
 TEST_F(HelloWorldFixture, HelloWorld)
 {
-  EXPECT_TRUE(true)
+  EXPECT_TRUE(true);
 }
 

@@ -42,6 +42,7 @@ main(int /*argc*/, char** /*argv*/)
   //  auto controller = std::make_shared<Controller>(model, world);
    // GMenuView menu_view (model, controller);
     // FIXME: listen for busname-lost
+    g_message("entering GMainLoop that does nothing! Woo!");
     g_main_loop_run(loop);
 
     // cleanup

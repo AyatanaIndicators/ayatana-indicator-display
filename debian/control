@@ -2,16 +2,21 @@ Source: indicator-display
 Section: misc
 Priority: optional
 Maintainer: Charles Kerr <charles.kerr@canonical.com>
-#  make g++ version explicit for ABI safety <https://wiki.ubuntu.com/cpp-11>
 Build-Depends: cmake,
                dbus,
+#  make g++ version explicit for ABI safety <https://wiki.ubuntu.com/cpp-11>
                g++-4.9,
+               libglib2.0-dev (>= 2.36),
+               liburl-dispatcher1-deva
+# for coverage reports
+               lcov,
+# for tests
+               cppcheck,
+               libgtest-dev,
+               google-mock (>= 1.6.0+svn437),
+# for packaging
                debhelper (>= 9),
                dh-translations,
-               intltool (>= 0.35.0), 
-               libglib2.0-dev (>= 2.36),
-               libgtest-dev,
-               liburl-dispatcher1-dev,
 Standards-Version: 3.9.4
 Homepage: http://launchpad.net/indicator-display/
 # If you aren't a member of ~indicator-applet-developers but need to upload 
