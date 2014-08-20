@@ -1,0 +1,27 @@
+Source: indicator-display
+Section: misc
+Priority: optional
+Maintainer: Charles Kerr <charles.kerr@canonical.com>
+#  make g++ version explicit for ABI safety <https://wiki.ubuntu.com/cpp-11>
+Build-Depends: cmake,
+               dbus,
+               g++-4.9,
+               debhelper (>= 9),
+               dh-translations,
+               intltool (>= 0.35.0), 
+               libglib2.0-dev (>= 2.36),
+               libgtest-dev,
+               liburl-dispatcher1-dev,
+Standards-Version: 3.9.4
+Homepage: http://launchpad.net/indicator-display/
+# If you aren't a member of ~indicator-applet-developers but need to upload 
+# packaging changes, just go ahead.  ~indicator-applet-developers will notice and 
+# sync up the code again.
+Vcs-Bzr: https://code.launchpad.net/~indicator-applet-developers/indicator-display/trunk.14.10
+
+Package: indicator-display
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813),
+Description: Miscellaneous small Indicators.
