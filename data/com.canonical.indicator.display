@@ -1,0 +1,11 @@
+[Indicator Service]
+Name=indicator-display
+ObjectPath=/com/canonical/indicator/display
+Position=90
+
+[phone]
+ObjectPath=/com/canonical/indicator/display/phone
+
+[phone_greeter]
+ObjectPath=/com/canonical/indicator/display/phone
+
