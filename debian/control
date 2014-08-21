@@ -8,6 +8,7 @@ Build-Depends: cmake,
                g++-4.9,
                libglib2.0-dev (>= 2.36),
                liburl-dispatcher1-deva
+               libproperties-cpp-dev,
 # for coverage reports
                lcov,
 # for tests

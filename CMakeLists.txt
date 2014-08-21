@@ -43,9 +43,8 @@ include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
 ##
 ##
 
-set (CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories (${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories (${CMAKE_CURRENT_BINARY_DIR}/include)
+set (CMAKE_INCLUDE_CURRENT_DIR OFF)
+include_directories (${CMAKE_CURRENT_SOURCE_DIR})
 
 # set the compiler warnings
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

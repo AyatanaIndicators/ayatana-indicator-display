@@ -67,7 +67,7 @@ install (FILES "${UPSTART_XDG_AUTOSTART_FILE}"
 set (UNITY_INDICATOR_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/unity/indicators")
 message (STATUS "${UNITY_INDICATOR_DIR} is the Unity Indicator install dir")
 
-set (UNITY_INDICATOR_NAME "com.canonical.indicator.display")
+set (UNITY_INDICATOR_NAME "com.canonical.indicator.rotation_lock")
 set (UNITY_INDICATOR_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${UNITY_INDICATOR_NAME}")
 
 install (FILES "${UNITY_INDICATOR_FILE}"

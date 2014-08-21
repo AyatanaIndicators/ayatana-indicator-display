@@ -17,32 +17,26 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#include "glib-fixture.h"
+#ifndef INDICATOR_DISPLAY_ROTATION_LOCK_H
+#define INDICATOR_DISPLAY_ROTATION_LOCK_H
 
-class HelloWorldFixture: public GlibFixture
+#include <src/indicator.h>
+
+#include <memory> // std::unique_ptr
+
+class RotationLockIndicator: public Indicator
 {
-private:
-  typedef GlibFixture super;
+public:
+  RotationLockIndicator();
+  ~RotationLockIndicator();
+
+  const char* name() const;
+  GSimpleActionGroup* action_group() const;
+  std::vector<std::shared_ptr<Profile>> profiles() const;
 
 protected:
-
-  void SetUp()
-  {
-    super::SetUp();
-  }
-
-  void TearDown()
-  {
-    super::TearDown();
-  }
+  class Impl;
+  std::unique_ptr<Impl> impl;
 };
 
-/***
-****
-***/
-
-TEST_F(HelloWorldFixture, HelloWorld)
-{
-  EXPECT_TRUE(true);
-}
-
+#endif

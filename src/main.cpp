@@ -17,6 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#include <src/exporter.h>
+#include <src/rotation-lock.h>
+
 #include <glib/gi18n.h> // bindtextdomain()
 #include <gio/gio.h>
 
@@ -35,14 +38,22 @@ main(int /*argc*/, char** /*argv*/)
     textdomain(GETTEXT_PACKAGE);
 
     auto loop = g_main_loop_new(nullptr, false);
+    auto on_name_lost = [loop](const std::string& name){
+      g_warning("busname lost: '%s'", name.c_str());
+      g_main_loop_quit(loop);
+    };
 
-    // run until we lose the busname
-//    auto model = std::make_shared<MutableModel>();
- //   auto world = std::shared_ptr<World>(new DBusWorld(model));
-  //  auto controller = std::make_shared<Controller>(model, world);
-   // GMenuView menu_view (model, controller);
-    // FIXME: listen for busname-lost
-    g_message("entering GMainLoop that does nothing! Woo!");
+    // build all our indicators.
+    // Right now we've only got one -- rotation lock -- but hey, we can dream.
+    std::vector<std::shared_ptr<Indicator>> indicators;
+    std::vector<std::shared_ptr<Exporter>> exporters;
+    indicators.push_back(std::make_shared<RotationLockIndicator>());
+    for (auto& indicator : indicators) {
+      auto exporter = std::make_shared<Exporter>(indicator);
+      exporter->name_lost().connect(on_name_lost);
+      exporters.push_back(exporter);
+    }
+
     g_main_loop_run(loop);
 
     // cleanup

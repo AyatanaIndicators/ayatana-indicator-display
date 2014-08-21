@@ -84,6 +84,8 @@ class GlibFixture : public ::testing::Test
 
       g_log_set_default_handler(default_log_handler, this);
 
+      g_assert(g_setenv("GSETTINGS_BACKEND", "memory", true));
+
       g_unsetenv("DISPLAY");
     }
 
