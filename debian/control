@@ -30,4 +30,4 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813),
-Description: Miscellaneous small Indicators.
+Description: Indicators too small to merit individual codebases; e.g. the rotation lock indicator
