@@ -1,5 +1,5 @@
 
-Test-case indicator-datetime/rotation-indicator
+Test-case indicator-display/rotation-indicator
 <dl>
         <dt>On the phone, enable the orientation lock in ubuntu-system-settings.</dt>
                 <dd>The rotation lock indicator should appear, and its switch menuitem should be set to 'true'.</dd>
