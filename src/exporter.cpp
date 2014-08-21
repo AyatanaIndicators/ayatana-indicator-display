@@ -29,7 +29,7 @@ public:
     auto bus_name = g_strdup_printf("com.canonical.indicator.%s", indicator->name());
     m_own_id = g_bus_own_name(G_BUS_TYPE_SESSION,
                               bus_name,
-                              G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT,
+                              G_BUS_NAME_OWNER_FLAGS_NONE,
                               on_bus_acquired,
                               nullptr,
                               on_name_lost,
