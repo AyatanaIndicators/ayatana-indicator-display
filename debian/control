@@ -14,6 +14,7 @@ Build-Depends: cmake,
                cppcheck,
                libgtest-dev,
                google-mock (>= 1.6.0+svn437),
+               gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813),
 # for packaging
                debhelper (>= 9),
                dh-translations,
