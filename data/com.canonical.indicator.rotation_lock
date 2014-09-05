@@ -1,0 +1,11 @@
+[Indicator Service]
+Name=indicator-rotation-lock
+ObjectPath=/com/canonical/indicator/rotation_lock
+Position=90
+
+[phone]
+ObjectPath=/com/canonical/indicator/rotation_lock/phone
+
+[phone_greeter]
+ObjectPath=/com/canonical/indicator/rotation_lock/phone
+
