@@ -3,10 +3,12 @@ Test-case indicator-display/rotation-indicator
 <dl>
         <dt>On the phone, enable the orientation lock in ubuntu-system-settings.</dt>
                 <dd>The rotation lock indicator should appear, and its switch menuitem should be set to 'true'.</dd>
+                <dd>NOTE: Current builds this is broken, until it is fixed in system settings you can set it with: <tt>gsettings set com.ubuntu.touch.system orientation-lock 'LandscapeOrientation'</tt></dd>
 
         <dt>With the orientation locked, click on the indicator's switch menuitem to toggle from locked to unlocked.</dd>
                 <dd>The rotation lock indicator should disappear</dd>
                 <dd>In ubuntu-system-settings, the orientation lock control should change to 'none'.</dd>
+                <dd>NOTE: Current builds this is broken, until it is fixed in system settings you can get it with: <tt>gsettings get com.ubuntu.touch.system orientation-lock</tt></dd>
 </dl>
 
 
