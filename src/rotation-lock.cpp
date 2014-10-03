@@ -141,7 +141,7 @@ private:
   void update_phone_header()
   {
     Header h;
-    h.title = _("Rotation lock");
+    h.title = _("Rotation");
     h.a11y = h.title;
     h.is_visible = g_settings_get_enum(m_settings, "orientation-lock") != 0;
     h.icon = m_icon;
