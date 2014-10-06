@@ -65,13 +65,11 @@ private:
   ****  Actions
   ***/
 
-#if 0
   static gboolean settings_to_action_state(GValue *value,
                                            GVariant *variant,
                                            gpointer /*unused*/)
   {
-    bool is_locked = g_strcmp0(g_variant_get_string(variant, nullptr), "none");
-    g_value_set_variant(value, g_variant_new_boolean(is_locked));
+    g_value_set_variant(value, variant);
     return TRUE;
   }
 
@@ -79,18 +77,8 @@ private:
                                             const GVariantType * /*expected_type*/,
                                             gpointer /*unused*/)
   {
-    // Toggling to 'on' *should* lock to the screen's current orientation.
-    // We don't have any way of knowing Screen.orientation in this service,
-    // so just pick one at random to satisfy the binding's needs.
-    //
-    // In practice this doesn't matter since the indicator isn't visible
-    // when the lock mode is 'none' so the end user won't ever be able
-    // to toggle the menuitem from None to anything else.
-
-    auto state_is_true = g_variant_get_boolean(g_value_get_variant(value));
-    return g_variant_new_string(state_is_true ? "PrimaryOrientation" : "none");
+    return g_variant_new_boolean(g_value_get_boolean(value));
   }
-#endif
  
   GSimpleActionGroup* create_action_group()
   {
@@ -101,9 +89,14 @@ private:
     action = g_simple_action_new_stateful("rotation-lock",
                                           nullptr,
                                           g_variant_new_boolean(false));
-    g_settings_bind(m_settings, "rotation-lock",
-                    action, "state",
-                    G_SETTINGS_BIND_DEFAULT);
+    g_settings_bind_with_mapping(m_settings, "rotation-lock",
+                                 action, "state",
+                                 G_SETTINGS_BIND_DEFAULT,
+                                 settings_to_action_state,
+                                 action_state_to_settings,
+                                 nullptr,
+                                 nullptr);
+                                 
     g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
     g_object_unref(G_OBJECT(action));
     g_signal_connect_swapped(m_settings, "changed::rotation-lock",
@@ -141,7 +134,7 @@ private:
     Header h;
     h.title = _("Rotation lock");
     h.a11y = h.title;
-    h.is_visible = g_settings_get_enum(m_settings, "rotation-lock") != 0;
+    h.is_visible = g_settings_get_boolean(m_settings, "rotation-lock");
     h.icon = m_icon;
     m_phone->header().set(h);
   }
