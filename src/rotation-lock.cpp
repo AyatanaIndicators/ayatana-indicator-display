@@ -30,7 +30,7 @@ public:
     m_action_group(create_action_group())
   {
     // build the rotation lock icon
-    auto icon = g_themed_icon_new_with_default_fallbacks("orientation-lock");
+    auto icon = g_themed_icon_new_with_default_fallbacks(m_rotation_lock_icon_name);
     auto icon_deleter = [](GIcon* o){g_object_unref(G_OBJECT(o));};
     m_icon.reset(icon, icon_deleter);
 
@@ -65,6 +65,7 @@ private:
   ****  Actions
   ***/
 
+#if 0
   static gboolean settings_to_action_state(GValue *value,
                                            GVariant *variant,
                                            gpointer /*unused*/)
@@ -89,6 +90,7 @@ private:
     auto state_is_true = g_variant_get_boolean(g_value_get_variant(value));
     return g_variant_new_string(state_is_true ? "PrimaryOrientation" : "none");
   }
+#endif
  
   GSimpleActionGroup* create_action_group()
   {
@@ -99,17 +101,13 @@ private:
     action = g_simple_action_new_stateful("rotation-lock",
                                           nullptr,
                                           g_variant_new_boolean(false));
-    g_settings_bind_with_mapping(m_settings, "orientation-lock",
-                                 action, "state",
-                                 G_SETTINGS_BIND_DEFAULT,
-                                 settings_to_action_state,
-                                 action_state_to_settings,
-                                 nullptr,
-                                 nullptr);
+    g_settings_bind(m_settings, "rotation-lock",
+                    action, "state",
+                    G_SETTINGS_BIND_DEFAULT);
     g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
     g_object_unref(G_OBJECT(action));
-    g_signal_connect_swapped(m_settings, "changed::orientation-lock",
-                             G_CALLBACK(on_orientation_lock_setting_changed), this);
+    g_signal_connect_swapped(m_settings, "changed::rotation-lock",
+                             G_CALLBACK(on_rotation_lock_setting_changed), this);
 
     return group;
   }
@@ -118,7 +116,7 @@ private:
   ****  Phone profile
   ***/
 
-  static void on_orientation_lock_setting_changed (gpointer gself)
+  static void on_rotation_lock_setting_changed (gpointer gself)
   {
     static_cast<Impl*>(gself)->update_phone_header();
   }
@@ -143,7 +141,7 @@ private:
     Header h;
     h.title = _("Rotation lock");
     h.a11y = h.title;
-    h.is_visible = g_settings_get_enum(m_settings, "orientation-lock") != 0;
+    h.is_visible = g_settings_get_enum(m_settings, "rotation-lock") != 0;
     h.icon = m_icon;
     m_phone->header().set(h);
   }
@@ -153,7 +151,7 @@ private:
   ***/
 
   static constexpr char const * m_schema_name {"com.ubuntu.touch.system"};
-  static constexpr char const * m_orientation_lock_icon_name {"orientation-lock"};
+  static constexpr char const * m_rotation_lock_icon_name {"orientation-lock"};
   GSettings* m_settings = nullptr;
   GSimpleActionGroup* m_action_group = nullptr;
   std::shared_ptr<SimpleProfile> m_phone;
