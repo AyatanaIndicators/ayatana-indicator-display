@@ -140,7 +140,7 @@ private:
     g_action_map_add_action(G_ACTION_MAP(action_group), G_ACTION(a));
     profile->header().changed().connect([action_group,action_name](const Header& header){
         auto state = create_header_state(header);
-        auto tmp = g_variant_print(state, true);
+        char* tmp = g_variant_print(state, true);
         g_debug("header changed; updating action state to '%s'", tmp);
         g_action_group_change_action_state(G_ACTION_GROUP(action_group), 
                                            action_name.c_str(),

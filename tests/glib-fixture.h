@@ -67,7 +67,7 @@ class GlibFixture : public ::testing::Test
                                     const gchar    * message,
                                     gpointer         self)
     {
-      auto tmp = g_strdup_printf ("%s:%d \"%s\"", log_domain, (int)log_level, message);
+      char* tmp = g_strdup_printf ("%s:%d \"%s\"", log_domain, (int)log_level, message);
       static_cast<GlibFixture*>(self)->log[log_level].push_back(tmp);
       g_free(tmp);
     }
