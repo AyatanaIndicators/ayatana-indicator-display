@@ -146,7 +146,7 @@ class GlibFixture : public ::testing::Test
 
   public:
 
-    virtual ~GLibFixture() =default;
+    virtual ~GlibFixture() =default;
 };
 
 #endif /* INDICATOR_TESTS_GLIB_FIXTURE_H */
