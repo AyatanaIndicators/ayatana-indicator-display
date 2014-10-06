@@ -17,6 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#ifndef INDICATOR_TESTS_GLIB_FIXTURE_H
+#define INDICATOR_TESTS_GLIB_FIXTURE_H
+
 #include <map>
 
 #include <glib.h>
@@ -140,4 +143,10 @@ class GlibFixture : public ::testing::Test
     }
 
     GMainLoop * loop;
+
+  public:
+
+    virtual ~GLibFixture() =default;
 };
+
+#endif /* INDICATOR_TESTS_GLIB_FIXTURE_H */

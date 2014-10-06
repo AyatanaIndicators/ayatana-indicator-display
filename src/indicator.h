@@ -52,6 +52,7 @@ public:
   virtual std::string name() const =0;
   virtual const core::Property<Header>& header() const =0;
   virtual std::shared_ptr<GMenuModel> menu_model() const =0;
+  virtual ~Profile() =default;
 
 protected:
   Profile() =default;

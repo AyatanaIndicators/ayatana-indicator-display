@@ -17,6 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#ifndef INDICATOR_DISPLAY_EXPORTER_H
+#define INDICATOR_DISPLAY_EXPORTER_H
+
 #include <src/indicator.h>
 
 #include <core/signal.h>
@@ -26,7 +29,7 @@
 class Exporter
 {
 public:
-  Exporter(const std::shared_ptr<Indicator>& indicator);
+  explicit Exporter(const std::shared_ptr<Indicator>& indicator);
   ~Exporter();
   core::Signal<std::string>& name_lost();
 
@@ -38,3 +41,4 @@ private:
   Exporter& operator=(const Exporter&) =delete;
 };
 
+#endif /* INDICATOR_DISPLAY_EXPORTER_H */
