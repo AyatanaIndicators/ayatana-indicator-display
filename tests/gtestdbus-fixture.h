@@ -17,6 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#ifndef INDICATOR_TESTS_GTESTDBUS_FIXTURE_H
+#define INDICATOR_TESTS_GTESTDBUS_FIXTURE_H
+
 #include "glib-fixture.h"
 
 /***
@@ -27,9 +30,10 @@ class GTestDBusFixture: public GlibFixture
 {
   public:
 
-    GTestDBusFixture() {}
+    GTestDBusFixture() =default;
+    virtual ~GTestDBusFixture() =default;
 
-    GTestDBusFixture(const std::vector<std::string>& service_dirs_in): service_dirs(service_dirs_in) {}
+    explicit GTestDBusFixture(const std::vector<std::string>& service_dirs_in): service_dirs(service_dirs_in) {}
 
   private:
 
@@ -100,3 +104,5 @@ class GTestDBusFixture: public GlibFixture
       super::TearDown();
     }
 };
+
+#endif /* INDICATOR_TESTS_GTESTDBUS_FIXTURE_H */

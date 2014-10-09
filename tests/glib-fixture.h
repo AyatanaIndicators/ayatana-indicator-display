@@ -17,6 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#ifndef INDICATOR_TESTS_GLIB_FIXTURE_H
+#define INDICATOR_TESTS_GLIB_FIXTURE_H
+
 #include <map>
 
 #include <glib.h>
@@ -52,7 +55,7 @@ class GlibFixture : public ::testing::Test
 
         if (expected_log[level] != n)
             for (size_t i=0; i<n; ++i)
-                g_message("%d %s", (n+1), v[i].c_str());
+                g_print("%d %s\n", (n+1), v[i].c_str());
       }
 
       expected_log.clear();
@@ -64,7 +67,7 @@ class GlibFixture : public ::testing::Test
                                     const gchar    * message,
                                     gpointer         self)
     {
-      auto tmp = g_strdup_printf ("%s:%d \"%s\"", log_domain, (int)log_level, message);
+      char* tmp = g_strdup_printf ("%s:%d \"%s\"", log_domain, (int)log_level, message);
       static_cast<GlibFixture*>(self)->log[log_level].push_back(tmp);
       g_free(tmp);
     }
@@ -140,4 +143,10 @@ class GlibFixture : public ::testing::Test
     }
 
     GMainLoop * loop;
+
+  public:
+
+    virtual ~GlibFixture() =default;
 };
+
+#endif /* INDICATOR_TESTS_GLIB_FIXTURE_H */
