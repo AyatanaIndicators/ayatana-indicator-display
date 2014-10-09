@@ -1,3 +1,11 @@
+indicator-display (0.1+14.10.20141009-0ubuntu1) utopic; urgency=low
+
+  [ Charles Kerr ]
+  * Use com.ubuntu.touch.system's "rotation-lock" boolean for the
+    rotation lock indicator. (LP: #1378078)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 09 Oct 2014 13:44:22 +0000
+
 indicator-display (0.1+14.10.20141007-0ubuntu1) utopic; urgency=low
 
   [ Charles Kerr ]
