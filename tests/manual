@@ -4,7 +4,7 @@ Test-case indicator-display/rotation-indicator
         <dt>On the phone, enable the rotation lock in ubuntu-system-settings.</dt>
                 <dd>The rotation lock indicator should appear, and its switch menuitem should be set to 'true'.</dd>
 
-        <dt>With the rotation locked, click on the indicator's switch menuitem to toggle from locked to unlocked.</dd>
+        <dt>With the rotation locked, click on the indicator's switch menuitem to toggle from locked to unlocked.</dt>
                 <dd>The rotation lock indicator should disappear</dd>
                 <dd>In ubuntu-system-settings, the rotation lock control should change to 'none'.</dd>
 </dl>
