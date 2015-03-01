@@ -77,7 +77,7 @@ private:
                                             const GVariantType * /*expected_type*/,
                                             gpointer /*unused*/)
   {
-    return g_variant_new_boolean(g_value_get_boolean(value));
+    return g_value_dup_variant(value);
   }
  
   GSimpleActionGroup* create_action_group()
