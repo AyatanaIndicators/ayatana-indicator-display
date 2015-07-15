@@ -4,8 +4,6 @@ Priority: optional
 Maintainer: Charles Kerr <charles.kerr@canonical.com>
 Build-Depends: cmake,
                dbus,
-#  make g++ version explicit for ABI safety <https://wiki.ubuntu.com/cpp-11>
-               g++-4.9,
                libglib2.0-dev (>= 2.36),
                libproperties-cpp-dev,
 # for coverage reports
