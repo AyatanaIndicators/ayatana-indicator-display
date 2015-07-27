@@ -23,7 +23,7 @@ class Exporter::Impl
 {
 public:
 
-  Impl(const std::shared_ptr<Indicator>& indicator):
+  explicit Impl(const std::shared_ptr<Indicator>& indicator):
     m_indicator(indicator)
   {
     auto bus_name = g_strdup_printf("com.canonical.indicator.%s", indicator->name());
