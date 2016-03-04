@@ -17,14 +17,14 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#include "gtestdbus-fixture.h"
+#include "test-dbus-fixture.h"
 
 #include <src/rotation-lock.h>
 
-class RotationLockFixture: public GTestDBusFixture
+class RotationLockFixture: public TestDBusFixture
 {
 private:
-  typedef GTestDBusFixture super;
+  typedef TestDBusFixture super;
 
 protected:
 

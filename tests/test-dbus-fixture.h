@@ -17,8 +17,7 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#ifndef INDICATOR_TESTS_GTESTDBUS_FIXTURE_H
-#define INDICATOR_TESTS_GTESTDBUS_FIXTURE_H
+#pragma once
 
 #include "glib-fixture.h"
 
@@ -26,14 +25,14 @@
 ****
 ***/
 
-class GTestDBusFixture: public GlibFixture
+class TestDBusFixture: public GlibFixture
 {
   public:
 
-    GTestDBusFixture() =default;
-    virtual ~GTestDBusFixture() =default;
+    TestDBusFixture() =default;
+    virtual ~TestDBusFixture() =default;
 
-    explicit GTestDBusFixture(const std::vector<std::string>& service_dirs_in): service_dirs(service_dirs_in) {}
+    explicit TestDBusFixture(const std::vector<std::string>& service_dirs_in): service_dirs(service_dirs_in) {}
 
   private:
 
@@ -42,10 +41,10 @@ class GTestDBusFixture: public GlibFixture
     static void
     on_bus_opened (GObject* /*object*/, GAsyncResult * res, gpointer gself)
     {
-      auto self = static_cast<GTestDBusFixture*>(gself);
+      auto self = static_cast<TestDBusFixture*>(gself);
 
       GError * err = 0;
-      self->bus = g_bus_get_finish (res, &err);
+      self->system_bus = g_bus_get_finish (res, &err);
       g_assert_no_error (err);
 
       g_main_loop_quit (self->loop);
@@ -54,10 +53,10 @@ class GTestDBusFixture: public GlibFixture
     static void
     on_bus_closed (GObject* /*object*/, GAsyncResult * res, gpointer gself)
     {
-      auto self = static_cast<GTestDBusFixture*>(gself);
+      auto self = static_cast<TestDBusFixture*>(gself);
 
       GError * err = 0;
-      g_dbus_connection_close_finish (self->bus, res, &err);
+      g_dbus_connection_close_finish (self->system_bus, res, &err);
       g_assert_no_error (err);
 
       g_main_loop_quit (self->loop);
@@ -66,10 +65,10 @@ class GTestDBusFixture: public GlibFixture
   protected:
 
     GTestDBus * test_dbus = nullptr;
-    GDBusConnection * bus = nullptr;
+    GDBusConnection * system_bus = nullptr;
     const std::vector<std::string> service_dirs;
 
-    virtual void SetUp ()
+    virtual void SetUp() override
     {
       super::SetUp ();
 
@@ -88,14 +87,14 @@ class GTestDBusFixture: public GlibFixture
       g_main_loop_run (loop);
     }
 
-    virtual void TearDown ()
+    virtual void TearDown() override
     {
       wait_msec();
 
       // close the system bus
-      g_dbus_connection_close(bus, nullptr, on_bus_closed, this);
+      g_dbus_connection_close(system_bus, nullptr, on_bus_closed, this);
       g_main_loop_run(loop);
-      g_clear_object(&bus);
+      g_clear_object(&system_bus);
 
       // tear down the test dbus
       g_test_dbus_down(test_dbus);
@@ -105,4 +104,3 @@ class GTestDBusFixture: public GlibFixture
     }
 };
 
-#endif /* INDICATOR_TESTS_GTESTDBUS_FIXTURE_H */
