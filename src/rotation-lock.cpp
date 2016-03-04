@@ -43,6 +43,7 @@ public:
 
   ~Impl()
   {
+    g_signal_handlers_disconnect_by_data(m_settings, this);
     g_clear_object(&m_action_group);
     g_clear_object(&m_settings);
   }
