@@ -29,7 +29,7 @@ function(add_test_by_name name)
   add_dependencies (${TEST_NAME} libindicatordisplayservice)
   target_link_libraries (${TEST_NAME} indicatordisplayservice ${SERVICE_DEPS_LIBRARIES} ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES})
 endfunction()
-add_test_by_name(test-rotation-lock)
+add_test_by_name(rotation-lock-test)
 
 add_test (cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline-suppr -I${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/tests)
 
