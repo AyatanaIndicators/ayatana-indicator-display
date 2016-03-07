@@ -17,6 +17,7 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#include <src/adbd-client.h>
 #include <src/exporter.h>
 #include <src/rotation-lock.h>
 
@@ -53,6 +54,16 @@ main(int /*argc*/, char** /*argv*/)
       exporter->name_lost().connect(on_name_lost);
       exporters.push_back(exporter);
     }
+
+    // We need the ADBD handler running,
+    // even though it doesn't have an indicator component yet
+    static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adb"};
+    GAdbdClient adbd_client{ADB_SOCKET_PATH};
+    adbd_client.on_pk_request().connect([](const AdbdClient::PKRequest& req){
+        g_debug("%s got pk_request [%s]", G_STRLOC, req.public_key.c_str());
+        // FIXME: actually decide what response to send back
+        req.respond(AdbdClient::PKResponse::ALLOW);
+    });
 
     g_main_loop_run(loop);
 

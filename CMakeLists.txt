@@ -15,6 +15,9 @@ set (SERVICE_EXEC "${PACKAGE}-service")
 option (enable_tests "Build the package's automatic tests." ON)
 option (enable_lcov "Generate lcov code coverage reports." ON)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 ##
 ##  GNU standard paths
 ## 
@@ -47,7 +50,7 @@ include_directories (${CMAKE_CURRENT_SOURCE_DIR})
 
 # set the compiler warnings
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Weverything -Wno-c++98-compat")
+  set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Weverything -Wno-c++98-compat -Wno-padded")
 else()
   set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wall -Wextra -Wpedantic")
 endif()

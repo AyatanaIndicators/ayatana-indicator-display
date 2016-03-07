@@ -5,6 +5,7 @@ add_definitions (-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 
 # handwritten source code...
 set (SERVICE_LIB_HANDWRITTEN_SOURCES
+     adbd-client.cpp
      exporter.cpp
      rotation-lock.cpp)
 
@@ -19,7 +20,7 @@ link_directories (${SERVICE_DEPS_LIBRARY_DIRS})
 
 set (SERVICE_EXEC_HANDWRITTEN_SOURCES main.cpp)
 add_executable (${SERVICE_EXEC} ${SERVICE_EXEC_HANDWRITTEN_SOURCES})
-target_link_libraries (${SERVICE_EXEC} ${SERVICE_LIB} ${SERVICE_DEPS_LIBRARIES} ${GCOV_LIBS})
+target_link_libraries (${SERVICE_EXEC} ${SERVICE_LIB} ${SERVICE_DEPS_LIBRARIES} Threads::Threads ${GCOV_LIBS})
 install (TARGETS ${SERVICE_EXEC} RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_PKGLIBEXECDIR})
 
 # add warnings/coverage info on handwritten files
