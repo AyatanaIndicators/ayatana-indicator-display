@@ -53,9 +53,6 @@ protected:
 
 TEST_F(AdbdClientFixture, SocketPlumbing)
 {
-    const auto socket_path = m_tmpdir + "/test-socket-plumbing";
-    g_message("socket_path is %s", socket_path.c_str());
-
     struct {
         const std::string request;
         const std::string expected_pk;
@@ -68,18 +65,24 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         { "PK",           "",           AdbdClient::PKResponse::DENY,  "NO" }
     };
 
+    const auto main_thread = g_thread_self();
+
+    const auto socket_path = m_tmpdir + "/test-socket-plumbing";
+    g_message("socket_path is %s", socket_path.c_str());
+
     for (const auto& test : tests)
     {
-        // make the AdbdClient and start listening for Requests
+        // start an AdbdClient that listens for PKRequests
         std::string pk;
         auto adbd_client = std::make_shared<GAdbdClient>(socket_path);
-        adbd_client->on_pk_request().connect([&pk, test](const AdbdClient::PKRequest& req){
+        adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
+            EXPECT_EQ(main_thread, g_thread_self());
             g_message("in on_pk_request with %s", req.public_key.c_str());
             pk = req.public_key;
             req.respond(test.response);
         });
 
-        // fire up a mock ADB server with a preloaded request, and wait for a response
+        // start a mock AdbdServer with to fire test key requests and wait for a response
         auto adbd_server = std::make_shared<GAdbdServer>(socket_path, std::vector<std::string>{test.request});
         wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 2000);
         EXPECT_EQ(test.expected_pk, pk);
