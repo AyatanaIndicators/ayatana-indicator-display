@@ -7,7 +7,9 @@ add_definitions (-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 set (SERVICE_LIB_HANDWRITTEN_SOURCES
      adbd-client.cpp
      exporter.cpp
-     rotation-lock.cpp)
+     indicator.cpp
+     rotation-lock.cpp
+     usb-snap.cpp)
 
 add_library (${SERVICE_LIB} STATIC
              ${SERVICE_LIB_HANDWRITTEN_SOURCES})

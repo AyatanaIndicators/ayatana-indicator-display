@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Canonical Ltd.
+ * Copyright 2014-2016 Canonical Ltd.
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -17,8 +17,7 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#ifndef INDICATOR_DISPLAY_INDICATOR_H
-#define INDICATOR_DISPLAY_INDICATOR_H
+#pragma once
 
 #include <core/property.h>
 
@@ -52,10 +51,10 @@ public:
   virtual std::string name() const =0;
   virtual const core::Property<Header>& header() const =0;
   virtual std::shared_ptr<GMenuModel> menu_model() const =0;
-  virtual ~Profile() =default;
+  virtual ~Profile();
 
 protected:
-  Profile() =default;
+  Profile();
 };
 
 
@@ -63,6 +62,7 @@ class SimpleProfile: public Profile
 {
 public:
   SimpleProfile(const char* name, const std::shared_ptr<GMenuModel>& menu): m_name(name), m_menu(menu) {}
+  virtual ~SimpleProfile();
 
   std::string name() const {return m_name;}
   core::Property<Header>& header() {return m_header;}
@@ -79,11 +79,10 @@ protected:
 class Indicator
 {
 public:
-  virtual ~Indicator() =default;
+  virtual ~Indicator();
 
   virtual const char* name() const =0;
   virtual GSimpleActionGroup* action_group() const =0;
   virtual std::vector<std::shared_ptr<Profile>> profiles() const =0;
 };
 
-#endif
