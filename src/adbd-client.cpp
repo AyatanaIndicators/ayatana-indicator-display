@@ -22,6 +22,9 @@
 #include <gio/gio.h>
 #include <gio/gunixsocketaddress.h>
 
+#include <algorithm>
+#include <cctype>
+#include <cstring>
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
@@ -89,6 +92,7 @@ private:
             auto self = data->self;
             struct PKRequest req;
             req.public_key = data->public_key;
+            req.fingerprint = get_fingerprint(req.public_key);
             req.respond = [self](PKResponse response){self->on_public_key_response(response);};
             self->m_on_pk_request(req);
         }
@@ -219,6 +223,37 @@ private:
         }
     }
 
+    static std::string get_fingerprint(const std::string& public_key)
+    {
+        // The first token is base64-encoded data, so cut on the first whitespace
+        const std::string base64 (
+            public_key.begin(),
+            std::find_if(
+                public_key.begin(), public_key.end(),
+                [](const std::string::value_type& ch){return std::isspace(ch);}
+            )
+        );
+
+        gsize digest_len {};
+        auto digest = g_base64_decode(base64.c_str(), &digest_len);
+
+        auto checksum = g_compute_checksum_for_data(G_CHECKSUM_MD5, digest, digest_len);
+        const gsize checksum_len = checksum ? strlen(checksum) : 0;
+
+        // insert ':' between character pairs; eg "ff27b5f3" --> "ff:27:b5:f3"
+        std::string fingerprint;
+        for (gsize i=0; i<checksum_len; ) {
+            fingerprint.append(checksum+i, checksum+i+2);
+            if (i < checksum_len-2)
+                fingerprint.append(":");
+            i += 2;
+        }
+
+        g_clear_pointer(&digest, g_free);
+        g_clear_pointer(&checksum, g_free);
+        return fingerprint;
+    }
+
     const std::string m_socket_path;
     GCancellable* m_cancellable = nullptr;
     std::thread m_worker_thread;
@@ -240,6 +275,10 @@ private:
 AdbdClient::~AdbdClient()
 {
 }
+
+/***
+****
+***/
 
 GAdbdClient::GAdbdClient(const std::string& socket_path):
     impl{new Impl{socket_path}}

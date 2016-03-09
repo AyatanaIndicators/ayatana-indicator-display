@@ -217,8 +217,8 @@ private:
         m_notification_id = 0;
     }
 
-    static constexpr char const * ACTION_ALLOW{"allow"};
-    static constexpr char const * ACTION_DENY{"deny"};
+    static constexpr char const * ACTION_ALLOW {"allow"};
+    static constexpr char const * ACTION_DENY  {"deny"};
 
     static constexpr char const * BUS_NAME    {"org.freedesktop.Notifications" };
     static constexpr char const * IFACE_NAME  {"org.freedesktop.Notifications" };

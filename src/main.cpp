@@ -61,7 +61,7 @@ main(int /*argc*/, char** /*argv*/)
     static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adb"};
     GAdbdClient adbd_client{ADB_SOCKET_PATH};
     adbd_client.on_pk_request().connect([](const AdbdClient::PKRequest& req){
-        auto snap = new UsbSnap(req.public_key);
+        auto snap = new UsbSnap(req.fingerprint);
         snap->on_user_response().connect([req,snap](AdbdClient::PKResponse response, bool /*FIXME: remember_choice*/){
             req.respond(response);
             g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap); // delete-later

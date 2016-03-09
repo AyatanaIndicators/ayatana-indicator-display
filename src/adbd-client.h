@@ -44,6 +44,7 @@ public:
 
     struct PKRequest {
         std::string public_key;
+        std::string fingerprint;
         std::function<void(PKResponse)> respond;
     };
 
