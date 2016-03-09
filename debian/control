@@ -3,12 +3,17 @@ Section: misc
 Priority: optional
 Maintainer: Charles Kerr <charles.kerr@canonical.com>
 Build-Depends: cmake,
+               cmake-extras (>= 0.4),
                dbus,
                libglib2.0-dev (>= 2.36),
                libproperties-cpp-dev,
 # for coverage reports
                lcov,
 # for tests
+               qt5-default,
+               qtbase5-dev,
+               libqtdbusmock1-dev (>= 0.4),
+               libqtdbustest1-dev,
                cppcheck,
                libgtest-dev,
                google-mock (>= 1.6.0+svn437),

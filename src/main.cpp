@@ -20,6 +20,7 @@
 #include <src/adbd-client.h>
 #include <src/exporter.h>
 #include <src/rotation-lock.h>
+#include <src/usb-snap.h>
 
 #include <glib/gi18n.h> // bindtextdomain()
 #include <gio/gio.h>
@@ -60,9 +61,11 @@ main(int /*argc*/, char** /*argv*/)
     static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adb"};
     GAdbdClient adbd_client{ADB_SOCKET_PATH};
     adbd_client.on_pk_request().connect([](const AdbdClient::PKRequest& req){
-        g_debug("%s got pk_request [%s]", G_STRLOC, req.public_key.c_str());
-        // FIXME: actually decide what response to send back
-        req.respond(AdbdClient::PKResponse::ALLOW);
+        auto snap = new UsbSnap(req.public_key);
+        snap->on_user_response().connect([req,snap](AdbdClient::PKResponse response, bool /*FIXME: remember_choice*/){
+            req.respond(response);
+            g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap); // delete-later
+        });
     });
 
     g_main_loop_run(loop);

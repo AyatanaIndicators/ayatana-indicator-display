@@ -1,5 +1,5 @@
-project (indicator-display)
-cmake_minimum_required (VERSION 2.8.9)
+project(indicator-display LANGUAGES C CXX)
+cmake_minimum_required(VERSION 2.8.9)
 
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
@@ -14,9 +14,6 @@ set (SERVICE_EXEC "${PACKAGE}-service")
 
 option (enable_tests "Build the package's automatic tests." ON)
 option (enable_lcov "Generate lcov code coverage reports." ON)
-
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
 
 ##
 ##  GNU standard paths
@@ -33,9 +30,10 @@ set (CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_
 ##  Check for prerequisites
 ##
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 find_package (PkgConfig REQUIRED)
 
-include (FindPkgConfig)
 pkg_check_modules (SERVICE_DEPS REQUIRED
                    gio-unix-2.0>=2.36
                    glib-2.0>=2.36)
@@ -58,9 +56,6 @@ set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wno-missing-field-initializers") # G
 
 # testing & coverage
 if (${enable_tests})
-  set (GTEST_SOURCE_DIR /usr/src/gtest/src)
-  set (GTEST_INCLUDE_DIR ${GTEST_SOURCE_DIR}/..)
-  set (GTEST_LIBS -lpthread)
   enable_testing ()
   if (${enable_lcov})
     include(GCov)
