@@ -17,10 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#include <src/adbd-client.h>
 #include <src/exporter.h>
 #include <src/rotation-lock.h>
-#include <src/usb-snap.h>
+#include <src/usb-manager.h>
 
 #include <glib/gi18n.h> // bindtextdomain()
 #include <gio/gio.h>
@@ -59,15 +58,10 @@ main(int /*argc*/, char** /*argv*/)
     // We need the ADBD handler running,
     // even though it doesn't have an indicator component yet
     static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adb"};
-    GAdbdClient adbd_client{ADB_SOCKET_PATH};
-    adbd_client.on_pk_request().connect([](const AdbdClient::PKRequest& req){
-        auto snap = new UsbSnap(req.fingerprint);
-        snap->on_user_response().connect([req,snap](AdbdClient::PKResponse response, bool /*FIXME: remember_choice*/){
-            req.respond(response);
-            g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap); // delete-later
-        });
-    });
+    static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
+    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME};
 
+    // let's go!
     g_main_loop_run(loop);
 
     // cleanup

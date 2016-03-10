@@ -10,6 +10,7 @@ add_library(
     exporter.cpp
     indicator.cpp
     rotation-lock.cpp
+    usb-manager.cpp
     usb-snap.cpp
 )
 

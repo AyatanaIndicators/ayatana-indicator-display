@@ -20,6 +20,7 @@
 #define QT_NO_KEYWORDS
 #include <tests/utils/dbus-types.h>
 #include <tests/utils/glib-fixture.h>
+#include <tests/utils/gtest-qt-print-helpers.h>
 
 #include <src/usb-snap.h>
 
@@ -35,43 +36,6 @@
 
 using namespace QtDBusTest;
 using namespace QtDBusMock;
-
-inline QString qVariantToString(const QVariant& variant) {
-    QString output;
-    QDebug dbg(&output);
-    dbg << variant;
-    return output;
-}
-
-inline void PrintTo(const QVariant& variant, std::ostream* os) {
-    QString output;
-    QDebug dbg(&output);
-    dbg << variant;
-
-    *os << "QVariant(" << output.toStdString() << ")";
-}
-
-inline void PrintTo(const QString& s, std::ostream* os) {
-    *os << "\"" << s.toStdString() << "\"";
-}
-
-inline void PrintTo(const QStringList& list, std::ostream* os) {
-    QString output;
-    QDebug dbg(&output);
-    dbg << list;
-
-    *os << "QStringList(" << output.toStdString() << ")";
-}
-
-inline void PrintTo(const QList<QDBusObjectPath>& list, std::ostream* os) {
-    QString output;
-    for (const auto& path: list)
-    {
-        output.append("\"" + path.path() + "\",");
-    }
-
-    *os << "QList<QDBusObjectPath>(" << output.toStdString() << ")";
-}
 
 #define WAIT_FOR_SIGNALS(signalSpy, signalsExpected)\
 {\

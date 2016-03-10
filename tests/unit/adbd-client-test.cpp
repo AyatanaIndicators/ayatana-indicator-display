@@ -31,22 +31,22 @@ private:
 
 protected:
 
-    std::string m_tmpdir;
+    static void file_deleter (std::string* s)
+    {
+        fprintf(stderr, "remove \"%s\"\n", s->c_str());
+        remove(s->c_str());
+        delete s;
+    }
+
+    std::shared_ptr<std::string> m_tmpdir;
 
     void SetUp()
     {
         super::SetUp();
 
         char tmpl[] {"adb-client-test-XXXXXX"};
-        m_tmpdir = mkdtemp(tmpl);
-        g_message("using tmpdir '%s'", m_tmpdir.c_str());
-    }
-
-    void TearDown()
-    {
-        g_rmdir(m_tmpdir.c_str());
-
-        super::TearDown();
+        m_tmpdir.reset(new std::string{mkdtemp(tmpl)}, file_deleter);
+        g_message("using tmpdir '%s'", m_tmpdir->c_str());
     }
 };
 
@@ -67,7 +67,7 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
 
     const auto main_thread = g_thread_self();
 
-    const auto socket_path = m_tmpdir + "/test-socket-plumbing";
+    const auto socket_path = *m_tmpdir + "/test-socket-plumbing";
     g_message("socket_path is %s", socket_path.c_str());
 
     for (const auto& test : tests)
