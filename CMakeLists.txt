@@ -1,30 +1,31 @@
 project(indicator-display LANGUAGES C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 
-list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-set (PROJECT_VERSION "14.10.0")
-set (PACKAGE ${CMAKE_PROJECT_NAME})
-set (GETTEXT_PACKAGE indicator-display)
-add_definitions (-DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}"
-                 -DGNOMELOCALEDIR="${CMAKE_INSTALL_FULL_LOCALEDIR}")
+set(PACKAGE ${CMAKE_PROJECT_NAME})
+set(GETTEXT_PACKAGE indicator-display)
+add_definitions(
+    -DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}"
+    -DGNOMELOCALEDIR="${CMAKE_INSTALL_FULL_LOCALEDIR}"
+)
 
-set (SERVICE_LIB ${PACKAGE})
-set (SERVICE_EXEC "${PACKAGE}-service")
+set(SERVICE_LIB ${PACKAGE})
+set(SERVICE_EXEC "${PACKAGE}-service")
 
-option (enable_tests "Build the package's automatic tests." ON)
-option (enable_lcov "Generate lcov code coverage reports." ON)
+option(enable_tests "Build the package's automatic tests." ON)
+option(enable_lcov "Generate lcov code coverage reports." ON)
 
 ##
 ##  GNU standard paths
 ## 
-include (GNUInstallDirs)
-if (EXISTS "/etc/debian_version") # Workaround for libexecdir on debian
-  set (CMAKE_INSTALL_LIBEXECDIR "${CMAKE_INSTALL_LIBDIR}")
-  set (CMAKE_INSTALL_FULL_LIBEXECDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
-endif ()
-set (CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
-set (CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
+include(GNUInstallDirs)
+if(EXISTS "/etc/debian_version") # Workaround for libexecdir on debian
+    set(CMAKE_INSTALL_LIBEXECDIR "${CMAKE_INSTALL_LIBDIR}")
+    set(CMAKE_INSTALL_FULL_LIBEXECDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+endif()
+set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
+set(CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
 
 ##
 ##  Check for prerequisites
@@ -32,12 +33,15 @@ set (CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-find_package (PkgConfig REQUIRED)
+find_package(PkgConfig REQUIRED)
 
-pkg_check_modules (SERVICE_DEPS REQUIRED
-                   gio-unix-2.0>=2.36
-                   glib-2.0>=2.36)
-include_directories (SYSTEM ${SERVICE_DEPS_INCLUDE_DIRS})
+pkg_check_modules(SERVICE_DEPS REQUIRED
+    gio-unix-2.0>=2.36
+    glib-2.0>=2.36
+)
+include_directories (SYSTEM
+  ${SERVICE_DEPS_INCLUDE_DIRS}
+)
 
 ##
 ##
@@ -47,24 +51,26 @@ set (CMAKE_INCLUDE_CURRENT_DIR OFF)
 include_directories (${CMAKE_CURRENT_SOURCE_DIR})
 
 # set the compiler warnings
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Weverything -Wno-c++98-compat -Wno-padded")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Weverything -Wno-c++98-compat -Wno-padded")
 else()
-  set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wall -Wextra -Wpedantic")
+   set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wall -Wextra -Wpedantic")
 endif()
-set (CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wno-missing-field-initializers") # GActionEntry
+set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wno-missing-field-initializers") # GActionEntry
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fPIC -g")
 
 # testing & coverage
-if (${enable_tests})
-  enable_testing ()
-  if (${enable_lcov})
+if(${enable_tests})
+  enable_testing()
+  if(${enable_lcov})
     include(GCov)
-  endif ()
-endif ()
+  endif()
+endif()
 
-add_subdirectory (src)
-add_subdirectory (data)
-add_subdirectory (po)
+add_subdirectory(src)
+add_subdirectory(data)
+add_subdirectory(po)
 if (${enable_tests})
-  add_subdirectory (tests)
+  add_subdirectory(tests)
 endif ()

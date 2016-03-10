@@ -17,7 +17,7 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#include "test-dbus-fixture.h"
+#include <tests/utils/test-dbus-fixture.h>
 
 #include <src/rotation-lock.h>
 

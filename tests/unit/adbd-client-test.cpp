@@ -17,8 +17,8 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#include <tests/test-dbus-fixture.h>
-#include <tests/adbd-server.h>
+#include <tests/utils/test-dbus-fixture.h>
+#include <tests/utils/adbd-server.h>
 
 #include <src/adbd-client.h>
 

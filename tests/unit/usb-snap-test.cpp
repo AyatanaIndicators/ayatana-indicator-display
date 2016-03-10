@@ -18,8 +18,8 @@
  */
 
 #define QT_NO_KEYWORDS
-#include <tests/dbus-types.h>
-#include <tests/glib-fixture.h>
+#include <tests/utils/dbus-types.h>
+#include <tests/utils/glib-fixture.h>
 
 #include <src/usb-snap.h>
 
