@@ -16,14 +16,17 @@ include_directories(SYSTEM
     ${GMOCK_INCLUDE_DIRS}
 )
 
-set(CTEST_ENVIRONMENT "${CTEST_ENVIRONMENT};G_MESSAGES_DEBUG=all")
+list(APPEND CTEST_ENVIRONMENT
+    G_MESSAGES_DEBUG=all
+    G_DBUS_DEBUG=call,signal,return,message
+)
 
 # turn off the warnings that break Google Test
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wno-global-constructors -Wno-weak-vtables")
+    list(APPEND CXX_WARNING_ARGS -Wno-global-constructors -Wno-weak-vtables)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_WARNING_ARGS}")
+add_compile_options(${CXX_WARNING_ARGS})
 
 add_test(cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline-suppr -I${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/tests)
 

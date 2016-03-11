@@ -19,6 +19,7 @@ option(enable_lcov "Generate lcov code coverage reports." ON)
 ##
 ##  GNU standard paths
 ## 
+
 include(GNUInstallDirs)
 if(EXISTS "/etc/debian_version") # Workaround for libexecdir on debian
     set(CMAKE_INSTALL_LIBEXECDIR "${CMAKE_INSTALL_LIBDIR}")
@@ -35,32 +36,34 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 
+set(GLIB_MINIMUM 2.36)
 pkg_check_modules(SERVICE_DEPS REQUIRED
-    gio-unix-2.0>=2.36
-    glib-2.0>=2.36
+    gio-unix-2.0>=${GLIB_MINIMUM}
+    glib-2.0>=${GLIB_MINIMUM}
 )
 include_directories (SYSTEM
   ${SERVICE_DEPS_INCLUDE_DIRS}
 )
 
 ##
-##
+##  Compiler settings
 ##
 
-set (CMAKE_INCLUDE_CURRENT_DIR OFF)
-include_directories (${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # set the compiler warnings
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Weverything -Wno-c++98-compat -Wno-padded")
-else()
-   set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wall -Wextra -Wpedantic")
+    list(APPEND CXX_WARNING_ARGS -Weverything -Wno-c++98-compat -Wno-padded)
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    list(APPEND CXX_WARNING_ARGS -Wall -Wextra -Wpedantic)
 endif()
-set(CXX_WARNING_ARGS "${CXX_WARNING_ARGS} -Wno-missing-field-initializers") # GActionEntry
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fPIC -g")
+add_compile_options(-std=c++14 -fPIC -g)
 
-# testing & coverage
+##
+##  Testing & Coverage
+##
+
 if(${enable_tests})
   enable_testing()
   if(${enable_lcov})

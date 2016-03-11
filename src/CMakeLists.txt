@@ -1,7 +1,10 @@
 
 add_definitions(-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_WARNING_ARGS} ${GCOV_FLAGS}")
+add_compile_options(
+  ${CXX_WARNING_ARGS}
+  ${GCOV_FLAGS}
+)
 
 add_library(
     ${SERVICE_LIB}
