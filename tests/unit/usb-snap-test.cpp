@@ -163,7 +163,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
             QVariantList() << id << test.action_to_invoke);
 
         // test that UsbSnap emits on_user_response() as a result
-        wait_for([&user_response_set](){return user_response_set;});
+        wait_for([&user_response_set](){return user_response_set;}, 2000);
         EXPECT_TRUE(user_response_set);
         ASSERT_EQ(test.expected_response, user_response);
 
