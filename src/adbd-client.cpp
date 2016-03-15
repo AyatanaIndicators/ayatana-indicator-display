@@ -119,7 +119,7 @@ private:
 
         while (!g_cancellable_is_cancelled(m_cancellable))
         {
-            g_debug("%s creating a client socket", G_STRLOC);
+            g_debug("%s creating a client socket to '%s'", G_STRLOC, socket_path.c_str());
             auto socket = create_client_socket(socket_path);
             bool got_valid_req = false;
 
@@ -179,9 +179,11 @@ private:
         }
 
         auto address = g_unix_socket_address_new(socket_path.c_str());
-        const auto connected = g_socket_connect(socket, address, m_cancellable, nullptr);
+        const auto connected = g_socket_connect(socket, address, m_cancellable, &error);
         g_clear_object(&address);
         if (!connected) {
+            g_debug("unable to connect to '%s': %s", socket_path.c_str(), error->message);
+            g_clear_error(&error);
             g_clear_object(&socket);
             return nullptr;
         }
