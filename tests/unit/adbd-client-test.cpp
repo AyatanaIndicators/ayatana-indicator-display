@@ -22,8 +22,6 @@
 
 #include <src/adbd-client.h>
 
-#include <stdlib.h> // mkdtemp
-
 class AdbdClientFixture: public TestDBusFixture
 {
 private:
@@ -44,8 +42,8 @@ protected:
     {
         super::SetUp();
 
-        char tmpl[] {"adb-client-test-XXXXXX"};
-        m_tmpdir.reset(new std::string{mkdtemp(tmpl)}, file_deleter);
+        char tmpl[] = {"adb-client-test-XXXXXX"};
+        m_tmpdir.reset(new std::string{g_mkdtemp(tmpl)}, file_deleter);
         g_message("using tmpdir '%s'", m_tmpdir->c_str());
     }
 };
