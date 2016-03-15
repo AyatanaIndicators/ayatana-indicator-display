@@ -115,7 +115,7 @@ private:
 
     void worker_func() // runs in worker thread
     {
-        const auto socket_path {m_socket_path};
+        const std::string socket_path {m_socket_path};
 
         while (!g_cancellable_is_cancelled(m_cancellable))
         {
@@ -155,7 +155,7 @@ private:
 
             // If nothing interesting's happening, sleep a bit.
             // (Interval copied from UsbDebuggingManager.java)
-            static constexpr auto sleep_interval {std::chrono::seconds(1)};
+            static constexpr std::chrono::seconds sleep_interval {std::chrono::seconds(1)};
             if (!got_valid_req && !g_cancellable_is_cancelled(m_cancellable)) {
                 std::unique_lock<std::mutex> lk(m_sleep_mutex);
                 m_sleep_cv.wait_for(lk, sleep_interval);
