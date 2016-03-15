@@ -22,10 +22,16 @@ add_executable(
     main.cpp
 )
 
+if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} LESS 3.2)
+    set(SERVICE_THREAD_LIBS -pthread)
+else()
+    set(SERVICE_THREAD_LIBS Threads::Threads)
+endif()
+
 target_link_libraries(${SERVICE_EXEC}
     ${SERVICE_LIB}
     ${SERVICE_DEPS_LIBRARIES}
-    Threads::Threads
+    ${SERVICE_THREAD_LIBS}
     ${GCOV_LIBS}
 )
 
