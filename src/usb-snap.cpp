@@ -92,6 +92,17 @@ private:
     {
         m_bus = G_DBUS_CONNECTION(g_object_ref(G_OBJECT(bus)));
 
+        m_subscription_id = g_dbus_connection_signal_subscribe(m_bus,
+                                                               BUS_NAME,
+                                                               IFACE_NAME,
+                                                               nullptr,
+                                                               OBJECT_PATH,
+                                                               nullptr,
+                                                               G_DBUS_SIGNAL_FLAGS_NONE,
+                                                               on_notification_signal_static,
+                                                               this,
+                                                               nullptr);
+
         auto body = g_strdup_printf(_("The computer's RSA key fingerprint is: %s"), m_fingerprint.c_str());
 
         GVariantBuilder actions_builder;
@@ -151,17 +162,6 @@ private:
     void on_notify_reply(uint32_t id)
     {
         m_notification_id = id;
-
-        m_subscription_id = g_dbus_connection_signal_subscribe(m_bus,
-                                                               BUS_NAME,
-                                                               IFACE_NAME,
-                                                               nullptr,
-                                                               OBJECT_PATH,
-                                                               nullptr,
-                                                               G_DBUS_SIGNAL_FLAGS_NONE,
-                                                               on_notification_signal_static,
-                                                               this,
-                                                               nullptr);
     }
 
     static void on_notification_signal_static(GDBusConnection* /*connection*/,
