@@ -60,7 +60,7 @@ g_assert(g_setenv("G_MESSAGES_DEBUG", "all", true));
 
     // We need the ADBD handler running,
     // even though it doesn't have an indicator component yet
-    static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adb"};
+    static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
     static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
     UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME};
 
