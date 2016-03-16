@@ -12,7 +12,7 @@ Build-Depends: cmake,
 # for tests
                qt5-default,
                qtbase5-dev,
-               libqtdbusmock1-dev (>= 0.4),
+               libqtdbusmock1-dev,
                libqtdbustest1-dev,
                cppcheck,
                libgtest-dev,
