@@ -26,6 +26,9 @@
 #include <memory>
 #include <string>
 
+/**
+ * A snap decision prompt for whether or not to allow an ADB connection
+ */
 class UsbSnap
 {
 public:

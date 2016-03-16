@@ -22,6 +22,9 @@
 #include <memory>
 #include <string>
 
+/**
+ * Manager class that connects the AdbdClient, UsbSnap, and manages the public key file
+ */
 class UsbManager
 {
 public:
