@@ -3,7 +3,6 @@ add_definitions(-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 
 add_compile_options(
   ${CXX_WARNING_ARGS}
-  ${GCOV_FLAGS}
 )
 
 add_library(
@@ -26,7 +25,6 @@ target_link_libraries(${SERVICE_EXEC}
     ${SERVICE_LIB}
     ${SERVICE_DEPS_LIBRARIES}
     ${THREAD_LINK_LIBRARIES}
-    ${GCOV_LIBS}
 )
 
 install(

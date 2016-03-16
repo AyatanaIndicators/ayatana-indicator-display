@@ -14,7 +14,7 @@ set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
 option(enable_tests "Build the package's automatic tests." ON)
-option(enable_lcov "Generate lcov code coverage reports." ON)
+option(enable_coverage "Generate code coverage reports." ON)
 
 ##
 ##  GNU standard paths
@@ -74,8 +74,8 @@ add_compile_options(-std=c++14 -fPIC -g)
 
 if(${enable_tests})
   enable_testing()
-  if(${enable_lcov})
-    include(GCov)
+  if(${enable_coverage})
+    include(EnableCoverageReport)
   endif()
 endif()
 
