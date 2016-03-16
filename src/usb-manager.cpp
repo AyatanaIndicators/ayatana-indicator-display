@@ -41,12 +41,11 @@ public:
     {
         m_adbd_client->on_pk_request().connect([this](const AdbdClient::PKRequest& req){
             auto snap = new UsbSnap(req.fingerprint);
-            snap->on_user_response().connect([this,req,snap](AdbdClient::PKResponse response, bool /*FIXME: remember_choice*/){
+            snap->on_user_response().connect([this,req,snap](AdbdClient::PKResponse response, bool remember_choice){
                 req.respond(response);
-                if (response == AdbdClient::PKResponse::ALLOW)
+                if (remember_choice)
                     write_public_key(req.public_key);
-
-                // delete later
+                // delete_later
                 g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap);
             });
         });
