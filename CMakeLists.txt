@@ -32,10 +32,18 @@ set(CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_P
 ##  Check for prerequisites
 ##
 
+# threads...
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} LESS 3.1)
+    set(THREAD_LINK_LIBRARIES -pthread)
+else()
+    set(THREAD_LINK_LIBRARIES Threads::Threads) # introduced in cmake 3.1
+endif()
+
 find_package(PkgConfig REQUIRED)
 
+# glib...
 set(GLIB_MINIMUM 2.36)
 pkg_check_modules(SERVICE_DEPS REQUIRED
     gio-unix-2.0>=${GLIB_MINIMUM}
