@@ -20,9 +20,10 @@
 #define QT_NO_KEYWORDS
 
 #include <tests/utils/adbd-server.h>
-#include <tests/utils/glib-fixture.h>
 #include <tests/utils/dbus-types.h>
+#include <tests/utils/glib-fixture.h>
 #include <tests/utils/gtest-qt-print-helpers.h>
+#include <tests/utils/qdbus-helpers.h>
 
 #include <src/usb-manager.h>
 
@@ -76,20 +77,6 @@ protected:
         fprintf(stderr, "remove \"%s\"\n", s->c_str());
         remove(s->c_str());
         delete s;
-    }
-
-    bool qDBusArgumentToMap(QVariant const& variant, QVariantMap& map)
-    {
-        if (variant.canConvert<QDBusArgument>())
-        {
-            QDBusArgument value(variant.value<QDBusArgument>());
-            if (value.currentType() == QDBusArgument::MapType)
-            {
-                value >> map;
-                return true;
-            }
-        }
-        return false;
     }
 
     void SetUp() override
