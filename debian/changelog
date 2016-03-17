@@ -1,3 +1,9 @@
+indicator-display (0.1+15.10.20150727-0ubuntu2~gcc5.1) wily; urgency=medium
+
+  * No-change test rebuild for g++5 ABI transition
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 27 Jul 2015 22:57:15 +0000
+
 indicator-display (0.1+15.10.20150727-0ubuntu1) wily; urgency=medium
 
   [ CI Train Bot ]

@@ -1,7 +1,8 @@
 Source: indicator-display
 Section: misc
 Priority: optional
-Maintainer: Charles Kerr <charles.kerr@canonical.com>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Charles Kerr <charles.kerr@canonical.com>
 Build-Depends: cmake,
                cmake-extras (>= 0.4),
                dbus,
