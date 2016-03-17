@@ -32,7 +32,7 @@ protected:
     static void file_deleter (std::string* s)
     {
         fprintf(stderr, "remove \"%s\"\n", s->c_str());
-        remove(s->c_str());
+        g_remove(s->c_str());
         delete s;
     }
 

@@ -18,47 +18,24 @@
  */
 
 #define QT_NO_KEYWORDS
-#include <tests/utils/dbus-types.h>
-#include <tests/utils/qdbus-helpers.h>
-#include <tests/utils/glib-fixture.h>
-#include <tests/utils/gtest-qt-print-helpers.h>
+#include <tests/utils/qt-fixture.h>
 
 #include <src/dbus-names.h>
 #include <src/usb-snap.h>
-
-#include <glib.h>
 
 #include <libqtdbustest/DBusTestRunner.h>
 #include <libqtdbustest/QProcessDBusService.h>
 #include <libqtdbusmock/DBusMock.h>
 
-#include <QSignalSpy>
-
-#include <gtest/gtest.h>
-
-using namespace QtDBusTest;
-using namespace QtDBusMock;
-
-#define WAIT_FOR_SIGNALS(signalSpy, signalsExpected)\
-{\
-    while (signalSpy.size() < signalsExpected)\
-    {\
-        ASSERT_TRUE(signalSpy.wait());\
-    }\
-    ASSERT_EQ(signalsExpected, signalSpy.size());\
-}
-
-class UsbSnapFixture: public GlibFixture
+class UsbSnapFixture: public QtFixture
 {
-    using super = GlibFixture;
+    using super = QtFixture;
 
 public:
 
     UsbSnapFixture():
         dbusMock{dbusTestRunner}
     {
-        DBusTypes::registerMetaTypes();
-
         dbusTestRunner.startServices();
     }
 
@@ -84,7 +61,6 @@ protected:
 
     QtDBusTest::DBusTestRunner dbusTestRunner;
     QtDBusMock::DBusMock dbusMock;
-    QtDBusTest::DBusServicePtr indicator;
 };
 
 TEST_F(UsbSnapFixture, TestRoundTrip)
@@ -119,7 +95,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         });
 
         // test that UsbSnap creates a fdo notification
-        WAIT_FOR_SIGNALS(notificationsSpy, 1);
+        wait_for_signals(notificationsSpy, 1);
         {
             QVariantList const& call(notificationsSpy.at(0));
             EXPECT_EQ("Notify", call.at(0));
@@ -157,7 +133,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
 
         // confirm that the snap dtor cleans up the notification
         snap.reset();
-        WAIT_FOR_SIGNALS(notificationsSpy, 1);
+        wait_for_signals(notificationsSpy, 1);
         {
             QVariantList const& call(notificationsSpy.at(0));
             EXPECT_EQ("CloseNotification", call.at(0));

@@ -20,10 +20,7 @@
 #define QT_NO_KEYWORDS
 
 #include <tests/utils/adbd-server.h>
-#include <tests/utils/dbus-types.h>
-#include <tests/utils/glib-fixture.h>
-#include <tests/utils/gtest-qt-print-helpers.h>
-#include <tests/utils/qdbus-helpers.h>
+#include <tests/utils/qt-fixture.h>
 
 #include <src/dbus-names.h>
 #include <src/usb-manager.h>
@@ -31,12 +28,6 @@
 #include <libqtdbustest/DBusTestRunner.h>
 #include <libqtdbustest/QProcessDBusService.h>
 #include <libqtdbusmock/DBusMock.h>
-
-#include <glib.h>
-
-#include <gtest/gtest.h>
-
-#include <QSignalSpy>
 
 #include <fstream>
 #include <sstream>
@@ -46,26 +37,15 @@
 ****
 ***/
 
-#define WAIT_FOR_SIGNALS(signalSpy, signalsExpected)\
-{\
-    while (signalSpy.size() < signalsExpected)\
-    {\
-        ASSERT_TRUE(signalSpy.wait());\
-    }\
-    ASSERT_EQ(signalsExpected, signalSpy.size());\
-}
-
-class UsbManagerFixture: public GlibFixture
+class UsbManagerFixture: public QtFixture
 {
-    using super = GlibFixture;
+    using super = QtFixture;
 
 public:
 
     UsbManagerFixture():
         dbusMock{dbusTestRunner}
     {
-        DBusTypes::registerMetaTypes();
-
         dbusTestRunner.startServices();
     }
 
@@ -76,7 +56,7 @@ protected:
     static void file_deleter (std::string* s)
     {
         fprintf(stderr, "remove \"%s\"\n", s->c_str());
-        remove(s->c_str());
+        g_remove(s->c_str());
         delete s;
     }
 
@@ -102,7 +82,6 @@ protected:
 
     QtDBusTest::DBusTestRunner dbusTestRunner;
     QtDBusMock::DBusMock dbusMock;
-    QtDBusTest::DBusServicePtr indicator;
     std::shared_ptr<std::string> m_tmpdir;
 };
 
@@ -126,7 +105,7 @@ TEST_F(UsbManagerFixture, Allow)
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path);
 
     // wait for the notification to show up, confirm it looks right
-    WAIT_FOR_SIGNALS(notificationsSpy, 1);
+    wait_for_signals(notificationsSpy, 1);
     {
         QVariantList const& call(notificationsSpy.at(0));
         EXPECT_EQ("Notify", call.at(0));
