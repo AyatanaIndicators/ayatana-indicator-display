@@ -23,6 +23,7 @@
 #include <tests/utils/glib-fixture.h>
 #include <tests/utils/gtest-qt-print-helpers.h>
 
+#include <src/dbus-names.h>
 #include <src/usb-snap.h>
 
 #include <glib.h>
@@ -75,10 +76,10 @@ protected:
 
     OrgFreedesktopDBusMockInterface& notificationsMockInterface()
     {
-        return dbusMock.mockInterface("org.freedesktop.Notifications",
-                                      "/org/freedesktop/Notifications",
-                                      "org.freedesktop.Notifications",
-                                       QDBusConnection::SessionBus);
+        return dbusMock.mockInterface(DBusNames::Notify::NAME,
+                                      DBusNames::Notify::PATH,
+                                      DBusNames::Notify::INTERFACE,
+                                      QDBusConnection::SessionBus);
     }
 
     QtDBusTest::DBusTestRunner dbusTestRunner;
@@ -144,8 +145,8 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
 
         // fake a user interaction with the fdo notification
         notificationsMockInterface().EmitSignal(
-            DBusTypes::NOTIFY_DBUS_INTERFACE,
-            "ActionInvoked",
+            DBusNames::Notify::INTERFACE,
+            DBusNames::Notify::ActionInvoked::NAME,
             "us",
             QVariantList() << id << test.action_to_invoke);
 

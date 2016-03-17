@@ -25,6 +25,7 @@
 #include <tests/utils/gtest-qt-print-helpers.h>
 #include <tests/utils/qdbus-helpers.h>
 
+#include <src/dbus-names.h>
 #include <src/usb-manager.h>
 
 #include <libqtdbustest/DBusTestRunner.h>
@@ -93,10 +94,10 @@ protected:
 
     OrgFreedesktopDBusMockInterface& notificationsMockInterface()
     {
-        return dbusMock.mockInterface("org.freedesktop.Notifications",
-                                      "/org/freedesktop/Notifications",
-                                      "org.freedesktop.Notifications",
-                                       QDBusConnection::SessionBus);
+        return dbusMock.mockInterface(DBusNames::Notify::NAME,
+                                      DBusNames::Notify::PATH,
+                                      DBusNames::Notify::INTERFACE,
+                                      QDBusConnection::SessionBus);
     }
 
     QtDBusTest::DBusTestRunner dbusTestRunner;
@@ -151,8 +152,8 @@ TEST_F(UsbManagerFixture, Allow)
 
     // click on allow in the notification
     notificationsMockInterface().EmitSignal(
-        DBusTypes::NOTIFY_DBUS_INTERFACE,
-        "ActionInvoked",
+        DBusNames::Notify::INTERFACE,
+        DBusNames::Notify::ActionInvoked::NAME,
         "us",
         QVariantList() << uint32_t(1) << "allow"
     );

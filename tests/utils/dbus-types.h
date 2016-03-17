@@ -39,9 +39,4 @@ namespace DBusTypes
         qDBusRegisterMetaType<QVariantDictMap>();
         qDBusRegisterMetaType<QStringMap>();
     }
-    static constexpr char const* NOTIFY_DBUS_NAME = "org.freedesktop.Notifications";
-
-    static constexpr char const* NOTIFY_DBUS_INTERFACE = "org.freedesktop.Notifications";
-
-    static constexpr char const* NOTIFY_DBUS_PATH = "/org/freedesktop/Notifications";
 }

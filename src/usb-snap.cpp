@@ -17,6 +17,7 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
+#include <src/dbus-names.h>
 #include <src/usb-snap.h>
 
 #include <glib/gi18n.h>
@@ -48,9 +49,9 @@ public:
         if (m_notification_id != 0) {
             GError* error {};
             g_dbus_connection_call_sync(m_bus,
-                                        BUS_NAME,
-                                        OBJECT_PATH,
-                                        IFACE_NAME,
+                                        DBusNames::Notify::NAME,
+                                        DBusNames::Notify::PATH,
+                                        DBusNames::Notify::INTERFACE,
                                         "CloseNotification",
                                         g_variant_new("(u)", m_notification_id),
                                         nullptr,
@@ -93,10 +94,10 @@ private:
         m_bus = G_DBUS_CONNECTION(g_object_ref(G_OBJECT(bus)));
 
         m_subscription_id = g_dbus_connection_signal_subscribe(m_bus,
-                                                               BUS_NAME,
-                                                               IFACE_NAME,
+                                                               DBusNames::Notify::NAME,
+                                                               DBusNames::Notify::INTERFACE,
                                                                nullptr,
-                                                               OBJECT_PATH,
+                                                               DBusNames::Notify::PATH,
                                                                nullptr,
                                                                G_DBUS_SIGNAL_FLAGS_NONE,
                                                                on_notification_signal_static,
@@ -128,9 +129,9 @@ private:
                                   &hints_builder,
                                   -1);
         g_dbus_connection_call(m_bus,
-                               BUS_NAME,
-                               OBJECT_PATH,
-                               IFACE_NAME,
+                               DBusNames::Notify::NAME,
+                               DBusNames::Notify::PATH,
+                               DBusNames::Notify::INTERFACE,
                                "Notify",
                                args,
                                G_VARIANT_TYPE("(u)"),
@@ -172,12 +173,12 @@ private:
                                               GVariant* parameters,
                                               gpointer gself)
     {
-        g_return_if_fail(!g_strcmp0(object_path, OBJECT_PATH));
-        g_return_if_fail(!g_strcmp0(interface_name, IFACE_NAME));
+        g_return_if_fail(!g_strcmp0(object_path, DBusNames::Notify::PATH));
+        g_return_if_fail(!g_strcmp0(interface_name, DBusNames::Notify::INTERFACE));
 
         auto self = static_cast<Impl*>(gself);
 
-        if (!g_strcmp0(signal_name, "ActionInvoked"))
+        if (!g_strcmp0(signal_name, DBusNames::Notify::ActionInvoked::NAME))
         {
             uint32_t id {};
             const char* action_name {};
@@ -185,7 +186,7 @@ private:
             if (id == self->m_notification_id)
                 self->on_action_invoked(action_name);
         }
-        else if (!g_strcmp0(signal_name, "NotificationClosed"))
+        else if (!g_strcmp0(signal_name, DBusNames::Notify::NotificationClosed::NAME))
         {
             uint32_t id {};
             uint32_t close_reason {};
@@ -211,7 +212,7 @@ private:
 
     void on_notification_closed(uint32_t close_reason)
     {
-        if (close_reason == CloseReason::EXPIRED)
+        if (close_reason == DBusNames::Notify::NotificationClosed::Reason::EXPIRED)
             m_on_user_response(AdbdClient::PKResponse::DENY, false);
 
         m_notification_id = 0;
@@ -219,11 +220,6 @@ private:
 
     static constexpr char const * ACTION_ALLOW {"allow"};
     static constexpr char const * ACTION_DENY  {"deny"};
-
-    static constexpr char const * BUS_NAME    {"org.freedesktop.Notifications" };
-    static constexpr char const * IFACE_NAME  {"org.freedesktop.Notifications" };
-    static constexpr char const * OBJECT_PATH {"/org/freedesktop/Notifications" };
-    enum CloseReason { EXPIRED=1, DISMISSED=2, API=3, UNDEFINED=4 };
 
     const std::string m_fingerprint;
     core::Signal<AdbdClient::PKResponse,bool> m_on_user_response;
