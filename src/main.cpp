@@ -29,7 +29,7 @@
 int
 main(int /*argc*/, char** /*argv*/)
 {
-#warning temp
+#warning NB the next line turns on verbose debug logging and is used for developement. Remove it before landing.
 g_assert(g_setenv("G_MESSAGES_DEBUG", "all", true));
 
     // Work around a deadlock in glib's type initialization.
