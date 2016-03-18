@@ -42,8 +42,9 @@ public:
         m_adbd_client->on_pk_request().connect([this](const AdbdClient::PKRequest& req){
             auto snap = new UsbSnap(req.fingerprint);
             snap->on_user_response().connect([this,req,snap](AdbdClient::PKResponse response, bool remember_choice){
+                g_debug("user responded! response %d, remember %d", int(response), int(remember_choice));
                 req.respond(response);
-                if (remember_choice)
+                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
                     write_public_key(req.public_key);
                 // delete_later
                 g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap);
@@ -59,6 +60,8 @@ private:
 
     void write_public_key(const std::string& public_key)
     {
+        g_debug("writing public key '%s' to '%s'", public_key.c_str(), m_public_keys_filename.c_str());
+
         // confirm the directory exists
         auto dirname = g_path_get_dirname(m_public_keys_filename.c_str());
         const auto dir_exists = g_file_test(dirname, G_FILE_TEST_IS_DIR);
