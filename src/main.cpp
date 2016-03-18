@@ -29,9 +29,6 @@
 int
 main(int /*argc*/, char** /*argv*/)
 {
-#warning NB the next line turns on verbose debug logging and is used for developement. Remove it before landing.
-g_assert(g_setenv("G_MESSAGES_DEBUG", "all", true));
-
     // Work around a deadlock in glib's type initialization.
     // It can be removed when https://bugzilla.gnome.org/show_bug.cgi?id=674885 is fixed.
     g_type_ensure(G_TYPE_DBUS_CONNECTION);

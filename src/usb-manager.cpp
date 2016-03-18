@@ -42,7 +42,7 @@ public:
         m_adbd_client->on_pk_request().connect([this](const AdbdClient::PKRequest& req){
             auto snap = new UsbSnap(req.fingerprint);
             snap->on_user_response().connect([this,req,snap](AdbdClient::PKResponse response, bool remember_choice){
-                g_debug("user responded! response %d, remember %d", int(response), int(remember_choice));
+                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
                 req.respond(response);
                 if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
                     write_public_key(req.public_key);
@@ -78,12 +78,12 @@ private:
             S_IRUSR|S_IWUSR|S_IRGRP
         );
         if (fd == -1) {
-            g_warning("Error opening ADB datafile: %s", g_strerror(errno));
+            g_warning("Error opening ADB datafile '%s': %s", m_public_keys_filename.c_str(), g_strerror(errno));
             return;
         }
 
         // write the new public key on its own line
-        std::string buf {public_key + '\n'};
+        const std::string buf {public_key + '\n'};
         if (write(fd, buf.c_str(), buf.size()) == -1)
             g_warning("Error writing ADB datafile: %d %s", errno, g_strerror(errno));
         close(fd);
