@@ -28,39 +28,57 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <set>
+
 class UsbManager::Impl
 {
 public:
  
     explicit Impl(
         const std::string& socket_path,
-        const std::string& public_keys_filename
+        const std::string& public_keys_filename,
+        const std::shared_ptr<UsbMonitor>& usb_monitor
     ):
         m_adbd_client{std::make_shared<GAdbdClient>(socket_path)},
-        m_public_keys_filename{public_keys_filename}
+        m_public_keys_filename{public_keys_filename},
+        m_usb_monitor{usb_monitor}
     {
-        m_adbd_client->on_pk_request().connect([this](const AdbdClient::PKRequest& req){
-            auto snap = new UsbSnap(req.fingerprint);
-            snap->on_user_response().connect([this,req,snap](AdbdClient::PKResponse response, bool remember_choice){
-                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
-                req.respond(response);
-                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
-                    write_public_key(req.public_key);
-                // delete_later
-                g_idle_add([](gpointer gsnap){delete static_cast<UsbSnap*>(gsnap); return G_SOURCE_REMOVE;}, snap);
-            });
+        m_usb_monitor->on_usb_disconnected().connect([this](const std::string& /*usb_name*/) {
+            m_snap.reset();
         });
+
+        m_adbd_client->on_pk_request().connect(
+            [this](const AdbdClient::PKRequest& req){
+
+                m_snap.reset(new UsbSnap(req.fingerprint),
+                    [this](UsbSnap* snap){
+                        m_snap_connections.clear();
+                        delete snap;
+                    }
+                );
+
+                m_snap_connections.insert((*m_snap).on_user_response().connect(
+                    [this,req](AdbdClient::PKResponse response, bool remember_choice){
+                        g_message("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
+                        req.respond(response);
+                        g_message("%s", G_STRLOC);
+                        if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
+                            write_public_key(req.public_key);
+                        g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->m_snap.reset(); return G_SOURCE_REMOVE;}, this);
+                    }
+                ));
+            }
+        );
+
     }
 
-    ~Impl()
-    {
-    }
+    ~Impl() =default;
 
 private:
 
     void write_public_key(const std::string& public_key)
     {
-        g_debug("writing public key '%s' to '%s'", public_key.c_str(), m_public_keys_filename.c_str());
+        g_message("%s writing public key '%s' to '%s'", G_STRLOC, public_key.c_str(), m_public_keys_filename.c_str());
 
         // confirm the directory exists
         auto dirname = g_path_get_dirname(m_public_keys_filename.c_str());
@@ -78,12 +96,12 @@ private:
             S_IRUSR|S_IWUSR|S_IRGRP
         );
         if (fd == -1) {
-            g_warning("Error opening ADB datafile '%s': %s", m_public_keys_filename.c_str(), g_strerror(errno));
+            g_warning("Error opening ADB datafile: %s", g_strerror(errno));
             return;
         }
 
         // write the new public key on its own line
-        const std::string buf {public_key + '\n'};
+        std::string buf {public_key + '\n'};
         if (write(fd, buf.c_str(), buf.size()) == -1)
             g_warning("Error writing ADB datafile: %d %s", errno, g_strerror(errno));
         close(fd);
@@ -91,6 +109,10 @@ private:
 
     std::shared_ptr<GAdbdClient> m_adbd_client;
     const std::string m_public_keys_filename;
+    std::shared_ptr<UsbMonitor> m_usb_monitor;
+
+    std::shared_ptr<UsbSnap> m_snap;
+    std::set<core::ScopedConnection> m_snap_connections;
 };
 
 /***
@@ -99,9 +121,10 @@ private:
 
 UsbManager::UsbManager(
     const std::string& socket_path,
-    const std::string& public_keys_filename
+    const std::string& public_keys_filename,
+    const std::shared_ptr<UsbMonitor>& usb_monitor
 ):
-    impl{new Impl{socket_path, public_keys_filename}}
+    impl{new Impl{socket_path, public_keys_filename, usb_monitor}}
 {
 }
 

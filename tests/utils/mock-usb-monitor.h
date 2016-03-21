@@ -21,26 +21,12 @@
 
 #include <src/usb-monitor.h>
 
-#include <memory>
-#include <string>
-
-/**
- * Manager class that connects the AdbdClient, UsbSnap, and manages the public key file
- */
-class UsbManager
+class MockUsbMonitor: public UsbMonitor
 {
 public:
-
-    UsbManager(
-        const std::string& socket_path,
-        const std::string& public_key_filename,
-        const std::shared_ptr<UsbMonitor>&
-    );
-
-    ~UsbManager();
-
-protected:
-
-    class Impl;
-    std::unique_ptr<Impl> impl;
+    MockUsbMonitor() =default;
+    virtual ~MockUsbMonitor() =default;
+    core::Signal<const std::string&>& on_usb_disconnected() override {return m_on_usb_disconnected;}
+    core::Signal<const std::string&> m_on_usb_disconnected;
 };
+

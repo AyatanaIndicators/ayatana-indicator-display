@@ -22,12 +22,13 @@
 #define QT_NO_KEYWORDS
 
 #include <tests/utils/dbus-types.h>
-#include <tests/utils/qdbus-helpers.h>
 #include <tests/utils/glib-fixture.h>
 #include <tests/utils/gtest-qt-print-helpers.h>
 
 #include <gtest/gtest.h>
 
+#include <QDBusArgument>
+#include <QVariant>
 #include <QSignalSpy>
 
 class QtFixture: public GlibFixture
@@ -53,6 +54,21 @@ protected:
         }
 
         ASSERT_EQ(signalsExpected, signalSpy.size());
+    }
+
+    bool qDBusArgumentToMap(QVariant const& variant, QVariantMap& map)
+    {
+        if (variant.canConvert<QDBusArgument>())
+        {
+            QDBusArgument value(variant.value<QDBusArgument>());
+            if (value.currentType() == QDBusArgument::MapType)
+            {
+                value >> map;
+                return true;
+            }
+        }
+
+        return false;
     }
 };
 

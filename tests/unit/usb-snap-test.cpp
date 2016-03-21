@@ -17,7 +17,6 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#define QT_NO_KEYWORDS
 #include <tests/utils/qt-fixture.h>
 
 #include <src/dbus-names.h>

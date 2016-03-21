@@ -45,6 +45,7 @@ public:
     {
         // tell the worker thread to stop whatever it's doing and exit.
         g_cancellable_cancel(m_cancellable);
+        m_pkresponse_cv.notify_one();
         m_sleep_cv.notify_one();
         m_worker_thread.join();
         g_clear_object(&m_cancellable);

@@ -48,6 +48,7 @@ set(GLIB_MINIMUM 2.36)
 pkg_check_modules(SERVICE_DEPS REQUIRED
     gio-unix-2.0>=${GLIB_MINIMUM}
     glib-2.0>=${GLIB_MINIMUM}
+    gudev-1.0
 )
 include_directories (SYSTEM
   ${SERVICE_DEPS_INCLUDE_DIRS}

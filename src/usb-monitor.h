@@ -19,28 +19,34 @@
 
 #pragma once
 
-#include <src/usb-monitor.h>
+#include <core/signal.h>
 
 #include <memory>
 #include <string>
 
 /**
- * Manager class that connects the AdbdClient, UsbSnap, and manages the public key file
+ * Simple interface that emits signals on USB device state changes
  */
-class UsbManager
+class UsbMonitor
 {
 public:
+    UsbMonitor();
+    virtual ~UsbMonitor();
+    virtual core::Signal<const std::string&>& on_usb_disconnected() =0;
+};
 
-    UsbManager(
-        const std::string& socket_path,
-        const std::string& public_key_filename,
-        const std::shared_ptr<UsbMonitor>&
-    );
-
-    ~UsbManager();
+/**
+ * Simple GUDev wrapper that notifies on android_usb device state changes
+ */
+class GUDevUsbMonitor: public UsbMonitor
+{
+public:
+    GUDevUsbMonitor();
+    virtual ~GUDevUsbMonitor();
+    core::Signal<const std::string&>& on_usb_disconnected() override;
 
 protected:
-
     class Impl;
     std::unique_ptr<Impl> impl;
 };
+

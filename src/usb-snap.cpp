@@ -148,6 +148,7 @@ private:
     {
         GError* error {};
         auto reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION(obus), res, &error);
+g_message("%s got notify response %s", G_STRLOC, g_variant_print(reply, true));
         if (error != nullptr) {
             if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
                 g_warning("UsbSnap: Error calling Notify: %s", error->message);

@@ -20,6 +20,7 @@
 #include <src/exporter.h>
 #include <src/rotation-lock.h>
 #include <src/usb-manager.h>
+#include <src/usb-monitor.h>
 
 #include <glib/gi18n.h> // bindtextdomain()
 #include <gio/gio.h>
@@ -59,7 +60,8 @@ main(int /*argc*/, char** /*argv*/)
     // even though it doesn't have an indicator component yet
     static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
     static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
-    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME};
+    auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
+    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor};
 
     // let's go!
     g_main_loop_run(loop);

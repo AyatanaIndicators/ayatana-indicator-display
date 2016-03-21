@@ -7,6 +7,7 @@ Build-Depends: cmake,
                cmake-extras (>= 0.4),
                dbus,
                libglib2.0-dev (>= 2.36),
+               libgudev-1.0-dev,
                libproperties-cpp-dev,
 # for coverage reports
                lcov,

@@ -17,10 +17,9 @@
  *   Charles Kerr <charles.kerr@canonical.com>
  */
 
-#define QT_NO_KEYWORDS
-
 #include <tests/utils/adbd-server.h>
 #include <tests/utils/qt-fixture.h>
+#include <tests/utils/mock-usb-monitor.h>
 
 #include <src/dbus-names.h>
 #include <src/usb-manager.h>
@@ -64,6 +63,8 @@ protected:
     {
         super::SetUp();
 
+        m_usb_monitor.reset(new MockUsbMonitor{});
+
         char tmpl[] = {"usb-manager-test-XXXXXX"};
         m_tmpdir.reset(new std::string{g_mkdtemp(tmpl)}, file_deleter);
         g_message("using tmpdir '%s'", m_tmpdir->c_str());
@@ -83,6 +84,7 @@ protected:
     QtDBusTest::DBusTestRunner dbusTestRunner;
     QtDBusMock::DBusMock dbusMock;
     std::shared_ptr<std::string> m_tmpdir;
+    std::shared_ptr<MockUsbMonitor> m_usb_monitor;
 };
 
 TEST_F(UsbManagerFixture, Allow)
@@ -102,7 +104,7 @@ TEST_F(UsbManagerFixture, Allow)
     auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
 
     // set up a UsbManager to process the request
-    auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path);
+    auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor);
 
     // wait for the notification to show up, confirm it looks right
     wait_for_signals(notificationsSpy, 1);
@@ -150,4 +152,40 @@ TEST_F(UsbManagerFixture, Allow)
         lines.emplace_back(std::move(line));
     ASSERT_EQ(1, lines.size());
     EXPECT_EQ(public_key, lines[0]);
+}
+
+TEST_F(UsbManagerFixture, Cancel)
+{
+    const std::shared_ptr<std::string> socket_path {new std::string{*m_tmpdir+"/socket"}, file_deleter};
+    const std::shared_ptr<std::string> public_keys_path {new std::string{*m_tmpdir+"/adb_keys"}, file_deleter};
+
+    // add a signal spy to listen to the notification daemon
+    QSignalSpy notificationsSpy(
+        &notificationsMockInterface(),
+        SIGNAL(MethodCalled(const QString &, const QVariantList &))
+    );
+
+    // start a mock AdbdServer ready to submit a request
+    const std::string public_key {"public_key"};
+    auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
+
+    // set up a UsbManager to process the request
+    auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor);
+
+    // wait for a notification to show up
+    wait_for_signals(notificationsSpy, 1);
+    EXPECT_EQ("Notify", notificationsSpy.at(0).at(0));
+    notificationsSpy.clear();
+
+    // wait for UsbSnap to receive dbusmock's response to the Notify request.
+    // there's no event to key off of for this, so just wait for a moment
+    wait_msec();
+
+    // disconnect the USB before the user has a chance to allow/deny
+    m_usb_monitor->m_on_usb_disconnected("android0");
+
+    // confirm that we requested the notification to be pulled down
+    wait_for_signals(notificationsSpy, 1);
+    EXPECT_EQ("CloseNotification", notificationsSpy.at(0).at(0));
+    notificationsSpy.clear();
 }
