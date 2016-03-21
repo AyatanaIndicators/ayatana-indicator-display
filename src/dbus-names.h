@@ -38,5 +38,12 @@ namespace DBusNames
             enum Reason { EXPIRED=1, DISMISSED=2, API=3, UNDEFINED=4 };
         }
     }
+
+    namespace UnityGreeter
+    {
+        static constexpr char const * NAME = "com.canonical.UnityGreeter";
+        static constexpr char const * PATH = "/";
+        static constexpr char const * INTERFACE = "com.canonical.UnityGreeter";
+    }
 }
 

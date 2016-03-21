@@ -10,6 +10,7 @@ add_library(
     STATIC
     adbd-client.cpp
     exporter.cpp
+    greeter.cpp
     indicator.cpp
     rotation-lock.cpp
     usb-manager.cpp
