@@ -103,8 +103,8 @@ private:
             g_clear_error(&error);
         } else {
             GVariant* is_active {};
-            g_variant_get_child(v, 0, "v", &is_active_v);
-            static_cast<Impl*>(gself)->m_is_active.set(g_variant_get_boolean(is_active);
+            g_variant_get_child(v, 0, "v", &is_active);
+            static_cast<Impl*>(gself)->m_is_active.set(g_variant_get_boolean(is_active));
             g_clear_pointer(&is_active, g_variant_unref);
         }
         g_clear_pointer(&v, g_variant_unref);
