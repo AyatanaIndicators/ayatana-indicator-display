@@ -87,7 +87,7 @@ protected:
     QtDBusMock::DBusMock dbusMock;
     std::shared_ptr<std::string> m_tmpdir;
     std::shared_ptr<MockUsbMonitor> m_usb_monitor;
-    std::shared_ptr<Greeter> m_greeter;
+    std::shared_ptr<MockGreeter> m_greeter;
 };
 
 TEST_F(UsbManagerFixture, Allow)
@@ -157,7 +157,7 @@ TEST_F(UsbManagerFixture, Allow)
     EXPECT_EQ(public_key, lines[0]);
 }
 
-TEST_F(UsbManagerFixture, AndroidInterruptus)
+TEST_F(UsbManagerFixture, USBDisconnectedDuringPrompt)
 {
     const std::shared_ptr<std::string> socket_path {new std::string{*m_tmpdir+"/socket"}, file_deleter};
     const std::shared_ptr<std::string> public_keys_path {new std::string{*m_tmpdir+"/adb_keys"}, file_deleter};
@@ -171,7 +171,6 @@ TEST_F(UsbManagerFixture, AndroidInterruptus)
 
     for (int i=0; i<3; i++)
     {
-g_message("i %d", i);
         // add a signal spy to listen to the notification daemon
         QSignalSpy notificationsSpy(
             &notificationsMockInterface(),
@@ -195,4 +194,33 @@ g_message("i %d", i);
         EXPECT_EQ("CloseNotification", notificationsSpy.at(0).at(0));
         notificationsSpy.clear();
     }
+}
+
+TEST_F(UsbManagerFixture, Greeter)
+{
+    const std::shared_ptr<std::string> socket_path {new std::string{*m_tmpdir+"/socket"}, file_deleter};
+    const std::shared_ptr<std::string> public_keys_path {new std::string{*m_tmpdir+"/adb_keys"}, file_deleter};
+
+    // start a mock AdbdServer ready to submit a request
+    const std::string public_key {"public_key"};
+    auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
+
+    // set up a UsbManager to process the request
+    m_greeter->m_is_active.set(true);
+    auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
+
+    // add a signal spy to listen to the notification daemon
+    QSignalSpy notificationsSpy(
+        &notificationsMockInterface(),
+        SIGNAL(MethodCalled(const QString &, const QVariantList &))
+    );
+
+    // the greeter is active, so the notification should not appear
+    EXPECT_FALSE(notificationsSpy.wait(2000));
+
+    // disable the greeter, the notification should appear
+    m_greeter->m_is_active.set(false);
+    wait_for_signals(notificationsSpy, 1);
+    EXPECT_EQ("Notify", notificationsSpy.at(0).at(0));
+    notificationsSpy.clear();
 }

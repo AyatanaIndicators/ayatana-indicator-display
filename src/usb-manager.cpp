@@ -50,7 +50,7 @@ public:
         });
 
         m_greeter->is_active().changed().connect([this](bool /*is_active*/) {
-            maybe_snap_now();
+            restart();
         });
 
         restart();
@@ -68,7 +68,6 @@ private:
         // clear out old state
         m_snap_connections.clear();
         m_snap.reset();
-        m_req = AdbdClient::PKRequest{};
         m_adbd_client.reset();
     }
 
@@ -76,42 +75,28 @@ private:
     {
         clear();
 
+        // don't prompt in the greeter!
+        if (m_greeter->is_active().get())
+            return;
+
         // set a new client
+g_message("creating a new adbd client");
         m_adbd_client.reset(new GAdbdClient{m_socket_path});
         m_adbd_client->on_pk_request().connect(
             [this](const AdbdClient::PKRequest& req) {
                 g_debug("%s got pk request", G_STRLOC);
-                m_req = req;
-                maybe_snap_now();
+                m_snap = std::make_shared<UsbSnap>(req.fingerprint);
+                m_snap_connections.insert((*m_snap).on_user_response().connect(
+                    [this,req](AdbdClient::PKResponse response, bool remember_choice){
+                        g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
+                        req.respond(response);
+                        if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
+                            write_public_key(req.public_key);
+                        g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->restart(); return G_SOURCE_REMOVE;}, this);
+                    }
+                ));
             }
         );
-    }
-
-    bool ready_to_snap()
-    {
-        return !m_greeter->is_active().get() && !m_req.public_key.empty();
-    }
-
-    void maybe_snap_now()
-    {
-        if (ready_to_snap())
-            snap_now();
-    }
-
-    void snap_now()
-    {
-        g_return_if_fail(ready_to_snap());
-
-        m_snap = std::make_shared<UsbSnap>(m_req.fingerprint);
-        m_snap_connections.insert((*m_snap).on_user_response().connect(
-            [this](AdbdClient::PKResponse response, bool remember_choice){
-                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
-                m_req.respond(response);
-                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
-                    write_public_key(m_req.public_key);
-                g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->restart(); return G_SOURCE_REMOVE;}, this);
-            }
-        ));
     }
 
     void write_public_key(const std::string& public_key)
@@ -151,7 +136,6 @@ private:
     const std::shared_ptr<Greeter> m_greeter;
 
     std::shared_ptr<GAdbdClient> m_adbd_client;
-    AdbdClient::PKRequest m_req;
     std::shared_ptr<UsbSnap> m_snap;
     std::set<core::ScopedConnection> m_snap_connections;
 };

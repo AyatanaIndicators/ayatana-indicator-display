@@ -73,7 +73,7 @@ private:
             auto client_socket = g_socket_accept(server_socket, m_cancellable, &error);
             if (error != nullptr) {
                 if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-                    g_warning("GAdbdServer: Error accepting socket connection: %s", error->message);
+                    g_message("GAdbdServer: Error accepting socket connection: %s", error->message);
                 g_clear_error(&error);
                 break;
             }
@@ -90,7 +90,7 @@ private:
                           &error);
             if (error != nullptr) {
                 if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-                    g_warning("GAdbdServer: Error sending request: %s", error->message);
+                    g_message("GAdbdServer: Error sending request: %s", error->message);
                 g_clear_error(&error);
                 g_clear_object(&client_socket);
                 break;
@@ -106,10 +106,10 @@ private:
                                                   &error);
             if (error != nullptr) {
                 if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-                    g_warning("GAdbdServer: Error reading response: %s", error->message);
+                    g_message("GAdbdServer: Error reading response: %s", error->message);
                 g_clear_error(&error);
                 g_clear_object(&client_socket);
-                break;
+                continue;
             }
             const std::string response(buf, std::string::size_type(n_bytes));
             g_message("server got response: %s", response.c_str()); 
