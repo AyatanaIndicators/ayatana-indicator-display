@@ -37,49 +37,81 @@ public:
     explicit Impl(
         const std::string& socket_path,
         const std::string& public_keys_filename,
-        const std::shared_ptr<UsbMonitor>& usb_monitor
+        const std::shared_ptr<UsbMonitor>& usb_monitor,
+        const std::shared_ptr<Greeter>& greeter
     ):
         m_socket_path{socket_path},
         m_public_keys_filename{public_keys_filename},
-        m_usb_monitor{usb_monitor}
+        m_usb_monitor{usb_monitor},
+        m_greeter{greeter}
     {
         m_usb_monitor->on_usb_disconnected().connect([this](const std::string& /*usb_name*/) {
             restart();
         });
 
+        m_greeter->is_active().changed().connect([this](bool /*is_active*/) {
+            maybe_snap_now();
+        });
+
         restart();
     }
 
-    ~Impl() =default;
+    ~Impl()
+    {
+        clear();
+    }
 
 private:
 
-    void restart()
+    void clear()
     {
         // clear out old state
         m_snap_connections.clear();
         m_snap.reset();
+        m_req = AdbdClient::PKRequest{};
         m_adbd_client.reset();
+    }
 
-        // add a new client
+    void restart()
+    {
+        clear();
+
+        // set a new client
         m_adbd_client.reset(new GAdbdClient{m_socket_path});
         m_adbd_client->on_pk_request().connect(
             [this](const AdbdClient::PKRequest& req) {
-
                 g_debug("%s got pk request", G_STRLOC);
-
-                m_snap = std::make_shared<UsbSnap>(req.fingerprint);
-                m_snap_connections.insert((*m_snap).on_user_response().connect(
-                    [this,req](AdbdClient::PKResponse response, bool remember_choice){
-                        g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
-                        req.respond(response);
-                        if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
-                            write_public_key(req.public_key);
-                        g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->m_snap.reset(); return G_SOURCE_REMOVE;}, this);
-                    }
-                ));
+                m_req = req;
+                maybe_snap_now();
             }
         );
+    }
+
+    bool ready_to_snap()
+    {
+        return !m_greeter->is_active().get() && !m_req.public_key.empty();
+    }
+
+    void maybe_snap_now()
+    {
+        if (ready_to_snap())
+            snap_now();
+    }
+
+    void snap_now()
+    {
+        g_return_if_fail(ready_to_snap());
+
+        m_snap = std::make_shared<UsbSnap>(m_req.fingerprint);
+        m_snap_connections.insert((*m_snap).on_user_response().connect(
+            [this](AdbdClient::PKResponse response, bool remember_choice){
+                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
+                m_req.respond(response);
+                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
+                    write_public_key(m_req.public_key);
+                g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->restart(); return G_SOURCE_REMOVE;}, this);
+            }
+        ));
     }
 
     void write_public_key(const std::string& public_key)
@@ -115,10 +147,11 @@ private:
 
     const std::string m_socket_path;
     const std::string m_public_keys_filename;
-
-    std::shared_ptr<UsbMonitor> m_usb_monitor;
+    const std::shared_ptr<UsbMonitor> m_usb_monitor;
+    const std::shared_ptr<Greeter> m_greeter;
 
     std::shared_ptr<GAdbdClient> m_adbd_client;
+    AdbdClient::PKRequest m_req;
     std::shared_ptr<UsbSnap> m_snap;
     std::set<core::ScopedConnection> m_snap_connections;
 };
@@ -130,9 +163,10 @@ private:
 UsbManager::UsbManager(
     const std::string& socket_path,
     const std::string& public_keys_filename,
-    const std::shared_ptr<UsbMonitor>& usb_monitor
+    const std::shared_ptr<UsbMonitor>& usb_monitor,
+    const std::shared_ptr<Greeter>& greeter
 ):
-    impl{new Impl{socket_path, public_keys_filename, usb_monitor}}
+    impl{new Impl{socket_path, public_keys_filename, usb_monitor, greeter}}
 {
 }
 

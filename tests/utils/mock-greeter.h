@@ -20,29 +20,13 @@
 #pragma once
 
 #include <src/greeter.h>
-#include <src/usb-monitor.h>
 
-#include <memory>
-#include <string>
-
-/**
- * Manager class that connects the AdbdClient, UsbSnap, and manages the public key file
- */
-class UsbManager
+class MockGreeter: public Greeter
 {
 public:
-
-    UsbManager(
-        const std::string& socket_path,
-        const std::string& public_key_filename,
-        const std::shared_ptr<UsbMonitor>&,
-        const std::shared_ptr<Greeter>&
-    );
-
-    ~UsbManager();
-
-protected:
-
-    class Impl;
-    std::unique_ptr<Impl> impl;
+    MockGreeter() =default;
+    virtual ~MockGreeter() =default;
+    core::Property<bool>& is_active() override {return m_is_active;}
+    core::Property<bool> m_is_active {false};
 };
+

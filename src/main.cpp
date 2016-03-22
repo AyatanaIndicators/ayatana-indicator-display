@@ -64,7 +64,7 @@ main(int /*argc*/, char** /*argv*/)
     static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
     auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
     auto greeter = std::make_shared<UnityGreeter>();
-    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor};
+    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor, greeter};
 
     // let's go!
     g_main_loop_run(loop);
