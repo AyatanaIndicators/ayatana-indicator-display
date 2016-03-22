@@ -68,37 +68,69 @@ private:
     {
         m_bus = G_DBUS_CONNECTION(g_object_ref(G_OBJECT(bus)));
 
+        g_dbus_connection_call(m_bus,
+                               DBusNames::UnityGreeter::NAME,
+                               DBusNames::UnityGreeter::PATH,
+                               DBusNames::Properties::INTERFACE,
+                               "Get",
+                               g_variant_new("(ss)", DBusNames::UnityGreeter::INTERFACE, "IsActive"),
+                               G_VARIANT_TYPE("(v)"),
+                               G_DBUS_CALL_FLAGS_NONE,
+                               -1,
+                               m_cancellable,
+                               on_get_is_active_ready,
+                               this);
+
         m_subscription_id = g_dbus_connection_signal_subscribe(m_bus,
                                                                DBusNames::UnityGreeter::NAME,
-                                                               "org.freedesktop.DBus.Properties",
-                                                               "PropertiesChanged",
+                                                               DBusNames::Properties::INTERFACE,
+                                                               DBusNames::Properties::PropertiesChanged::NAME,
                                                                DBusNames::UnityGreeter::PATH,
-                                                               nullptr,
+                                                               DBusNames::UnityGreeter::INTERFACE,
                                                                G_DBUS_SIGNAL_FLAGS_NONE,
-                                                               on_properties_changed_signal_static,
+                                                               on_properties_changed_signal,
                                                                this,
                                                                nullptr);
     }
 
-    static void on_properties_changed_signal_static(GDBusConnection* /*connection*/,
-                                                    const gchar* sender_name,
-                                                    const gchar* object_path,
-                                                    const gchar* interface_name,
-                                                    const gchar* signal_name,
-                                                    GVariant* parameters,
-                                                    gpointer gself)
+    static void on_get_is_active_ready(GObject* source, GAsyncResult* res, gpointer gself)
     {
-        g_return_if_fail(!g_strcmp0(sender_name, DBusNames::UnityGreeter::NAME));
-        g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
-        g_return_if_fail(!g_strcmp0(interface_name, "org.freedesktop.DBus.Properties"));
-        g_return_if_fail(!g_strcmp0(signal_name, "PropertiesChanged"));
-
-        static_cast<Impl*>(gself)->on_properties_changed_signal(parameters);
+        GError* error {};
+        auto v = g_dbus_connection_call_finish(G_DBUS_CONNECTION(source), res, &error);
+        if (error != nullptr) {
+            if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+                g_warning("UsbSnap: Error getting session bus: %s", error->message);
+            g_clear_error(&error);
+        } else {
+            GVariant* is_active {};
+            g_variant_get_child(v, 0, "v", &is_active_v);
+            static_cast<Impl*>(gself)->m_is_active.set(g_variant_get_boolean(is_active);
+            g_clear_pointer(&is_active, g_variant_unref);
+        }
+        g_clear_pointer(&v, g_variant_unref);
     }
 
-    void on_properties_changed_signal(GVariant* parameters)
+    static void on_properties_changed_signal(GDBusConnection* /*connection*/,
+                                             const gchar* /*sender_name*/,
+                                             const gchar* object_path,
+                                             const gchar* interface_name,
+                                             const gchar* signal_name,
+                                             GVariant* parameters,
+                                             gpointer gself)
     {
-        g_message("%s %s", G_STRLOC, g_variant_print(parameters, true));
+        g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
+        g_return_if_fail(!g_strcmp0(interface_name, DBusNames::Properties::INTERFACE));
+        g_return_if_fail(!g_strcmp0(signal_name, DBusNames::Properties::PropertiesChanged::NAME));
+        g_return_if_fail(g_variant_is_of_type(parameters, G_VARIANT_TYPE(DBusNames::Properties::PropertiesChanged::ARGS_VARIANT_TYPE)));
+
+        auto v = g_variant_get_child_value (parameters, 1);
+        gboolean is_active {};
+        if (g_variant_lookup(v, "IsActive", "b", &is_active))
+        {
+            g_debug("%s is_active changed to %d", G_STRLOC, int(is_active));
+            static_cast<Impl*>(gself)->m_is_active.set(is_active);
+        }
+        g_clear_pointer(&v, g_variant_unref);
     }
 
     core::Property<bool> m_is_active;
@@ -115,9 +147,15 @@ Greeter::Greeter() =default;
 
 Greeter::~Greeter() =default;
 
-UnityGreeter::~UnityGreeter() =default;
-
 UnityGreeter::UnityGreeter():
     impl{new Impl{}}
 {
+}
+
+UnityGreeter::~UnityGreeter() =default;
+
+core::Property<bool>&
+UnityGreeter::is_active()
+{
+    return impl->is_active();
 }

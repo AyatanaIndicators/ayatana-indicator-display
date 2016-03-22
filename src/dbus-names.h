@@ -45,5 +45,16 @@ namespace DBusNames
         static constexpr char const * PATH = "/";
         static constexpr char const * INTERFACE = "com.canonical.UnityGreeter";
     }
+
+    namespace Properties
+    {
+        static constexpr char const * INTERFACE = "org.freedesktop.DBus.Properties";
+
+        namespace PropertiesChanged
+        {
+            static constexpr char const* NAME = "PropertiesChanged";
+            static constexpr char const* ARGS_VARIANT_TYPE = "(sa{sv}as)";
+        }
+    }
 }
 
