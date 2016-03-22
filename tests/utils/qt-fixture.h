@@ -31,6 +31,16 @@
 #include <QVariant>
 #include <QSignalSpy>
 
+#define wait_for_signals(signalSpy,signalsExpected) \
+{                                                   \
+    while (signalSpy.size() < signalsExpected)      \
+    {                                               \
+        ASSERT_TRUE(signalSpy.wait());              \
+    }                                               \
+                                                    \
+    ASSERT_EQ(signalsExpected, signalSpy.size());   \
+}
+
 class QtFixture: public GlibFixture
 {
     using super = GlibFixture;
@@ -45,16 +55,6 @@ public:
     ~QtFixture() =default;
 
 protected:
-
-    void wait_for_signals(QSignalSpy& signalSpy, int signalsExpected)
-    {
-        while (signalSpy.size() < signalsExpected)
-        {
-            ASSERT_TRUE(signalSpy.wait());
-        }
-
-        ASSERT_EQ(signalsExpected, signalSpy.size());
-    }
 
     bool qDBusArgumentToMap(QVariant const& variant, QVariantMap& map)
     {
