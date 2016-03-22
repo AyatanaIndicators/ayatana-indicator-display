@@ -80,7 +80,6 @@ private:
 
             // pop the next request off the stack
             auto request = requests.front();
-            requests.erase(requests.begin());
 
             // send the request
             g_message("GAdbdServer::Impl::worker_func() sending req [%s]", request.c_str());
@@ -114,7 +113,10 @@ private:
             }
             const std::string response(buf, std::string::size_type(n_bytes));
             g_message("server got response: %s", response.c_str()); 
-            m_responses.push_back(response);
+            if (!response.empty()) {
+                m_responses.push_back(response);
+                requests.erase(requests.begin());
+            }
 
             // cleanup
             g_clear_object(&client_socket);
