@@ -106,7 +106,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
             EXPECT_EQ("computer-symbolic", args.at(2)); // icon name
             EXPECT_EQ("Allow USB Debugging?", args.at(3)); // summary
             EXPECT_EQ(QString::fromUtf8("The computer's RSA key fingerprint is: ") + test.fingerprint, args.at(4)); // body
-            EXPECT_EQ(QStringList({"allow", "Allow", "deny", "Deny"}), args.at(5)); // actions
+            EXPECT_EQ(QStringList({"allow", "Allow", "deny", "Don't Allow"}), args.at(5)); // actions
             EXPECT_EQ(-1, args.at(7));
 
             QVariantMap hints;

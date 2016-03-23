@@ -111,7 +111,7 @@ private:
         g_variant_builder_add(&actions_builder, "s", ACTION_ALLOW);
         g_variant_builder_add(&actions_builder, "s", _("Allow"));
         g_variant_builder_add(&actions_builder, "s", ACTION_DENY);
-        g_variant_builder_add(&actions_builder, "s", _("Deny"));
+        g_variant_builder_add(&actions_builder, "s", _("Don't Allow"));
 
         GVariantBuilder hints_builder;
         g_variant_builder_init(&hints_builder, G_VARIANT_TYPE_VARDICT);
