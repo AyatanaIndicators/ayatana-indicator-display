@@ -68,7 +68,7 @@ private:
         // clear out old state
         m_snap_connections.clear();
         m_snap.reset();
-        m_req = decltype(m_req){};
+        m_req = decltype(m_req)();
         m_adbd_client.reset();
     }
 
