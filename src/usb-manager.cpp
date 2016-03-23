@@ -58,6 +58,9 @@ public:
 
     ~Impl()
     {
+        if (m_restart_idle_tag)
+            g_source_remove(m_restart_idle_tag);
+
         clear();
     }
 
@@ -103,7 +106,12 @@ private:
                 m_req.respond(response);
                 if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
                     write_public_key(m_req.public_key);
-                g_idle_add([](gpointer gself){static_cast<Impl*>(gself)->restart(); return G_SOURCE_REMOVE;}, this);
+                m_restart_idle_tag = g_idle_add([](gpointer gself){
+                    auto self = static_cast<Impl*>(gself);
+                    self->m_restart_idle_tag = 0;
+                    self->restart();
+                    return G_SOURCE_REMOVE;
+                }, this);
             }
         ));
     }
@@ -143,6 +151,8 @@ private:
     const std::string m_public_keys_filename;
     const std::shared_ptr<UsbMonitor> m_usb_monitor;
     const std::shared_ptr<Greeter> m_greeter;
+ 
+    unsigned int m_restart_idle_tag {};
 
     std::shared_ptr<GAdbdClient> m_adbd_client;
     AdbdClient::PKRequest m_req;
