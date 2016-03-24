@@ -112,7 +112,7 @@ private:
                 continue;
             }
             const std::string response(buf, std::string::size_type(n_bytes));
-            g_message("server got response: %s", response.c_str()); 
+            g_message("server read %d bytes, got response: '%s'", int(n_bytes), response.c_str()); 
             if (!response.empty()) {
                 m_responses.push_back(response);
                 requests.erase(requests.begin());

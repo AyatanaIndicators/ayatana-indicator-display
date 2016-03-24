@@ -44,6 +44,7 @@ public:
     ~Impl()
     {
         // tell the worker thread to stop whatever it's doing and exit.
+        g_debug("%s Client::Impl dtor, cancelling m_cancellable", G_STRLOC);
         g_cancellable_cancel(m_cancellable);
         m_pkresponse_cv.notify_one();
         m_sleep_cv.notify_one();
@@ -144,7 +145,9 @@ private:
                         return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
                     });
                     response = m_pkresponse;
-                    g_debug("%s got response '%d'", G_STRLOC, int(response));
+                    g_debug("%s got response '%d', is-cancelled %d", G_STRLOC,
+                            int(response),
+                            int(g_cancellable_is_cancelled(m_cancellable)));
                 }
                 if (!g_cancellable_is_cancelled(m_cancellable))
                     send_pk_response(socket, response);
