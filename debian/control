@@ -4,12 +4,18 @@ Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Charles Kerr <charles.kerr@canonical.com>
 Build-Depends: cmake,
+               cmake-extras (>= 0.4),
                dbus,
                libglib2.0-dev (>= 2.36),
+               libgudev-1.0-dev,
                libproperties-cpp-dev,
 # for coverage reports
                lcov,
 # for tests
+               qt5-default,
+               qtbase5-dev,
+               libqtdbusmock1-dev,
+               libqtdbustest1-dev,
                cppcheck,
                libgtest-dev,
                google-mock (>= 1.6.0+svn437),
