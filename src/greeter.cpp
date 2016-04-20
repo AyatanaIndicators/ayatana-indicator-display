@@ -66,6 +66,8 @@ private:
 
     void on_bus_ready(GDBusConnection* bus)
     {
+        g_message("%s bus is ready", G_STRLOC);
+
         m_bus = G_DBUS_CONNECTION(g_object_ref(G_OBJECT(bus)));
 
         g_dbus_connection_call(m_bus,
@@ -95,6 +97,7 @@ private:
 
     static void on_get_is_active_ready(GObject* source, GAsyncResult* res, gpointer gself)
     {
+        g_message("%s", G_STRLOC);
         GError* error {};
         auto v = g_dbus_connection_call_finish(G_DBUS_CONNECTION(source), res, &error);
         if (error != nullptr) {
@@ -102,6 +105,7 @@ private:
                 g_warning("UsbSnap: Error getting session bus: %s", error->message);
             g_clear_error(&error);
         } else {
+            g_message("%s v is %s", G_STRLOC, g_variant_print(v, true));
             GVariant* is_active {};
             g_variant_get_child(v, 0, "v", &is_active);
             static_cast<Impl*>(gself)->m_is_active.set(g_variant_get_boolean(is_active));
@@ -124,10 +128,13 @@ private:
         g_return_if_fail(g_variant_is_of_type(parameters, G_VARIANT_TYPE(DBusNames::Properties::PropertiesChanged::ARGS_VARIANT_TYPE)));
 
         auto v = g_variant_get_child_value (parameters, 1);
+        if (v != nullptr)
+            g_message("%s v is %s", G_STRLOC, g_variant_print(v, true));
+
         gboolean is_active {};
         if (g_variant_lookup(v, "IsActive", "b", &is_active))
         {
-            g_debug("%s is_active changed to %d", G_STRLOC, int(is_active));
+            g_message("%s is_active changed to %d", G_STRLOC, int(is_active));
             static_cast<Impl*>(gself)->m_is_active.set(is_active);
         }
         g_clear_pointer(&v, g_variant_unref);
