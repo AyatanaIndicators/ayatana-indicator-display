@@ -21,6 +21,8 @@
 
 #include <core/property.h>
 
+#include <gio/gio.h>
+
 #include <memory>
 #include <string>
 
@@ -36,7 +38,7 @@ public:
 class UnityGreeter: public Greeter
 {
 public:
-    UnityGreeter();
+    explicit UnityGreeter(GDBusConnection* connection);
     virtual ~UnityGreeter();
     core::Property<bool>& is_active() override;
 
