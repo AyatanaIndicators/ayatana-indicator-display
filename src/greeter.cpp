@@ -29,6 +29,7 @@ public:
     Impl():
         m_cancellable{g_cancellable_new()}
     {
+        g_message("%s getting bus", G_STRLOC);
         g_bus_get(G_BUS_TYPE_SESSION, m_cancellable, on_bus_ready_static, this);
     }
 
@@ -52,6 +53,7 @@ private:
 
     static void on_bus_ready_static(GObject* /*source*/, GAsyncResult* res, gpointer gself)
     {
+        g_message("%s %s", G_STRLOC, G_STRFUNC);
         GError* error {};
         auto bus = g_bus_get_finish (res, &error);
         if (error != nullptr) {
@@ -122,6 +124,8 @@ private:
                                              GVariant* parameters,
                                              gpointer gself)
     {
+        g_message("%s", G_STRLOC);
+
         g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
         g_return_if_fail(!g_strcmp0(interface_name, DBusNames::Properties::INTERFACE));
         g_return_if_fail(!g_strcmp0(signal_name, DBusNames::Properties::PropertiesChanged::NAME));
