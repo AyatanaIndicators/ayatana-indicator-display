@@ -92,7 +92,6 @@ private:
 
     void maybe_snap()
     {
-g_message("%s m_req.public_key.empty() %d && m_greeter->is_active().get() %d", G_STRLOC, int(m_req.public_key.empty()), int(m_greeter->is_active().get()));
         // don't prompt in the greeter!
         if (!m_req.public_key.empty() && !m_greeter->is_active().get())
             snap();
