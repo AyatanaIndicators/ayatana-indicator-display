@@ -41,6 +41,7 @@ protected:
 
     std::shared_ptr<QtDBusTest::DBusTestRunner> m_dbus_runner;
     std::shared_ptr<QtDBusMock::DBusMock> m_dbus_mock;
+    GDBusConnection* m_bus {};
 
     void SetUp() override
     {
@@ -49,6 +50,18 @@ protected:
         // use a fresh bus for each test run
         m_dbus_runner.reset(new QtDBusTest::DBusTestRunner());
         m_dbus_mock.reset(new QtDBusMock::DBusMock(*m_dbus_runner.get()));
+
+        GError* error {};
+        m_bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, &error);
+        g_assert_no_error(error);
+        g_dbus_connection_set_exit_on_close(m_bus, FALSE);
+    }
+
+    void TearDown() override
+    {
+        g_clear_object(&m_bus);
+
+        super::TearDown();
     }
 
     void start_greeter_service(bool is_active)
