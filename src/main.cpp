@@ -47,15 +47,6 @@ main(int /*argc*/, char** /*argv*/)
       g_main_loop_quit(loop);
     };
 
-    // get the session bus
-    GError* error {};
-    auto session_bus = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &error);
-    if (error != nullptr) {
-        g_critical("Unable to get session bus: %s", error->message);
-        g_clear_error(&error);
-        return 0;
-    }
-
     // build all our indicators.
     // Right now we've only got one -- rotation lock -- but hey, we can dream.
     std::vector<std::shared_ptr<Indicator>> indicators;
@@ -72,7 +63,7 @@ main(int /*argc*/, char** /*argv*/)
     static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
     static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
     auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
-    auto greeter = std::make_shared<UnityGreeter>(session_bus);
+    auto greeter = std::make_shared<UnityGreeter>();
     UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor, greeter};
 
     // let's go!
@@ -80,6 +71,5 @@ main(int /*argc*/, char** /*argv*/)
 
     // cleanup
     g_main_loop_unref(loop);
-    g_clear_object(&session_bus);
     return 0;
 }

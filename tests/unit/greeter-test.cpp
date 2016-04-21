@@ -41,7 +41,7 @@ protected:
 
     std::shared_ptr<QtDBusTest::DBusTestRunner> m_dbus_runner;
     std::shared_ptr<QtDBusMock::DBusMock> m_dbus_mock;
-    GDBusConnection* m_session_bus;
+    GDBusConnection* m_session_bus {};
 
     void SetUp() override
     {
@@ -111,7 +111,7 @@ TEST_F(GreeterFixture, ActiveServiceStartsBeforeWatcher)
 
     start_greeter_service(expected);
 
-    UnityGreeter greeter(m_session_bus);
+    UnityGreeter greeter;
 
     ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
 }
@@ -120,7 +120,7 @@ TEST_F(GreeterFixture, WatcherStartsBeforeActiveService)
 {
     constexpr bool expected {true};
 
-    UnityGreeter greeter(m_session_bus);
+    UnityGreeter greeter;
 
     start_greeter_service(expected);
 
@@ -133,7 +133,7 @@ TEST_F(GreeterFixture, InactiveServiceStartsBeforeWatcher)
 
     start_greeter_service(expected);
 
-    UnityGreeter greeter(m_session_bus);
+    UnityGreeter greeter;
 
     ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
 }
@@ -142,7 +142,7 @@ TEST_F(GreeterFixture, WatcherStartsBeforeInactiveService)
 {
     constexpr bool expected {false};
 
-    UnityGreeter greeter(m_session_bus);
+    UnityGreeter greeter;
 
     start_greeter_service(expected);
 

@@ -26,40 +26,20 @@ class UnityGreeter::Impl
 {
 public:
 
-    explicit Impl(GDBusConnection* connection):
-        m_bus(G_DBUS_CONNECTION(g_object_ref(connection))),
-        m_cancellable{g_cancellable_new()}
+    explicit Impl()
     {
-        m_watcher_id = g_bus_watch_name_on_connection(
-            m_bus,
-            DBusNames::UnityGreeter::NAME,
-            G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
-            on_greeter_appeared,
-            on_greeter_vanished,
-            this,
-            nullptr);
+        m_cancellable.reset(
+            g_cancellable_new(),
+            [](GCancellable* c){
+                g_cancellable_cancel(c);
+                g_clear_object(&c);
+            }
+        );
 
-        m_subscription_id = g_dbus_connection_signal_subscribe(
-            m_bus,
-            DBusNames::UnityGreeter::NAME,
-            DBusNames::Properties::INTERFACE,
-            DBusNames::Properties::PropertiesChanged::NAME,
-            DBusNames::UnityGreeter::PATH,
-            DBusNames::UnityGreeter::INTERFACE,
-            G_DBUS_SIGNAL_FLAGS_NONE,
-            on_properties_changed_signal,
-            this,
-            nullptr);
+        g_bus_get(G_BUS_TYPE_SESSION, m_cancellable.get(), on_bus_ready, this);
     }
 
-    ~Impl()
-    {
-        g_cancellable_cancel(m_cancellable);
-        g_clear_object(&m_cancellable);
-        g_bus_unwatch_name(m_watcher_id);
-        g_dbus_connection_signal_unsubscribe(m_bus, m_subscription_id);
-        g_clear_object(&m_bus);
-    }
+    ~Impl() =default;
 
     core::Property<bool>& is_active()
     {
@@ -68,8 +48,57 @@ public:
 
 private:
 
+    static void on_bus_ready(
+        GObject* /*source*/,
+        GAsyncResult* res,
+        gpointer gself)
+    {
+        GError* error {};
+        auto bus = g_bus_get_finish(res, &error);
+        if (error != nullptr)
+        {
+            if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+                g_warning("Greeter: Error getting bus: %s", error->message);
+            g_clear_error(&error);
+        }
+        else
+        {
+            auto self = static_cast<Impl*>(gself);
+
+            const auto watcher_id = g_bus_watch_name_on_connection(
+                bus,
+                DBusNames::UnityGreeter::NAME,
+                G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
+                on_greeter_appeared,
+                on_greeter_vanished,
+                gself,
+                nullptr);
+
+            const auto subscription_id = g_dbus_connection_signal_subscribe(
+                bus,
+                DBusNames::UnityGreeter::NAME,
+                DBusNames::Properties::INTERFACE,
+                DBusNames::Properties::PropertiesChanged::NAME,
+                DBusNames::UnityGreeter::PATH,
+                DBusNames::UnityGreeter::INTERFACE,
+                G_DBUS_SIGNAL_FLAGS_NONE,
+                on_properties_changed_signal,
+                gself,
+                nullptr);
+
+            self->m_bus.reset(
+                bus,
+                [watcher_id, subscription_id](GDBusConnection* o){
+                    g_bus_unwatch_name(watcher_id);
+                    g_dbus_connection_signal_unsubscribe(o, subscription_id);
+                    g_clear_object(&o);
+                }
+            );
+        }
+    }
+
     static void on_greeter_appeared(
-        GDBusConnection* /*session_bus*/,
+        GDBusConnection* bus,
         const char* /*name*/,
         const char* name_owner,
         gpointer gself)
@@ -79,7 +108,7 @@ private:
         self->m_owner = name_owner;
 
         g_dbus_connection_call(
-            self->m_bus,
+            bus,
             DBusNames::UnityGreeter::NAME,
             DBusNames::UnityGreeter::PATH,
             DBusNames::Properties::INTERFACE,
@@ -88,13 +117,13 @@ private:
             G_VARIANT_TYPE("(v)"),
             G_DBUS_CALL_FLAGS_NONE,
             -1,
-            self->m_cancellable,
+            self->m_cancellable.get(),
             on_get_is_active_ready,
             gself);
     }
 
     static void on_greeter_vanished(
-        GDBusConnection* /*session_bus*/,
+        GDBusConnection* /*bus*/,
         const char* /*name*/,
         gpointer gself)
     {
@@ -155,10 +184,8 @@ private:
 
     core::Property<bool> m_is_active {false};
 
-    GDBusConnection* m_bus {};
-    GCancellable* m_cancellable {};
-    guint m_watcher_id {};
-    unsigned int m_subscription_id {};
+    std::shared_ptr<GDBusConnection> m_bus;
+    std::shared_ptr<GCancellable> m_cancellable;
     std::string m_owner;
 };
 
@@ -170,8 +197,8 @@ Greeter::Greeter() =default;
 
 Greeter::~Greeter() =default;
 
-UnityGreeter::UnityGreeter(GDBusConnection* connection):
-    impl{new Impl{connection}}
+UnityGreeter::UnityGreeter():
+    impl{new Impl{}}
 {
 }
 
