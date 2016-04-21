@@ -26,13 +26,13 @@ class UnityGreeter::Impl
 {
 public:
 
-    explicit Impl()
+    Impl()
     {
         m_cancellable.reset(
             g_cancellable_new(),
-            [](GCancellable* c){
-                g_cancellable_cancel(c);
-                g_clear_object(&c);
+            [](GCancellable* o){
+                g_cancellable_cancel(o);
+                g_clear_object(&o);
             }
         );
 
@@ -154,7 +154,7 @@ private:
     }
 
     static void on_properties_changed_signal(
-        GDBusConnection* /*connection*/,
+        GDBusConnection* /*bus*/,
         const gchar* sender_name,
         const gchar* object_path,
         const gchar* interface_name,
@@ -171,7 +171,6 @@ private:
         g_return_if_fail(g_variant_is_of_type(parameters, G_VARIANT_TYPE(DBusNames::Properties::PropertiesChanged::ARGS_VARIANT_TYPE)));
 
         auto v = g_variant_get_child_value(parameters, 1);
-
         gboolean is_active {};
         if (g_variant_lookup(v, "IsActive", "b", &is_active))
         {
@@ -179,13 +178,11 @@ private:
             self->m_is_active.set(is_active);
         }
         g_clear_pointer(&v, g_variant_unref);
-
     }
 
     core::Property<bool> m_is_active {false};
-
-    std::shared_ptr<GDBusConnection> m_bus;
     std::shared_ptr<GCancellable> m_cancellable;
+    std::shared_ptr<GDBusConnection> m_bus;
     std::string m_owner;
 };
 

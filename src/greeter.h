@@ -36,7 +36,7 @@ public:
 class UnityGreeter: public Greeter
 {
 public:
-    explicit UnityGreeter();
+    UnityGreeter();
     virtual ~UnityGreeter();
     core::Property<bool>& is_active() override;
 

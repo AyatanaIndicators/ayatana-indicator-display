@@ -41,35 +41,19 @@ protected:
 
     std::shared_ptr<QtDBusTest::DBusTestRunner> m_dbus_runner;
     std::shared_ptr<QtDBusMock::DBusMock> m_dbus_mock;
-    GDBusConnection* m_session_bus {};
 
     void SetUp() override
     {
         super::SetUp();
   
-        // use a fresh bus for each test
- 
+        // use a fresh bus for each test run
         m_dbus_runner.reset(new QtDBusTest::DBusTestRunner());
         m_dbus_mock.reset(new QtDBusMock::DBusMock(*m_dbus_runner.get()));
-
-        GError* error {};
-        m_session_bus = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &error);
-        g_assert_no_error(error);
-        g_dbus_connection_set_exit_on_close(m_session_bus, false);
-    }
-
-    void TearDown() override
-    {
-        g_clear_object(&m_session_bus);
-        m_dbus_mock.reset();
-        m_dbus_runner.reset();
-
-        super::TearDown();
     }
 
     void start_greeter_service(bool is_active)
     {
-        // set a watcher to look for our mock to appear
+        // set a watcher to look for our mock greeter to appear
         bool owned {};
         QDBusServiceWatcher watcher(
             DBusNames::UnityGreeter::NAME,
@@ -92,18 +76,24 @@ protected:
         );
         m_dbus_runner->startServices();
 
-        // wait for the watcher to be triggered
+        // wait for the watcher
         ASSERT_TRUE(wait_for([&owned]{return owned;}));
     }
 };
 
-#define ASSERT_PROPERTY_EVENTUALLY(expected_in, property_in) \
+#define ASSERT_PROPERTY_EQ_EVENTUALLY(expected_in, property_in) \
     do { \
         const auto& e = expected_in; \
         const auto& p = property_in; \
-        ASSERT_TRUE(wait_for([e, &p](){ return e == p.get(); })) \
+        ASSERT_TRUE(wait_for([e, &p](){return e == p.get();})) \
             << "expected " << e << " but got " << p.get(); \
    } while(0)
+
+/**
+ * Test startup timing by looking at four different cases:
+ * [unity greeter shows up on bus (before, after) we start listening]
+ *   x [unity greeter is (active, inactive)]
+ */
 
 TEST_F(GreeterFixture, ActiveServiceStartsBeforeWatcher)
 {
@@ -113,7 +103,7 @@ TEST_F(GreeterFixture, ActiveServiceStartsBeforeWatcher)
 
     UnityGreeter greeter;
 
-    ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
 }
 
 TEST_F(GreeterFixture, WatcherStartsBeforeActiveService)
@@ -124,7 +114,7 @@ TEST_F(GreeterFixture, WatcherStartsBeforeActiveService)
 
     start_greeter_service(expected);
 
-    ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
 }
 
 TEST_F(GreeterFixture, InactiveServiceStartsBeforeWatcher)
@@ -135,7 +125,7 @@ TEST_F(GreeterFixture, InactiveServiceStartsBeforeWatcher)
 
     UnityGreeter greeter;
 
-    ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
 }
 
 TEST_F(GreeterFixture, WatcherStartsBeforeInactiveService)
@@ -146,6 +136,6 @@ TEST_F(GreeterFixture, WatcherStartsBeforeInactiveService)
 
     start_greeter_service(expected);
 
-    ASSERT_PROPERTY_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
 }
 
