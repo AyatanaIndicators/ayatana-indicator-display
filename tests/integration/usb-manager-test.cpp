@@ -206,7 +206,7 @@ TEST_F(UsbManagerFixture, Greeter)
     auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
 
     // set up a UsbManager to process the request
-    m_greeter->m_is_active.set(true);
+    m_greeter->m_state.set(Greeter::State::ACTIVE);
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
 
     // add a signal spy to listen to the notification daemon
@@ -219,7 +219,7 @@ TEST_F(UsbManagerFixture, Greeter)
     EXPECT_FALSE(notificationsSpy.wait(2000));
 
     // disable the greeter, the notification should appear
-    m_greeter->m_is_active.set(false);
+    m_greeter->m_state.set(Greeter::State::INACTIVE);
     wait_for_signals(notificationsSpy, 1);
     EXPECT_EQ("Notify", notificationsSpy.at(0).at(0));
     notificationsSpy.clear();

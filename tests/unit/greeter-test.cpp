@@ -18,6 +18,7 @@
  */
 
 #include <tests/utils/qt-fixture.h>
+#include <tests/utils/gtest-print-helpers.h>
 
 #include <src/dbus-names.h>
 #include <src/greeter.h>
@@ -110,45 +111,49 @@ protected:
 
 TEST_F(GreeterFixture, ActiveServiceStartsBeforeWatcher)
 {
-    constexpr bool expected {true};
+    constexpr bool is_active {true};
+    constexpr Greeter::State expected {Greeter::State::ACTIVE};
 
-    start_greeter_service(expected);
+    start_greeter_service(is_active);
 
     UnityGreeter greeter;
 
-    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
 
 TEST_F(GreeterFixture, WatcherStartsBeforeActiveService)
 {
-    constexpr bool expected {true};
+    constexpr bool is_active {true};
+    constexpr Greeter::State expected {Greeter::State::ACTIVE};
 
     UnityGreeter greeter;
 
-    start_greeter_service(expected);
+    start_greeter_service(is_active);
 
-    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
 
 TEST_F(GreeterFixture, InactiveServiceStartsBeforeWatcher)
 {
-    constexpr bool expected {false};
+    constexpr bool is_active {false};
+    constexpr Greeter::State expected {Greeter::State::INACTIVE};
 
-    start_greeter_service(expected);
+    start_greeter_service(is_active);
 
     UnityGreeter greeter;
 
-    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
 
 TEST_F(GreeterFixture, WatcherStartsBeforeInactiveService)
 {
-    constexpr bool expected {false};
+    constexpr bool is_active {false};
+    constexpr Greeter::State expected {Greeter::State::INACTIVE};
 
     UnityGreeter greeter;
 
-    start_greeter_service(expected);
+    start_greeter_service(is_active);
 
-    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.is_active());
+    ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
 

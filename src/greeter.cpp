@@ -41,9 +41,9 @@ public:
 
     ~Impl() =default;
 
-    core::Property<bool>& is_active()
+    core::Property<State>& state()
     {
-        return m_is_active;
+        return m_state;
     }
 
 private:
@@ -130,7 +130,7 @@ private:
         auto self = static_cast<Impl*>(gself);
 
         self->m_owner.clear();
-        self->m_is_active.set(false);
+        self->m_state.set(State::UNAVAILABLE);
     }
 
     static void on_get_is_active_ready(
@@ -147,7 +147,7 @@ private:
         } else {
             GVariant* is_active {};
             g_variant_get_child(v, 0, "v", &is_active);
-            static_cast<Impl*>(gself)->m_is_active.set(g_variant_get_boolean(is_active));
+            static_cast<Impl*>(gself)->m_state.set(g_variant_get_boolean(is_active) ? State::ACTIVE : State::INACTIVE);
             g_clear_pointer(&is_active, g_variant_unref);
         }
         g_clear_pointer(&v, g_variant_unref);
@@ -175,12 +175,12 @@ private:
         if (g_variant_lookup(v, "IsActive", "b", &is_active))
         {
             g_debug("%s is_active changed to %d", G_STRLOC, int(is_active));
-            self->m_is_active.set(is_active);
+            self->m_state.set(is_active ? State::ACTIVE : State::INACTIVE);
         }
         g_clear_pointer(&v, g_variant_unref);
     }
 
-    core::Property<bool> m_is_active {false};
+    core::Property<State> m_state {State::UNAVAILABLE};
     std::shared_ptr<GCancellable> m_cancellable;
     std::shared_ptr<GDBusConnection> m_bus;
     std::string m_owner;
@@ -201,8 +201,8 @@ UnityGreeter::UnityGreeter():
 
 UnityGreeter::~UnityGreeter() =default;
 
-core::Property<bool>&
-UnityGreeter::is_active()
+core::Property<Greeter::State>&
+UnityGreeter::state()
 {
-    return impl->is_active();
+    return impl->state();
 }

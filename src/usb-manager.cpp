@@ -49,7 +49,7 @@ public:
             restart();
         });
 
-        m_greeter->is_active().changed().connect([this](bool /*is_active*/) {
+        m_greeter->state().changed().connect([this](Greeter::State /*state*/) {
             maybe_snap();
         });
 
@@ -92,9 +92,15 @@ private:
 
     void maybe_snap()
     {
-        // don't prompt in the greeter!
-        if (!m_req.public_key.empty() && !m_greeter->is_active().get())
-            snap();
+        // only prompt if there's something to prompt about
+        if (m_req.public_key.empty())
+            return;
+
+        // only prompt in an unlocked session
+        if (m_greeter->state().get() != Greeter::State::INACTIVE)
+            return;
+
+        snap();
     }
 
     void snap()

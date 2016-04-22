@@ -29,7 +29,9 @@ class Greeter
 public:
     Greeter();
     virtual ~Greeter();
-    virtual core::Property<bool>& is_active() =0;
+
+    enum class State { UNAVAILABLE, INACTIVE, ACTIVE };
+    virtual core::Property<State>& state() =0;
 };
 
 
@@ -38,7 +40,7 @@ class UnityGreeter: public Greeter
 public:
     UnityGreeter();
     virtual ~UnityGreeter();
-    core::Property<bool>& is_active() override;
+    core::Property<State>& state() override;
 
 protected:
     class Impl;
