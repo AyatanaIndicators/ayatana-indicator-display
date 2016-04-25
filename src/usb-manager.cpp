@@ -50,6 +50,7 @@ public:
         });
 
         m_greeter->state().changed().connect([this](Greeter::State /*state*/) {
+g_message("%s greeter state changed; calling maybe_snap()", G_STRLOC);
             maybe_snap();
         });
 
@@ -83,7 +84,7 @@ private:
         m_adbd_client.reset(new GAdbdClient{m_socket_path});
         m_adbd_client->on_pk_request().connect(
             [this](const AdbdClient::PKRequest& req) {
-                g_debug("%s got pk request: %s", G_STRLOC, req.fingerprint.c_str());
+                g_message("%s got pk request: %s, calling maybe_snap()", G_STRLOC, req.fingerprint.c_str());
                 m_req = req;
                 maybe_snap();
             }
@@ -92,14 +93,17 @@ private:
 
     void maybe_snap()
     {
+g_message("%s m_req.public_key [%s]", G_STRLOC, m_req.public_key.c_str());
         // only prompt if there's something to prompt about
         if (m_req.public_key.empty())
             return;
 
+g_message("%s m_greeter->state() %s", G_STRLOC, Greeter::state_str(m_greeter->state().get()));
         // only prompt in an unlocked session
         if (m_greeter->state().get() != Greeter::State::INACTIVE)
             return;
 
+g_message("%s calling snap!", G_STRLOC);
         snap();
     }
 

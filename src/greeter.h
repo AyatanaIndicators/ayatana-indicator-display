@@ -31,6 +31,10 @@ public:
     virtual ~Greeter();
 
     enum class State { UNAVAILABLE, INACTIVE, ACTIVE };
+static inline const char* state_str(const State& state) {
+    static constexpr char const * state_str[] = { "Unavailable", "Inactive", "Active" };
+    return state_str[int(state)];
+}
     virtual core::Property<State>& state() =0;
 };
 

@@ -48,6 +48,12 @@ public:
 
 private:
 
+    void set_state(const State& state)
+    {
+g_message("%s setting state to %s", G_STRLOC, state_str(state));
+        m_state.set(state);
+    }
+
     static void on_bus_ready(
         GObject* /*source*/,
         GAsyncResult* res,
@@ -99,10 +105,11 @@ private:
 
     static void on_greeter_appeared(
         GDBusConnection* bus,
-        const char* /*name*/,
+        const char* name,
         const char* name_owner,
         gpointer gself)
     {
+g_message("%s %s appared on bus, owned by %s", G_STRLOC, name, name_owner);
         auto self = static_cast<Impl*>(gself);
 
         self->m_owner = name_owner;
@@ -124,13 +131,14 @@ private:
 
     static void on_greeter_vanished(
         GDBusConnection* /*bus*/,
-        const char* /*name*/,
+        const char* name,
         gpointer gself)
     {
+g_message("%s %s disappeared from bus", G_STRLOC, name);
         auto self = static_cast<Impl*>(gself);
 
         self->m_owner.clear();
-        self->m_state.set(State::UNAVAILABLE);
+        self->set_state(State::UNAVAILABLE);
     }
 
     static void on_get_is_active_ready(
@@ -138,6 +146,7 @@ private:
         GAsyncResult* res, 
         gpointer gself)
     {
+g_message("%s", G_STRLOC);
         GError* error {};
         auto v = g_dbus_connection_call_finish(G_DBUS_CONNECTION(source), res, &error);
         if (error != nullptr) {
@@ -145,9 +154,10 @@ private:
                 g_warning("Greeter: Error getting IsActive property: %s", error->message);
             g_clear_error(&error);
         } else {
+g_message("%s got '%s'", G_STRLOC, g_variant_print(v, true));
             GVariant* is_active {};
             g_variant_get_child(v, 0, "v", &is_active);
-            static_cast<Impl*>(gself)->m_state.set(g_variant_get_boolean(is_active) ? State::ACTIVE : State::INACTIVE);
+            static_cast<Impl*>(gself)->set_state(g_variant_get_boolean(is_active) ? State::ACTIVE : State::INACTIVE);
             g_clear_pointer(&is_active, g_variant_unref);
         }
         g_clear_pointer(&v, g_variant_unref);
@@ -163,6 +173,7 @@ private:
         gpointer gself)
     {
         auto self = static_cast<Impl*>(gself);
+g_message("%s on_properties_changed got %s", G_STRLOC, g_variant_print(parameters, true));
 
         g_return_if_fail(!g_strcmp0(sender_name, self->m_owner.c_str()));
         g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
@@ -173,10 +184,7 @@ private:
         auto v = g_variant_get_child_value(parameters, 1);
         gboolean is_active {};
         if (g_variant_lookup(v, "IsActive", "b", &is_active))
-        {
-            g_debug("%s is_active changed to %d", G_STRLOC, int(is_active));
-            self->m_state.set(is_active ? State::ACTIVE : State::INACTIVE);
-        }
+            self->set_state(is_active ? State::ACTIVE : State::INACTIVE);
         g_clear_pointer(&v, g_variant_unref);
     }
 
