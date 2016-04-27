@@ -5,9 +5,9 @@
 
 inline void PrintTo(const Greeter::State& state, std::ostream* os) {
     switch(state) {
-        case Greeter::State::ACTIVE:   *os << "Active"; break;
-        case Greeter::State::INACTIVE: *os << "Inactive"; break;
-        default:                       *os << "Unavailable"; break;
+        case Greeter::State::ACTIVE:      *os << "Active"; break;
+        case Greeter::State::INACTIVE:    *os << "Inactive"; break;
+        case Greeter::State::UNAVAILABLE: *os << "Unavailable"; break;
     }
 }
 
