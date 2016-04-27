@@ -50,6 +50,8 @@ public:
         });
 
         m_greeter->state().changed().connect([this](Greeter::State /*state*/) {
+g_message("%s clearing old snap, if any", G_STRLOC);
+            clear_snap();
 g_message("%s greeter state changed; calling maybe_snap()", G_STRLOC);
             maybe_snap();
         });
@@ -67,11 +69,16 @@ g_message("%s greeter state changed; calling maybe_snap()", G_STRLOC);
 
 private:
 
+    void clear_snap()
+    {
+        m_snap_connections.clear();
+        m_snap.reset();
+    }
+
     void clear()
     {
         // clear out old state
-        m_snap_connections.clear();
-        m_snap.reset();
+        clear_snap();
         m_req = decltype(m_req)();
         m_adbd_client.reset();
     }

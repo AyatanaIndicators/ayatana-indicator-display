@@ -119,6 +119,7 @@ private:
         g_variant_builder_add(&hints_builder, "{sv}", "x-canonical-snap-decisions", g_variant_new_string("true"));
         g_variant_builder_add(&hints_builder, "{sv}", "x-canonical-private-affirmative-tint", g_variant_new_string("true"));
 
+g_message("%s calling notification notify", G_STRLOC);
         auto args = g_variant_new("(susssasa{sv}i)",
                                   "",
                                   uint32_t(0),
@@ -153,6 +154,7 @@ private:
                 g_warning("UsbSnap: Error calling Notify: %s", error->message);
             g_clear_error(&error);
         } else {
+g_message("%s on_notify reply %s", G_STRLOC, g_variant_print(reply, true));
             uint32_t id {};
             g_variant_get(reply, "(u)", &id);
             static_cast<Impl*>(gself)->on_notify_reply(id);
@@ -162,6 +164,7 @@ private:
 
     void on_notify_reply(uint32_t id)
     {
+g_message("%s setting m_notification_id to %d", G_STRLOC, int(id));
         m_notification_id = id;
     }
 
@@ -177,6 +180,7 @@ private:
         g_return_if_fail(!g_strcmp0(interface_name, DBusNames::Notify::INTERFACE));
 
         auto self = static_cast<Impl*>(gself);
+g_message("%s got signal %s with parameters %s", G_STRLOC, signal_name, g_variant_print(parameters, true));
 
         if (!g_strcmp0(signal_name, DBusNames::Notify::ActionInvoked::NAME))
         {
@@ -212,9 +216,11 @@ private:
 
     void on_notification_closed(uint32_t close_reason)
     {
+g_message("%s closed with reason %d", G_STRLOC, int(close_reason));
         if (close_reason == DBusNames::Notify::NotificationClosed::Reason::EXPIRED)
             m_on_user_response(AdbdClient::PKResponse::DENY, false);
 
+g_message("%s setting m_notification_id to 0", G_STRLOC);
         m_notification_id = 0;
     }
 
