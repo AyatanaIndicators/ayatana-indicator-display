@@ -212,6 +212,8 @@ g_message("%s got signal %s with parameters %s", G_STRLOC, signal_name, g_varian
         const bool remember_this_choice = response == AdbdClient::PKResponse::ALLOW;
 
         m_on_user_response(response, remember_this_choice);
+g_message("%s clearing m_notification_id", G_STRLOC);
+        m_notification_id = 0;
     }
 
     void on_notification_closed(uint32_t close_reason)
@@ -220,7 +222,7 @@ g_message("%s closed with reason %d", G_STRLOC, int(close_reason));
         if (close_reason == DBusNames::Notify::NotificationClosed::Reason::EXPIRED)
             m_on_user_response(AdbdClient::PKResponse::DENY, false);
 
-g_message("%s setting m_notification_id to 0", G_STRLOC);
+g_message("%s clearing m_notification_id", G_STRLOC);
         m_notification_id = 0;
     }
 
