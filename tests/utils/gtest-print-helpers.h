@@ -11,7 +11,7 @@ inline void PrintTo(const Greeter::State& state, std::ostream* os) {
     }
 }
 
-std::ostream& operator<<(std::ostream& os, const Greeter::State& state) {
+inline std::ostream& operator<<(std::ostream& os, const Greeter::State& state) {
     PrintTo(state, &os);
     return os;
 }
