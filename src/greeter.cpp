@@ -50,7 +50,6 @@ private:
 
     void set_state(const State& state)
     {
-g_message("%s setting state to %s", G_STRLOC, state_str(state));
         m_state.set(state);
     }
 
@@ -109,7 +108,6 @@ g_message("%s setting state to %s", G_STRLOC, state_str(state));
         const char* name_owner,
         gpointer gself)
     {
-g_message("%s %s appared on bus, owned by %s", G_STRLOC, name, name_owner);
         auto self = static_cast<Impl*>(gself);
 
         self->m_owner = name_owner;
@@ -134,7 +132,6 @@ g_message("%s %s appared on bus, owned by %s", G_STRLOC, name, name_owner);
         const char* name,
         gpointer gself)
     {
-g_message("%s %s disappeared from bus", G_STRLOC, name);
         auto self = static_cast<Impl*>(gself);
 
         self->m_owner.clear();
@@ -146,7 +143,6 @@ g_message("%s %s disappeared from bus", G_STRLOC, name);
         GAsyncResult* res, 
         gpointer gself)
     {
-g_message("%s", G_STRLOC);
         GError* error {};
         auto v = g_dbus_connection_call_finish(G_DBUS_CONNECTION(source), res, &error);
         if (error != nullptr) {
@@ -154,7 +150,6 @@ g_message("%s", G_STRLOC);
                 g_warning("Greeter: Error getting IsActive property: %s", error->message);
             g_clear_error(&error);
         } else {
-g_message("%s got '%s'", G_STRLOC, g_variant_print(v, true));
             GVariant* is_active {};
             g_variant_get_child(v, 0, "v", &is_active);
             static_cast<Impl*>(gself)->set_state(g_variant_get_boolean(is_active) ? State::ACTIVE : State::INACTIVE);
@@ -173,7 +168,6 @@ g_message("%s got '%s'", G_STRLOC, g_variant_print(v, true));
         gpointer gself)
     {
         auto self = static_cast<Impl*>(gself);
-g_message("%s on_properties_changed got %s", G_STRLOC, g_variant_print(parameters, true));
 
         g_return_if_fail(!g_strcmp0(sender_name, self->m_owner.c_str()));
         g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
