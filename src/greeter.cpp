@@ -104,7 +104,7 @@ private:
 
     static void on_greeter_appeared(
         GDBusConnection* bus,
-        const char* name,
+        const char* /*name*/,
         const char* name_owner,
         gpointer gself)
     {
@@ -129,7 +129,7 @@ private:
 
     static void on_greeter_vanished(
         GDBusConnection* /*bus*/,
-        const char* name,
+        const char* /*name*/,
         gpointer gself)
     {
         auto self = static_cast<Impl*>(gself);
