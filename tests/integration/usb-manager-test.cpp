@@ -143,7 +143,7 @@ TEST_F(UsbManagerFixture, Allow)
     );
 
     // confirm that the AdbdServer got the right response
-    wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 2000);
+    wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 5000);
     ASSERT_EQ(1, adbd_server->m_responses.size());
     EXPECT_EQ("OK", adbd_server->m_responses.front());
 
