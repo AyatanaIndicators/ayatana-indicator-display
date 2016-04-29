@@ -50,7 +50,6 @@ public:
         });
 
         m_greeter->state().changed().connect([this](Greeter::State /*state*/) {
-            clear_snap();
             maybe_snap();
         });
 
