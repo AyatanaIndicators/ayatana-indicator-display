@@ -163,13 +163,16 @@ TEST_F(UsbManagerFixture, USBDisconnectedDuringPrompt)
     const std::shared_ptr<std::string> public_keys_path {new std::string{*m_tmpdir+"/adb_keys"}, file_deleter};
 
     // start a mock AdbdServer ready to submit a request
+    const size_t N_TESTS {3};
     const std::string public_key {"public_key"};
-    auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
+    const std::vector<std::string> requests(N_TESTS, "PK"+public_key);
+    const std::vector<std::string> expected_responses(N_TESTS, "NO");
+    auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, requests);
 
     // set up a UsbManager to process the request
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
 
-    for (int i=0; i<3; i++)
+    for (std::remove_const<decltype(N_TESTS)>::type i=0; i<N_TESTS; ++i)
     {
         // add a signal spy to listen to the notification daemon
         QSignalSpy notificationsSpy(
@@ -194,6 +197,9 @@ TEST_F(UsbManagerFixture, USBDisconnectedDuringPrompt)
         EXPECT_EQ("CloseNotification", notificationsSpy.at(0).at(0));
         notificationsSpy.clear();
     }
+
+    EXPECT_TRUE(wait_for([adbd_server, N_TESTS](){return adbd_server->m_responses.size() == N_TESTS;}, 5000));
+    EXPECT_EQ(expected_responses, adbd_server->m_responses);
 }
 
 TEST_F(UsbManagerFixture, Greeter)
