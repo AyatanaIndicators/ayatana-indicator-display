@@ -46,59 +46,54 @@ public:
         m_greeter{greeter}
     {
         m_usb_monitor->on_usb_disconnected().connect([this](const std::string& /*usb_name*/) {
-            restart();
+            m_req.reset();
         });
 
-        m_greeter->state().changed().connect([this](Greeter::State /*state*/) {
-            maybe_snap();
+        m_greeter->state().changed().connect([this](const Greeter::State& state) {
+            if (state == Greeter::State::INACTIVE)
+                maybe_snap();
+            else
+                stop_snap();
         });
 
-        restart();
-    }
-
-    ~Impl()
-    {
-        if (m_restart_idle_tag)
-            g_source_remove(m_restart_idle_tag);
-
-        clear();
-    }
-
-private:
-
-    void clear_snap()
-    {
-        m_snap_connections.clear();
-        m_snap.reset();
-    }
-
-    void clear()
-    {
-        // clear out old state
-        clear_snap();
-        m_req = decltype(m_req)();
-        m_adbd_client.reset();
-    }
-
-    void restart()
-    {
-        clear();
-
-        // set a new client
+        // create a new adbd client
         m_adbd_client.reset(new GAdbdClient{m_socket_path});
         m_adbd_client->on_pk_request().connect(
             [this](const AdbdClient::PKRequest& req) {
                 g_debug("%s got pk request: %s, calling maybe_snap()", G_STRLOC, req.fingerprint.c_str());
-                m_req = req;
+
+                m_response = AdbdClient::PKResponse::DENY; // set the fallback response
+                m_req.reset(
+                    new AdbdClient::PKRequest(req),
+                    [this](AdbdClient::PKRequest* r) {
+                        stop_snap();
+                        r->respond(m_response);
+                        delete r;
+                    }
+                );
                 maybe_snap();
             }
         );
     }
 
+    ~Impl()
+    {
+        if (m_request_complete_idle_tag)
+            g_source_remove(m_request_complete_idle_tag);
+    }
+
+private:
+
+    void stop_snap()
+    {
+        m_snap_connections.clear();
+        m_snap.reset();
+    }
+
     void maybe_snap()
     {
         // only prompt if there's something to prompt about
-        if (m_req.public_key.empty())
+        if (!m_req)
             return;
 
         // only prompt in an unlocked session
@@ -110,19 +105,25 @@ private:
 
     void snap()
     {
-        m_snap = std::make_shared<UsbSnap>(m_req.fingerprint);
+        m_snap = std::make_shared<UsbSnap>(m_req->fingerprint);
         m_snap_connections.insert((*m_snap).on_user_response().connect(
             [this](AdbdClient::PKResponse response, bool remember_choice){
-                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
-                m_req.respond(response);
+
                 if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
-                    write_public_key(m_req.public_key);
-                m_restart_idle_tag = g_idle_add([](gpointer gself){
-                    auto self = static_cast<Impl*>(gself);
-                    self->m_restart_idle_tag = 0;
-                    self->restart();
-                    return G_SOURCE_REMOVE;
-                }, this);
+                    write_public_key(m_req->public_key);
+
+                m_response = response;
+
+                // defer finishing the request into an idle func because
+                // ScopedConnections can't be destroyed inside their callbacks
+                if (m_request_complete_idle_tag == 0) {
+                    m_request_complete_idle_tag = g_idle_add([](gpointer gself){
+                        auto self = static_cast<Impl*>(gself);
+                        self->m_request_complete_idle_tag = 0;
+                        self->m_req.reset();
+                        return G_SOURCE_REMOVE;
+                    }, this);
+                }
             }
         ));
     }
@@ -163,12 +164,13 @@ private:
     const std::shared_ptr<UsbMonitor> m_usb_monitor;
     const std::shared_ptr<Greeter> m_greeter;
  
-    unsigned int m_restart_idle_tag {};
+    unsigned int m_request_complete_idle_tag {};
 
     std::shared_ptr<GAdbdClient> m_adbd_client;
-    AdbdClient::PKRequest m_req;
     std::shared_ptr<UsbSnap> m_snap;
     std::set<core::ScopedConnection> m_snap_connections;
+    AdbdClient::PKResponse m_response {AdbdClient::PKResponse::DENY};
+    std::shared_ptr<AdbdClient::PKRequest> m_req;
 };
 
 /***
