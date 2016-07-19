@@ -64,7 +64,9 @@ install (FILES "${UPSTART_XDG_AUTOSTART_FILE}"
 ##
 
 # where to install
-pkg_get_variable(SYSTEMD_USER_DIR systemd systemduserunitdir)
+# Uncomment when we drop Vivid
+# pkg_get_variable(SYSTEMD_USER_DIR systemd systemduserunitdir)
+set (SYSTEMD_USER_DIR "/usr/lib/systemd/user")
 message (STATUS "${SYSTEMD_USER_DIR} is the systemd user unit file install dir")
 
 set (SYSTEMD_USER_NAME "${CMAKE_PROJECT_NAME}.service")
