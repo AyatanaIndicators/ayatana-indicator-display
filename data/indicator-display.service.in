@@ -1,0 +1,7 @@
+[Unit]
+Description=Indicator Display Backend
+PartOf=graphical-session.target
+After=indicators-pre.target
+
+[Service]
+ExecStart=@pkglibexecdir@/indicator-display-service
