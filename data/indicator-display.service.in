@@ -5,3 +5,4 @@ After=indicators-pre.target
 
 [Service]
 ExecStart=@pkglibexecdir@/indicator-display-service
+Restart=on-failure
