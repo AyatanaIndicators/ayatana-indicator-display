@@ -66,7 +66,7 @@ private:
         GCancellable* cancellable = nullptr;
         const std::string public_key;
 
-        PKIdleData(Impl* self_, GCancellable* cancellable_, std::string public_key_):
+        PKIdleData(Impl* self_, GCancellable* cancellable_, const std::string& public_key_):
             self(self_),
             cancellable(G_CANCELLABLE(g_object_ref(cancellable_))),
             public_key(public_key_) {}
