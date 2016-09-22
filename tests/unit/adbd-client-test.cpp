@@ -73,7 +73,7 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         // start an AdbdClient that listens for PKRequests
         std::string pk;
         auto adbd_client = std::make_shared<GAdbdClient>(socket_path);
-        adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
+        auto connection = adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
 g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
             EXPECT_EQ(main_thread, g_thread_self());
 g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
@@ -93,6 +93,7 @@ g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
         EXPECT_EQ(test.expected_response, adbd_server->m_responses.front());
    
         // cleanup
+        connection.disconnect();
         adbd_client.reset();
         adbd_server.reset();
         g_unlink(socket_path.c_str());
