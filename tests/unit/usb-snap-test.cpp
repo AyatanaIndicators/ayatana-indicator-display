@@ -88,7 +88,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         auto snap = std::make_shared<UsbSnap>(test.fingerprint);
         AdbdClient::PKResponse user_response {};
         bool user_response_set = false;
-        snap->on_user_response().connect([&user_response,&user_response_set](AdbdClient::PKResponse response, bool /*remember*/){
+        auto connection = snap->on_user_response().connect([&user_response,&user_response_set](AdbdClient::PKResponse response, bool /*remember*/){
             user_response = response;
             user_response_set = true;
         });
@@ -131,6 +131,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         ASSERT_EQ(test.expected_response, user_response);
 
         // confirm that the snap dtor cleans up the notification
+        connection.disconnect();
         snap.reset();
         wait_for_signals(notificationsSpy, 1);
         {
