@@ -74,10 +74,15 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         std::string pk;
         auto adbd_client = std::make_shared<GAdbdClient>(socket_path);
         adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
             EXPECT_EQ(main_thread, g_thread_self());
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
             g_message("in on_pk_request with %s", req.public_key.c_str());
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
             pk = req.public_key;
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
             req.respond(test.response);
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
         });
 
         // start a mock AdbdServer with to fire test key requests and wait for a response
