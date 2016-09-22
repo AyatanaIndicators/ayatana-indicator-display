@@ -80,6 +80,7 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
                 maybe_snap();
             }
         );
+    }
 
     ~Impl()
     {

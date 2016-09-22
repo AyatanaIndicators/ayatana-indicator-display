@@ -190,20 +190,9 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
                     m_pkresponse = AdbdClient::PKResponse::DENY;
 g_message("%s %s", G_STRLOC, G_STRFUNC);
                     pass_public_key_to_main_thread(public_key);
-g_message("%s %s", G_STRLOC, G_STRFUNC);
-                    g_debug("%s thread %p waiting", G_STRLOC, g_thread_self());
-g_message("%s %s", G_STRLOC, G_STRFUNC);
-                    try {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
-                        m_pkresponse_cv.wait(lk, [this](){
-g_message("%s %s", G_STRLOC, G_STRFUNC);
-                            return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
-                        });
-                    } catch (std::system_error& e) {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
-                        g_critical("%s thread %p unable to wait for response because of unexpected error '%s'", G_STRLOC, g_thread_self(), e.what());
-                    }
-g_message("%s %s", G_STRLOC, G_STRFUNC);
+                    m_pkresponse_cv.wait(lk, [this](){
+                        return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
+                    });
                     response = m_pkresponse;
                     g_debug("%s thread %p got response '%d', is-cancelled %d", G_STRLOC,
                             g_thread_self(),
