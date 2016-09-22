@@ -44,7 +44,7 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
 
     ~Impl()
     {
-g_debug("%s %s", G_STRLOC, G_STRFUNC);
+g_debug("%s %s DTOR DTOR dtor", G_STRLOC, G_STRFUNC);
         // tell the worker thread to stop whatever it's doing and exit.
         g_debug("%s Client::Impl dtor, cancelling m_cancellable", G_STRLOC);
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
@@ -63,7 +63,7 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
 
     core::Signal<const PKRequest&>& on_pk_request()
     {
-g_debug("%s %s", G_STRLOC, G_STRFUNC);
+g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
         return m_on_pk_request;
     }
 
@@ -98,7 +98,7 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
     {
         /* NB: It's possible (though unlikely) that data.self was destroyed
            while this callback was pending, so we must check is-cancelled FIRST */
-g_debug("%s %s", G_STRLOC, G_STRFUNC);
+g_debug("%s %s thread is %p", G_STRLOC, G_STRFUNC, g_thread_self());
         auto data = static_cast<PKIdleData*>(gdata);
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
         if (!g_cancellable_is_cancelled(data->cancellable))
@@ -127,11 +127,12 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
     void on_public_key_response(PKResponse response)
     {
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
-        g_debug("%s got response %d", G_STRLOC, int(response));
+        g_debug("%s thread %p got response %d", G_STRLOC, g_thread_self(), int(response));
 
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
         // set m_pkresponse and wake up the waiting worker thread
-        std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
+        std::lock_guard<std::mutex> lk(m_sleep_mutex);
+        //std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
         m_pkresponse = response;
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
@@ -147,7 +148,7 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
 
     void worker_func() // runs in worker thread
     {
-g_debug("%s %s", G_STRLOC, G_STRFUNC);
+g_debug("%s %s worker thread is %p", G_STRLOC, G_STRFUNC, g_thread_self());
         const std::string socket_path {m_socket_path};
 
 g_debug("%s %s", G_STRLOC, G_STRFUNC);

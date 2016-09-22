@@ -46,6 +46,7 @@ main(int /*argc*/, char** /*argv*/)
       g_warning("busname lost: '%s'", name.c_str());
       g_main_loop_quit(loop);
     };
+g_debug("%s %s main thread is %p", G_STRLOC, G_STRFUNC, g_thread_self());
 
     // build all our indicators.
     // Right now we've only got one -- rotation lock -- but hey, we can dream.
