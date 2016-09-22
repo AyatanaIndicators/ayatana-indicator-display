@@ -121,6 +121,7 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
         }
 
 g_message("%s %s", G_STRLOC, G_STRFUNC);
+fflush(nullptr);
         return G_SOURCE_REMOVE;
     }
 
@@ -140,6 +141,7 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
 g_message("%s %s", G_STRLOC, G_STRFUNC);
         m_pkresponse_cv.notify_one();
 g_message("%s %s", G_STRLOC, G_STRFUNC);
+fflush(nullptr);
     }
 
     /***
