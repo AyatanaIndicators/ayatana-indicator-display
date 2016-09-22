@@ -124,11 +124,11 @@ private:
 
         while (!g_cancellable_is_cancelled(m_cancellable))
         {
-            g_debug("%s creating a client socket to '%s'", G_STRLOC, socket_path.c_str());
+            g_debug("%s thread %p creating a client socket to '%s'", G_STRLOC, g_thread_self(), socket_path.c_str());
             auto socket = create_client_socket(socket_path);
             bool got_valid_req = false;
 
-            g_debug("%s calling read_request", G_STRLOC);
+            g_debug("%s thread %p calling read_request", g_thread_self(), G_STRLOC);
             std::string reqstr;
             if (socket != nullptr)
                 reqstr = read_request(socket);
@@ -138,16 +138,21 @@ private:
             if (reqstr.substr(0,2) == "PK") {
                 PKResponse response = PKResponse::DENY;
                 const auto public_key = reqstr.substr(2);
-                g_debug("%s got pk [%s]", G_STRLOC, public_key.c_str());
+                g_debug("%s thread %p got pk [%s]", G_STRLOC, g_thread_self(), public_key.c_str());
                 if (!public_key.empty()) {
                     got_valid_req = true;
                     std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
                     m_pkresponse_ready = false;
+                    m_pkresponse = AdbdClient::PKResponse::DENY;
                     pass_public_key_to_main_thread(public_key);
                     g_debug("%s thread %p waiting", G_STRLOC, g_thread_self());
-                    m_pkresponse_cv.wait(lk, [this](){
-                        return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
-                    });
+                    try {
+                        m_pkresponse_cv.wait(lk, [this](){
+                            return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
+                        });
+                    } catch (std::system_error& e) {
+                        g_critical("%s thread %p unable to wait for response because of unexpected error '%s'", G_STRLOC, g_thread_self(), e.what());
+                    }
                     response = m_pkresponse;
                     g_debug("%s thread %p got response '%d', is-cancelled %d", G_STRLOC,
                             g_thread_self(),

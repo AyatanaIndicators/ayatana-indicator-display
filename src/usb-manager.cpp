@@ -102,7 +102,7 @@ private:
         m_snap = std::make_shared<UsbSnap>(m_req.fingerprint);
         m_snap_connections.insert((*m_snap).on_user_response().connect(
             [this](AdbdClient::PKResponse response, bool remember_choice){
-                g_debug("%s user responded! response %d, remember %d", G_STRLOC, int(response), int(remember_choice));
+                g_debug("%s thread %p user responded! response %d, remember %d", G_STRLOC, g_thread_self(), int(response), int(remember_choice));
                 m_req.respond(response);
                 if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
                     write_public_key(m_req.public_key);
