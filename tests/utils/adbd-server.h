@@ -38,7 +38,7 @@ public:
     GAdbdServer(const std::string& socket_path,
                 const std::vector<std::string>& requests):
         m_requests{requests},
-        m_socket_path{socket_path},
+        m_server_socket{create_server_socket(socket_path)},
         m_cancellable{g_cancellable_new()},
         m_worker_thread{&GAdbdServer::worker_func, this}
     {
@@ -50,6 +50,7 @@ public:
         g_cancellable_cancel(m_cancellable);
         m_worker_thread.join();
         g_clear_object(&m_cancellable);
+        g_clear_object(&m_server_socket);
     }
 
     const std::vector<std::string> m_requests;
@@ -59,18 +60,14 @@ private:
 
     void worker_func() // runs in worker thread
     {
-        auto server_socket = create_server_socket(m_socket_path);
         auto requests = m_requests;
-
-        GError* error {};
-        g_socket_listen (server_socket, &error);
-        g_assert_no_error (error);
 
         while (!g_cancellable_is_cancelled(m_cancellable) && !requests.empty())
         {
             // wait for a client connection
             g_message("GAdbdServer::Impl::worker_func() calling g_socket_accept()");
-            auto client_socket = g_socket_accept(server_socket, m_cancellable, &error);
+            GError* error {};
+            auto client_socket = g_socket_accept(m_server_socket, m_cancellable, &error);
             if (error != nullptr) {
                 if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
                     g_message("GAdbdServer: Error accepting socket connection: %s", error->message);
@@ -121,8 +118,6 @@ private:
             // cleanup
             g_clear_object(&client_socket);
         }
-
-        g_clear_object(&server_socket);
     }
 
     // bind to a local domain socket
@@ -139,11 +134,14 @@ private:
         g_assert_no_error (error);
         g_clear_object (&address);
 
+        g_socket_listen (socket, &error);
+        g_assert_no_error (error);
+
         return socket;
     }
 
-    const std::string m_socket_path;
-    GCancellable* m_cancellable = nullptr;
+    GSocket* m_server_socket {};
+    GCancellable* m_cancellable {};
     std::thread m_worker_thread;
 };
 

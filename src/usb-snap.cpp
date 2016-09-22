@@ -208,6 +208,7 @@ private:
         const bool remember_this_choice = response == AdbdClient::PKResponse::ALLOW;
 
         m_on_user_response(response, remember_this_choice);
+        m_notification_id = 0;
     }
 
     void on_notification_closed(uint32_t close_reason)
