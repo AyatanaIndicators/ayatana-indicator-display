@@ -87,7 +87,7 @@ g_debug("%s %s thread %p", G_STRLOC, G_STRFUNC, g_thread_self());
 
         // start a mock AdbdServer with to fire test key requests and wait for a response
         auto adbd_server = std::make_shared<GAdbdServer>(socket_path, std::vector<std::string>{test.request});
-        wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 2000);
+        wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 5000);
         EXPECT_EQ(test.expected_pk, pk);
         ASSERT_EQ(1, adbd_server->m_responses.size());
         EXPECT_EQ(test.expected_response, adbd_server->m_responses.front());
