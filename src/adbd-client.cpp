@@ -131,7 +131,7 @@ g_debug("%s %s", G_STRLOC, G_STRFUNC);
 
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
         // set m_pkresponse and wake up the waiting worker thread
-        std::lock_guard<std::mutex> lk(m_sleep_mutex);
+        std::lock_guard<std::mutex> lk(m_pkresponse_mutex);
         //std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
 g_debug("%s %s", G_STRLOC, G_STRFUNC);
         m_pkresponse = response;
