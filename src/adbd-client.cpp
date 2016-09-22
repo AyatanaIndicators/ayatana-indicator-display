@@ -23,6 +23,7 @@
 #include <gio/gunixsocketaddress.h>
 
 #include <algorithm>
+#include <atomic>
 #include <cctype>
 #include <cstring>
 #include <chrono>
@@ -365,7 +366,7 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
 
     std::mutex m_pkresponse_mutex;
     std::condition_variable m_pkresponse_cv;
-    bool m_pkresponse_ready = false;
+    std::atomic<bool> m_pkresponse_ready {false};
     PKResponse m_pkresponse = PKResponse::DENY;
 };
 
