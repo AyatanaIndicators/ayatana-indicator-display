@@ -48,7 +48,8 @@ public:
         g_cancellable_cancel(m_cancellable);
         m_pkresponse_cv.notify_one();
         m_sleep_cv.notify_one();
-        m_worker_thread.join();
+        if (m_worker_thread.joinable())
+            m_worker_thread.join();
         g_clear_object(&m_cancellable);
     }
 
@@ -104,6 +105,8 @@ private:
 
     void on_public_key_response(PKResponse response)
     {
+        g_debug("%s got response %d", G_STRLOC, int(response));
+
         // set m_pkresponse and wake up the waiting worker thread
         std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
         m_pkresponse = response;
@@ -141,11 +144,13 @@ private:
                     std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
                     m_pkresponse_ready = false;
                     pass_public_key_to_main_thread(public_key);
+                    g_debug("%s thread %p waiting", G_STRLOC, g_thread_self());
                     m_pkresponse_cv.wait(lk, [this](){
                         return m_pkresponse_ready || g_cancellable_is_cancelled(m_cancellable);
                     });
                     response = m_pkresponse;
-                    g_debug("%s got response '%d', is-cancelled %d", G_STRLOC,
+                    g_debug("%s thread %p got response '%d', is-cancelled %d", G_STRLOC,
+                            g_thread_self(),
                             int(response),
                             int(g_cancellable_is_cancelled(m_cancellable)));
                 }
