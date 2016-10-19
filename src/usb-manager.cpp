@@ -45,21 +45,15 @@ public:
         m_usb_monitor{usb_monitor},
         m_greeter{greeter}
     {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         m_usb_monitor->on_usb_disconnected().connect([this](const std::string& /*usb_name*/) {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
             m_req.reset();
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         });
 
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         m_greeter->state().changed().connect([this](const Greeter::State& state) {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
             if (state == Greeter::State::INACTIVE)
                 maybe_snap();
             else
                 stop_snap();
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         });
 
         // create a new adbd client
@@ -84,31 +78,24 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
 
     ~Impl()
     {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         if (m_request_complete_idle_tag)
             g_source_remove(m_request_complete_idle_tag);
-g_message("%s %s", G_STRLOC, G_STRFUNC);
     }
 
 private:
 
     void stop_snap()
     {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         m_snap_connections.clear();
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         m_snap.reset();
-g_message("%s %s", G_STRLOC, G_STRFUNC);
     }
 
     void maybe_snap()
     {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         // only prompt if there's something to prompt about
         if (!m_req)
             return;
 
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         // only prompt in an unlocked session
         if (m_greeter->state().get() != Greeter::State::INACTIVE)
             return;
@@ -139,25 +126,20 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
                 }
             }
         ));
-g_message("%s %s", G_STRLOC, G_STRFUNC);
     }
 
     void write_public_key(const std::string& public_key)
     {
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         g_debug("%s writing public key '%s' to '%s'", G_STRLOC, public_key.c_str(), m_public_keys_filename.c_str());
 
         // confirm the directory exists
         auto dirname = g_path_get_dirname(m_public_keys_filename.c_str());
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         const auto dir_exists = g_file_test(dirname, G_FILE_TEST_IS_DIR);
         if (!dir_exists)
             g_warning("ADB data directory '%s' does not exist", dirname);
         g_clear_pointer(&dirname, g_free);
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         if (!dir_exists)
             return;
-g_message("%s %s", G_STRLOC, G_STRFUNC);
 
         // open the file in append mode, with user rw and group r permissions
         const auto fd = open(
@@ -165,20 +147,16 @@ g_message("%s %s", G_STRLOC, G_STRFUNC);
             O_APPEND|O_CREAT|O_WRONLY,
             S_IRUSR|S_IWUSR|S_IRGRP
         );
-g_message("%s %s", G_STRLOC, G_STRFUNC);
         if (fd == -1) {
             g_warning("Error opening ADB datafile: %s", g_strerror(errno));
-g_message("%s %s", G_STRLOC, G_STRFUNC);
             return;
         }
-g_message("%s %s", G_STRLOC, G_STRFUNC);
 
         // write the new public key on its own line
         std::string buf {public_key + '\n'};
         if (write(fd, buf.c_str(), buf.size()) == -1)
             g_warning("Error writing ADB datafile: %d %s", errno, g_strerror(errno));
         close(fd);
-g_message("%s %s", G_STRLOC, G_STRFUNC);
     }
 
     const std::string m_socket_path;
