@@ -109,8 +109,6 @@ private:
         g_debug("%s thread %p got response %d", G_STRLOC, g_thread_self(), int(response));
 
         // set m_pkresponse and wake up the waiting worker thread
-        //std::lock_guard<std::mutex> lk(m_pkresponse_mutex);
-        //std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
         m_pkresponse = response;
         m_pkresponse_ready = true;
         m_pkresponse_cv.notify_one();
