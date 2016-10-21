@@ -73,7 +73,7 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         // start an AdbdClient that listens for PKRequests
         std::string pk;
         auto adbd_client = std::make_shared<GAdbdClient>(socket_path);
-        adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
+        auto connection = adbd_client->on_pk_request().connect([&pk, main_thread, test](const AdbdClient::PKRequest& req){
             EXPECT_EQ(main_thread, g_thread_self());
             g_message("in on_pk_request with %s", req.public_key.c_str());
             pk = req.public_key;
@@ -82,12 +82,13 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
 
         // start a mock AdbdServer with to fire test key requests and wait for a response
         auto adbd_server = std::make_shared<GAdbdServer>(socket_path, std::vector<std::string>{test.request});
-        wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 2000);
+        wait_for([adbd_server](){return !adbd_server->m_responses.empty();}, 5000);
         EXPECT_EQ(test.expected_pk, pk);
         ASSERT_EQ(1, adbd_server->m_responses.size());
         EXPECT_EQ(test.expected_response, adbd_server->m_responses.front());
    
         // cleanup
+        connection.disconnect();
         adbd_client.reset();
         adbd_server.reset();
         g_unlink(socket_path.c_str());

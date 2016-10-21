@@ -88,7 +88,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         auto snap = std::make_shared<UsbSnap>(test.fingerprint);
         AdbdClient::PKResponse user_response {};
         bool user_response_set = false;
-        snap->on_user_response().connect([&user_response,&user_response_set](AdbdClient::PKResponse response, bool /*remember*/){
+        auto connection = snap->on_user_response().connect([&user_response,&user_response_set](AdbdClient::PKResponse response, bool /*remember*/){
             user_response = response;
             user_response_set = true;
         });
@@ -130,14 +130,9 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         EXPECT_TRUE(user_response_set);
         ASSERT_EQ(test.expected_response, user_response);
 
-        // confirm that the snap dtor cleans up the notification
+        // confirm that the snap dtor doesn't try to close
+        // the notification that's already been closed by user choice
         snap.reset();
-        wait_for_signals(notificationsSpy, 1);
-        {
-            QVariantList const& call(notificationsSpy.at(0));
-            EXPECT_EQ("CloseNotification", call.at(0));
-            QVariantList const& args(call.at(1).toList());
-            EXPECT_EQ(id, args.at(0));
-        }
+        EXPECT_FALSE(notificationsSpy.wait(1000));
     }
 }

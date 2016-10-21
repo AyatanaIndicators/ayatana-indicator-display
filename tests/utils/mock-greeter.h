@@ -26,7 +26,7 @@ class MockGreeter: public Greeter
 public:
     MockGreeter() =default;
     virtual ~MockGreeter() =default;
-    core::Property<bool>& is_active() override {return m_is_active;}
-    core::Property<bool> m_is_active {false};
+    core::Property<Greeter::State>& state() override {return m_state;}
+    core::Property<Greeter::State> m_state {State::INACTIVE};
 };
 
