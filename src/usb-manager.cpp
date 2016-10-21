@@ -50,10 +50,11 @@ public:
         });
 
         m_greeter->state().changed().connect([this](const Greeter::State& state) {
-            if (state == Greeter::State::INACTIVE)
+            if (state == Greeter::State::INACTIVE) {
                 maybe_snap();
-            else
+            } else {
                 stop_snap();
+            }
         });
 
         // create a new adbd client
@@ -78,8 +79,9 @@ public:
 
     ~Impl()
     {
-        if (m_request_complete_idle_tag)
+        if (m_request_complete_idle_tag) {
             g_source_remove(m_request_complete_idle_tag);
+        }
     }
 
 private:
@@ -93,12 +95,14 @@ private:
     void maybe_snap()
     {
         // only prompt if there's something to prompt about
-        if (!m_req)
+        if (!m_req) {
             return;
+        }
 
         // only prompt in an unlocked session
-        if (m_greeter->state().get() != Greeter::State::INACTIVE)
+        if (m_greeter->state().get() != Greeter::State::INACTIVE) {
             return;
+        }
 
         snap();
     }
@@ -109,8 +113,9 @@ private:
         m_snap_connections.insert((*m_snap).on_user_response().connect(
             [this](AdbdClient::PKResponse response, bool remember_choice){
 
-                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW))
+                if (remember_choice && (response == AdbdClient::PKResponse::ALLOW)) {
                     write_public_key(m_req->public_key);
+                }
 
                 m_response = response;
 

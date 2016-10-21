@@ -49,8 +49,9 @@ public:
         g_cancellable_cancel(m_cancellable);
         m_pkresponse_cv.notify_one();
         m_sleep_cv.notify_one();
-        if (m_worker_thread.joinable())
+        if (m_worker_thread.joinable()) {
             m_worker_thread.join();
+        }
         g_clear_object(&m_cancellable);
     }
 
@@ -154,8 +155,9 @@ private:
                             int(response),
                             int(g_cancellable_is_cancelled(m_cancellable)));
                 }
-                if (!g_cancellable_is_cancelled(m_cancellable))
+                if (!g_cancellable_is_cancelled(m_cancellable)) {
                     send_pk_response(socket, response);
+                }
             } else if (!reqstr.empty()) {
                 g_warning("Invalid ADB request: [%s]", reqstr.c_str());
             }

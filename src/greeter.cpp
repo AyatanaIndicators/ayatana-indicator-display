@@ -146,8 +146,9 @@ private:
         GError* error {};
         auto v = g_dbus_connection_call_finish(G_DBUS_CONNECTION(source), res, &error);
         if (error != nullptr) {
-            if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+            if (!g_error_matches(error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
                 g_warning("Greeter: Error getting IsActive property: %s", error->message);
+            }
             g_clear_error(&error);
         } else {
             GVariant* is_active {};
