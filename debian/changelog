@@ -1,3 +1,13 @@
+indicator-display (0.1+17.04.20161021.1-0ubuntu1) zesty; urgency=medium
+
+  [ Charles Kerr ]
+  * Fix test error in adbd-client-test
+
+  [ Ted Gould ]
+  * Adding a systemd user session unit
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Fri, 21 Oct 2016 14:20:11 +0000
+
 indicator-display (0.1+16.04.20160324.1-0ubuntu1) xenial; urgency=medium
 
   [ Charles Kerr ]
