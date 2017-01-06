@@ -76,7 +76,7 @@ add_compile_options(-std=c++14 -fPIC -g)
 if(${enable_tests})
   enable_testing()
   if(${enable_coverage})
-    include(EnableCoverageReport)
+    find_package(CoverageReport)
   endif()
 endif()
 

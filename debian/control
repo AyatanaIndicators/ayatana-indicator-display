@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Charles Kerr <charles.kerr@canonical.com>
 Build-Depends: cmake,
-               cmake-extras (>= 0.4),
+               cmake-extras (>= 0.10),
                dbus,
                libglib2.0-dev (>= 2.36),
                libgudev-1.0-dev,
