@@ -1,3 +1,9 @@
+indicator-display (0.1+17.04.20170106-0ubuntu1) zesty; urgency=medium
+
+  * Compatibility with unversioned cmake-extras modules (LP: #1563573)
+
+ -- Pete Woods <pete.woods@canonical.com>  Fri, 06 Jan 2017 10:44:49 +0000
+
 indicator-display (0.1+17.04.20161021.1-0ubuntu1) zesty; urgency=medium
 
   [ Charles Kerr ]
