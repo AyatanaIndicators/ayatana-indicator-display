@@ -13,9 +13,6 @@ add_definitions(
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
-option(enable_tests "Build the package's automatic tests." ON)
-option(enable_coverage "Generate code coverage reports." ON)
-
 ##
 ##  GNU standard paths
 ## 
@@ -69,20 +66,20 @@ endif()
 
 add_compile_options(-std=c++14 -fPIC -g)
 
+add_subdirectory(src)
+add_subdirectory(data)
+add_subdirectory(po)
+
 ##
 ##  Testing & Coverage
 ##
 
-if(${enable_tests})
-  enable_testing()
-  if(${enable_coverage})
-    find_package(CoverageReport)
-  endif()
-endif()
+enable_testing()
+add_subdirectory(tests)
+find_package(CoverageReport)
+ENABLE_COVERAGE_REPORT(
+  TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
+  TESTS ${COVERAGE_TEST_TARGETS}
+  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+)
 
-add_subdirectory(src)
-add_subdirectory(data)
-add_subdirectory(po)
-if (${enable_tests})
-  add_subdirectory(tests)
-endif ()

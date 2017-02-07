@@ -16,9 +16,15 @@ set(TEST_LINK_LIBRARIES
 
 function(add_qt_test_by_name name)
   set(TEST_NAME ${name})
+  set(COVERAGE_TEST_TARGETS ${COVERAGE_TEST_TARGETS} ${TEST_NAME} PARENT_SCOPE)
   add_executable (${TEST_NAME} ${TEST_NAME}.cpp)
   add_test(${TEST_NAME} ${TEST_NAME})
   set_property(TEST ${TEST_NAME} APPEND PROPERTY ENVIRONMENT ${CTEST_ENVIRONMENT})
   target_link_libraries(${TEST_NAME} ${SERVICE_LINK_LIBRARIES} ${QT_LINK_LIBRARIES} ${TEST_LINK_LIBRARIES} ${THREAD_LINK_LIBRARIES})
 endfunction()
 add_qt_test_by_name(usb-manager-test)
+
+set(COVERAGE_TEST_TARGETS
+  ${COVERAGE_TEST_TARGETS}
+  PARENT_SCOPE
+)

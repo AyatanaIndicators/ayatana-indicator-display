@@ -10,6 +10,7 @@ Build-Depends: cmake,
                libgudev-1.0-dev,
                libproperties-cpp-dev,
 # for coverage reports
+               gcovr,
                lcov,
 # for tests
                qt5-default,
