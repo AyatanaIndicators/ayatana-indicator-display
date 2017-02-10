@@ -1,3 +1,13 @@
+indicator-display (0.1+17.04.20170210-0ubuntu1) zesty; urgency=medium
+
+  * Remove old autostart files.
+  * Fix the google test dependency.
+  * Use intltool support from cmake-extras.
+  * Make coverage reporting work.
+  * Enable parallel builds.
+
+ -- Rodney Dawes <rodney.dawes@canonical.com>  Fri, 10 Feb 2017 17:10:00 +0000
+
 indicator-display (0.1+17.04.20170106-0ubuntu1) zesty; urgency=medium
 
   * Compatibility with unversioned cmake-extras modules (LP: #1563573)
