@@ -33,3 +33,8 @@ add_test(cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline
 add_subdirectory(integration)
 add_subdirectory(unit)
 add_subdirectory(utils)
+
+set(COVERAGE_TEST_TARGETS
+  ${COVERAGE_TEST_TARGETS}
+  PARENT_SCOPE
+)
