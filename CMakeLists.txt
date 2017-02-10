@@ -64,7 +64,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     list(APPEND CXX_WARNING_ARGS -Wall -Wextra -Wpedantic)
 endif()
 
-add_compile_options(-std=c++14 -fPIC -g)
+add_compile_options(-std=c++14 -fPIC)
 
 add_subdirectory(src)
 add_subdirectory(data)
