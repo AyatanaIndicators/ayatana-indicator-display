@@ -19,47 +19,6 @@ install (FILES "${UPSTART_JOB_FILE}"
          DESTINATION "${UPSTART_JOBS_DIR}")
 
 ##
-##  XDG Autostart File
-##
-
-# where to install
-set (XDG_AUTOSTART_DIR "/etc/xdg/autostart")
-message (STATUS "${XDG_AUTOSTART_DIR} is the XDG Autostart install dir")
-
-set (XDG_AUTOSTART_NAME "${CMAKE_PROJECT_NAME}.desktop")
-set (XDG_AUTOSTART_FILE "${CMAKE_CURRENT_BINARY_DIR}/${XDG_AUTOSTART_NAME}")
-set (XDG_AUTOSTART_FILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/${XDG_AUTOSTART_NAME}.in")
-
-# build it
-set (pkglibexecdir "${CMAKE_INSTALL_FULL_PKGLIBEXECDIR}")
-configure_file ("${XDG_AUTOSTART_FILE_IN}" "${XDG_AUTOSTART_FILE}")
-
-# install it
-install (FILES "${XDG_AUTOSTART_FILE}"
-         DESTINATION "${XDG_AUTOSTART_DIR}")
-
-##
-##  Upstart XDG Autostart Override
-##
-
-# where to install
-set (UPSTART_XDG_AUTOSTART_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/upstart/xdg/autostart")
-message (STATUS "${UPSTART_XDG_AUTOSTART_DIR} is the Upstart XDG autostart override dir")
-
-set (UPSTART_XDG_AUTOSTART_NAME "${CMAKE_PROJECT_NAME}.upstart.desktop")
-set (UPSTART_XDG_AUTOSTART_FILE "${CMAKE_CURRENT_BINARY_DIR}/${UPSTART_XDG_AUTOSTART_NAME}")
-set (UPSTART_XDG_AUTOSTART_FILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/${UPSTART_XDG_AUTOSTART_NAME}.in")
-
-# build it
-set (pkglibexecdir "${CMAKE_INSTALL_FULL_PKGLIBEXECDIR}")
-configure_file ("${UPSTART_XDG_AUTOSTART_FILE_IN}" "${UPSTART_XDG_AUTOSTART_FILE}")
-
-# install it
-install (FILES "${UPSTART_XDG_AUTOSTART_FILE}"
-         DESTINATION "${UPSTART_XDG_AUTOSTART_DIR}"
-         RENAME "${XDG_AUTOSTART_NAME}")
-
-##
 ##  Systemd Unit File
 ##
 
