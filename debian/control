@@ -5,6 +5,7 @@ Maintainer: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 Build-Depends: cmake,
                cmake-extras (>= 0.10),
                dbus,
+               intltool,
                libglib2.0-dev (>= 2.36),
                libgudev-1.0-dev,
                libproperties-cpp-dev,
