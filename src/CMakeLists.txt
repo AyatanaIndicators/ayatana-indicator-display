@@ -1,5 +1,8 @@
-
 add_definitions(-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
+
+if(EXISTS "/usr/share/glib-2.0/schemas/com.ubuntu.sound.gschema.xml")
+  add_definitions( -DHAS_UBUNTU_TOUCH_SCHEMA )
+endif()
 
 add_compile_options(
   ${CXX_WARNING_ARGS}
@@ -34,4 +37,3 @@ install(
         ${SERVICE_EXEC}
     RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_PKGLIBEXECDIR}
 )
-

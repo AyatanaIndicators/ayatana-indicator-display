@@ -22,7 +22,7 @@
 
 #include <gio/gio.h>
 
-class UnityGreeter::Impl
+class Greeter::Impl
 {
 public:
 
@@ -72,7 +72,7 @@ private:
 
             const auto watcher_id = g_bus_watch_name_on_connection(
                 bus,
-                DBusNames::UnityGreeter::NAME,
+                DBusNames::Greeter::NAME,
                 G_BUS_NAME_WATCHER_FLAGS_AUTO_START,
                 on_greeter_appeared,
                 on_greeter_vanished,
@@ -81,11 +81,11 @@ private:
 
             const auto subscription_id = g_dbus_connection_signal_subscribe(
                 bus,
-                DBusNames::UnityGreeter::NAME,
+                DBusNames::Greeter::NAME,
                 DBusNames::Properties::INTERFACE,
                 DBusNames::Properties::PropertiesChanged::NAME,
-                DBusNames::UnityGreeter::PATH,
-                DBusNames::UnityGreeter::INTERFACE,
+                DBusNames::Greeter::PATH,
+                DBusNames::Greeter::INTERFACE,
                 G_DBUS_SIGNAL_FLAGS_NONE,
                 on_properties_changed_signal,
                 gself,
@@ -114,11 +114,11 @@ private:
 
         g_dbus_connection_call(
             bus,
-            DBusNames::UnityGreeter::NAME,
-            DBusNames::UnityGreeter::PATH,
+            DBusNames::Greeter::NAME,
+            DBusNames::Greeter::PATH,
             DBusNames::Properties::INTERFACE,
             "Get",
-            g_variant_new("(ss)", DBusNames::UnityGreeter::INTERFACE, "IsActive"),
+            g_variant_new("(ss)", DBusNames::Greeter::INTERFACE, "IsActive"),
             G_VARIANT_TYPE("(v)"),
             G_DBUS_CALL_FLAGS_NONE,
             -1,
@@ -171,7 +171,7 @@ private:
         auto self = static_cast<Impl*>(gself);
 
         g_return_if_fail(!g_strcmp0(sender_name, self->m_owner.c_str()));
-        g_return_if_fail(!g_strcmp0(object_path, DBusNames::UnityGreeter::PATH));
+        g_return_if_fail(!g_strcmp0(object_path, DBusNames::Greeter::PATH));
         g_return_if_fail(!g_strcmp0(interface_name, DBusNames::Properties::INTERFACE));
         g_return_if_fail(!g_strcmp0(signal_name, DBusNames::Properties::PropertiesChanged::NAME));
         g_return_if_fail(g_variant_is_of_type(parameters, G_VARIANT_TYPE(DBusNames::Properties::PropertiesChanged::ARGS_VARIANT_TYPE)));
@@ -193,19 +193,19 @@ private:
 ****
 ***/
 
-Greeter::Greeter() =default;
+BaseGreeter::BaseGreeter() =default;
 
-Greeter::~Greeter() =default;
+BaseGreeter::~BaseGreeter() =default;
 
-UnityGreeter::UnityGreeter():
+Greeter::Greeter():
     impl{new Impl{}}
 {
 }
 
-UnityGreeter::~UnityGreeter() =default;
+Greeter::~Greeter() =default;
 
 core::Property<Greeter::State>&
-UnityGreeter::state()
+Greeter::state()
 {
     return impl->state();
 }

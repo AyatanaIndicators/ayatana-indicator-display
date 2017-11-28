@@ -24,11 +24,11 @@
 #include <memory>
 #include <string>
 
-class Greeter
+class BaseGreeter
 {
 public:
-    Greeter();
-    virtual ~Greeter();
+    BaseGreeter();
+    virtual ~BaseGreeter();
 
     enum class State { UNAVAILABLE, INACTIVE, ACTIVE };
 static inline const char* state_str(const State& state) {
@@ -39,11 +39,11 @@ static inline const char* state_str(const State& state) {
 };
 
 
-class UnityGreeter: public Greeter
+class Greeter: public BaseGreeter
 {
 public:
-    UnityGreeter();
-    virtual ~UnityGreeter();
+    Greeter();
+    virtual ~Greeter();
     core::Property<State>& state() override;
 
 protected:

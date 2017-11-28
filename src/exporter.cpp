@@ -26,7 +26,7 @@ public:
   explicit Impl(const std::shared_ptr<Indicator>& indicator):
     m_indicator(indicator)
   {
-    auto bus_name = g_strdup_printf("com.canonical.indicator.%s", indicator->name());
+    auto bus_name = g_strdup_printf("org.ayatana.indicator.%s", indicator->name());
     m_own_id = g_bus_own_name(G_BUS_TYPE_SESSION,
                               bus_name,
                               G_BUS_NAME_OWNER_FLAGS_NONE,
@@ -94,7 +94,7 @@ private:
     // export the actions
 
     error = nullptr;
-    object_path = g_strdup_printf("/com/canonical/indicator/%s", indicator->name());
+    object_path = g_strdup_printf("/org/ayatana/indicator/%s", indicator->name());
     id = g_dbus_connection_export_action_group(m_bus,
                                                object_path,
                                                G_ACTION_GROUP(indicator->action_group()),
@@ -151,7 +151,7 @@ private:
     // build the header menu
     auto detailed_action = g_strdup_printf("indicator.%s", action_name.c_str());
     GMenuItem* header = g_menu_item_new(nullptr, detailed_action);
-    g_menu_item_set_attribute(header, "x-canonical-type", "s", "com.canonical.indicator.root");
+    g_menu_item_set_attribute(header, "x-canonical-type", "s", "org.ayatana.indicator.root");
     g_menu_item_set_submenu(header, profile->menu_model().get());
     g_free(detailed_action);
 
@@ -161,7 +161,7 @@ private:
     g_object_unref(header);
 
     // export the menu
-    auto object_path = g_strdup_printf("/com/canonical/indicator/%s/%s",
+    auto object_path = g_strdup_printf("/org/ayatana/indicator/%s/%s",
                                        indicator->name(),
                                        profile->name().c_str());
     GError* error = nullptr;

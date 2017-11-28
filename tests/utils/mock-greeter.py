@@ -1,4 +1,4 @@
-'''unity greeter mock template
+'''desktop greeter mock template
 
 Very basic template that just mocks the greeter is-active flag
 '''
@@ -19,17 +19,17 @@ import os
 
 from dbusmock import MOCK_IFACE, mockobject
 
-BUS_NAME = 'com.canonical.UnityGreeter'
+BUS_NAME = 'org.ayatana.Greeter'
 MAIN_OBJ = '/'
-MAIN_IFACE = 'com.canonical.UnityGreeter'
+MAIN_IFACE = 'org.ayatana.Greeter'
 SYSTEM_BUS = False
 
 
 def load(mock, parameters):
     mock.AddMethods(
         MAIN_IFACE, [
-            ('HideGreeter', '', '', 'self.Set("com.canonical.UnityGreeter", "IsActive", False)'),
-            ('ShowGreeter', '', '', 'self.Set("com.canonical.UnityGreeter", "IsActive", True)')
+            ('HideGreeter', '', '', 'self.Set("org.ayatana.Greeter", "IsActive", False)'),
+            ('ShowGreeter', '', '', 'self.Set("org.ayatana.Greeter", "IsActive", True)')
         ]
     )
     mock.AddProperties(

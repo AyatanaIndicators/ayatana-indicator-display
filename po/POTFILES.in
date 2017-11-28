@@ -1,0 +1,9 @@
+src/adbd-client.cpp
+src/exporter.cpp
+src/greeter.cpp
+src/indicator.cpp
+src/main.cpp
+src/rotation-lock.cpp
+src/usb-manager.cpp
+src/usb-monitor.cpp
+src/usb-snap.cpp

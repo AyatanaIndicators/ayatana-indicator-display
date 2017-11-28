@@ -1,0 +1,24 @@
+<schemalist gettext-domain="ayatana-indicator-display">
+  <enum id="org.ayatana.display.ScreenOrientation">
+    <value value="0" nick="none"/>
+    <value value="1" nick="PrimaryOrientation"/>
+    <value value="2" nick="LandscapeOrientation"/>
+    <value value="3" nick="PortraitOrientation"/>
+    <value value="4" nick="InvertedLandscapeOrientation"/>
+    <value value="5" nick="InvertedPortraitOrientation"/>
+  </enum>
+  <schema id="org.ayatana.display" path="/org/ayatana/display/">
+    <key name="rotation-lock" type="b">
+      <default>false</default>
+      <summary>Lock rotation</summary>
+      <description>
+      Lock automatic display rotation.
+      </description>
+    </key>
+    <key name="orientation-lock" enum="org.ayatana.display.ScreenOrientation">
+      <default>"none"</default>
+      <summary>Orientation lock</summary>
+      <description>Locks orientation to a specific value.</description>
+    </key>
+  </schema>
+</schemalist>

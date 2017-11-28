@@ -1,3 +1,12 @@
+ayatana-indicator-display (0.2-0) UNRELEASED; urgency=medium
+
+  * Fork ayatana-indicator-datetime from Ubuntu's indicator-display.
+
+  * Upstream-provided Debian package for ayatana-indicator-display.
+    See upstream ChangeLog for recent changes.
+
+ -- Mike Gabriel <mike.gabriel@das-netzwerkteam.de>  Fri, 24 Nov 2017 10:04:00 +0100
+
 indicator-display (0.1+17.04.20170210-0ubuntu1) zesty; urgency=medium
 
   * Remove old autostart files.

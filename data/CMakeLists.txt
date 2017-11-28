@@ -1,3 +1,5 @@
+find_package(GSettings)
+
 ##
 ##  Upstart Job File
 ##
@@ -19,13 +21,19 @@ install (FILES "${UPSTART_JOB_FILE}"
          DESTINATION "${UPSTART_JOBS_DIR}")
 
 ##
+## GSettings
+##
+
+if(NOT EXISTS /usr/share/glib-2.0/schemas/com.ubuntu.touch.system.gschema.xml)
+  add_schema ("org.ayatana.display.gschema.xml")
+endif()
+
+##
 ##  Systemd Unit File
 ##
 
 # where to install
-# Uncomment when we drop Vivid
-# pkg_get_variable(SYSTEMD_USER_DIR systemd systemduserunitdir)
-set (SYSTEMD_USER_DIR "/usr/lib/systemd/user")
+pkg_get_variable(SYSTEMD_USER_DIR systemd systemduserunitdir)
 message (STATUS "${SYSTEMD_USER_DIR} is the systemd user unit file install dir")
 
 set (SYSTEMD_USER_NAME "${CMAKE_PROJECT_NAME}.service")
@@ -51,15 +59,15 @@ install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.override"
          DESTINATION "${UPSTART_SYSTEMD_OVERRIDE_DIR}")
 
 ##
-##  Unity Indicator File
+##  Ayatana Indicator File
 ##
 
 # where to install
-set (UNITY_INDICATOR_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/unity/indicators")
-message (STATUS "${UNITY_INDICATOR_DIR} is the Unity Indicator install dir")
+set (AYATANA_INDICATOR_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/ayatana/indicators")
+message (STATUS "${AYATANA_INDICATOR_DIR} is the Ayatana Indicator install dir")
 
-set (UNITY_INDICATOR_NAME "com.canonical.indicator.rotation_lock")
-set (UNITY_INDICATOR_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${UNITY_INDICATOR_NAME}")
+set (AYATANA_INDICATOR_NAME "org.ayatana.indicator.rotation_lock")
+set (AYATANA_INDICATOR_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${AYATANA_INDICATOR_NAME}")
 
-install (FILES "${UNITY_INDICATOR_FILE}"
-         DESTINATION "${UNITY_INDICATOR_DIR}")
+install (FILES "${AYATANA_INDICATOR_FILE}"
+         DESTINATION "${AYATANA_INDICATOR_DIR}")

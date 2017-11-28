@@ -1,8 +1,7 @@
-Source: indicator-display
-Section: misc
+Source: ayatana-indicator-display
+Section: x11
 Priority: optional
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: Charles Kerr <charles.kerr@canonical.com>
+Maintainer: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 Build-Depends: cmake,
                cmake-extras (>= 0.10),
                dbus,
@@ -12,32 +11,28 @@ Build-Depends: cmake,
 # for coverage reports
                gcovr,
                lcov,
+# Ubuntu B-Ds, if on Ubuntu
+               gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813) | hello,
 # for tests
-               qt5-default,
                qtbase5-dev,
                libqtdbusmock1-dev,
                libqtdbustest1-dev,
                cppcheck,
                googletest | google-mock (>= 1.6.0+svn437),
-               gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813),
 # for packaging
                debhelper (>= 9),
-               dh-translations,
 # for systemd unit
-               systemd,
-Standards-Version: 3.9.5
-Homepage: http://launchpad.net/indicator-display/
-X-Ubuntu-Use-Langpack: yes
-# If you aren't a member of ~indicator-applet-developers but need to upload 
-# packaging changes, just go ahead.  ~indicator-applet-developers will notice and 
-# sync up the code again.
-Vcs-Bzr: https://code.launchpad.net/~indicator-applet-developers/indicator-display/trunk.14.10
+               systemd [linux-any],
+Standards-Version: 4.1.1
+Homepage: http://github.com/AyatanaIndicators/ayatana-indicator-display
+Vcs-Git: http://github.com/AyatanaIndicators/ayatana-indicator-display
+Vcs-Browser: http://github.com/AyatanaIndicators/ayatana-indicator-display
 
-Package: indicator-display
+Package: ayatana-indicator-display
 Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813),
-         indicator-common,
-Description: Collection of small indicators
- Indicators too small to merit separate codebases, such as Rotation Lock
+         ayatana-indicator-common,
+Description: Ayatana Indicator for Display configuration
+ This Ayatana Indicator is designed to be placed on the right side of a
+ panel and give the user easy control for changing their display settings.

@@ -39,11 +39,11 @@ namespace DBusNames
         }
     }
 
-    namespace UnityGreeter
+    namespace Greeter
     {
-        static constexpr char const * NAME = "com.canonical.UnityGreeter";
+        static constexpr char const * NAME = "org.ayatana.Greeter";
         static constexpr char const * PATH = "/";
-        static constexpr char const * INTERFACE = "com.canonical.UnityGreeter";
+        static constexpr char const * INTERFACE = "org.ayatana.Greeter";
     }
 
     namespace Properties
@@ -57,4 +57,3 @@ namespace DBusNames
         }
     }
 }
-

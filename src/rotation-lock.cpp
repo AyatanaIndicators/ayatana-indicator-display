@@ -123,7 +123,7 @@ private:
     menu = g_menu_new();
 
     menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
-    g_menu_item_set_attribute(menu_item, "x-canonical-type", "s", "com.canonical.indicator.switch");
+    g_menu_item_set_attribute(menu_item, "x-canonical-type", "s", "org.ayatana.indicator.switch");
     g_menu_append_item(menu, menu_item);
     g_object_unref(menu_item);
 
@@ -144,7 +144,11 @@ private:
   ****
   ***/
 
+#ifdef HAS_UBUNTU_TOUCH_SCHEMA
   static constexpr char const * m_schema_name {"com.ubuntu.touch.system"};
+#else
+  static constexpr char const * m_schema_name {"org.ayatana.display"};
+#endif
   static constexpr char const * m_rotation_lock_icon_name {"orientation-lock"};
   GSettings* m_settings = nullptr;
   GSimpleActionGroup* m_action_group = nullptr;

@@ -70,7 +70,7 @@ protected:
         // set a watcher to look for our mock greeter to appear
         bool owned {};
         QDBusServiceWatcher watcher(
-            DBusNames::UnityGreeter::NAME,
+            DBusNames::Greeter::NAME,
             m_dbus_runner->sessionConnection()
         );
         QObject::connect(
@@ -83,7 +83,7 @@ protected:
         QVariantMap parameters;
         parameters["IsActive"] = QVariant(is_active);
         m_dbus_mock->registerTemplate(
-            DBusNames::UnityGreeter::NAME,
+            DBusNames::Greeter::NAME,
             GREETER_TEMPLATE,
             parameters,
             QDBusConnection::SessionBus
@@ -116,7 +116,7 @@ TEST_F(GreeterFixture, ActiveServiceStartsBeforeWatcher)
 
     start_greeter_service(is_active);
 
-    UnityGreeter greeter;
+    Greeter greeter;
 
     ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
@@ -126,7 +126,7 @@ TEST_F(GreeterFixture, WatcherStartsBeforeActiveService)
     constexpr bool is_active {true};
     constexpr Greeter::State expected {Greeter::State::ACTIVE};
 
-    UnityGreeter greeter;
+    Greeter greeter;
 
     start_greeter_service(is_active);
 
@@ -140,7 +140,7 @@ TEST_F(GreeterFixture, InactiveServiceStartsBeforeWatcher)
 
     start_greeter_service(is_active);
 
-    UnityGreeter greeter;
+    Greeter greeter;
 
     ASSERT_PROPERTY_EQ_EVENTUALLY(expected, greeter.state());
 }
@@ -150,7 +150,7 @@ TEST_F(GreeterFixture, WatcherStartsBeforeInactiveService)
     constexpr bool is_active {false};
     constexpr Greeter::State expected {Greeter::State::INACTIVE};
 
-    UnityGreeter greeter;
+    Greeter greeter;
 
     start_greeter_service(is_active);
 

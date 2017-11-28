@@ -1,10 +1,10 @@
-project(indicator-display LANGUAGES C CXX)
+project(ayatana-indicator-display LANGUAGES C CXX)
 cmake_minimum_required(VERSION 2.8.9)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set(PACKAGE ${CMAKE_PROJECT_NAME})
-set(GETTEXT_PACKAGE indicator-display)
+set(GETTEXT_PACKAGE "ayatana-indicator-display")
 add_definitions(
     -DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}"
     -DGNOMELOCALEDIR="${CMAKE_INSTALL_FULL_LOCALEDIR}"
@@ -82,4 +82,3 @@ ENABLE_COVERAGE_REPORT(
   TESTS ${COVERAGE_TEST_TARGETS}
   FILTER /usr/include ${CMAKE_BINARY_DIR}/*
 )
-
