@@ -1,8 +1,8 @@
 [Unit]
-Description=Indicator Display Backend
+Description=Ayatana Indicator Display Backend
 PartOf=graphical-session.target
-After=indicators-pre.target
+After=ayatana-indicators-pre.target
 
 [Service]
-ExecStart=@pkglibexecdir@/indicator-display-service
+ExecStart=@pkglibexecdir@/ayatana-indicator-display-service
 Restart=on-failure
