@@ -38,7 +38,7 @@ main(int /*argc*/, char** /*argv*/)
 
     // boilerplate i18n
     setlocale(LC_ALL, "");
-    bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     textdomain(GETTEXT_PACKAGE);
 
     auto loop = g_main_loop_new(nullptr, false);

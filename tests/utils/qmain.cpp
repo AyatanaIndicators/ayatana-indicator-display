@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 
     // boilerplate i18n
     setlocale(LC_ALL, "");
-    bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     textdomain(GETTEXT_PACKAGE);
 
     QCoreApplication application(argc, argv);
