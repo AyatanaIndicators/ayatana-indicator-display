@@ -4,12 +4,6 @@ cmake_minimum_required(VERSION 2.8.9)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set(PACKAGE ${CMAKE_PROJECT_NAME})
-set(GETTEXT_PACKAGE "ayatana-indicator-display")
-add_definitions(
-    -DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}"
-    -DGNOMELOCALEDIR="${CMAKE_INSTALL_FULL_LOCALEDIR}"
-)
-
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
@@ -24,6 +18,17 @@ if(EXISTS "/etc/debian_version") # Workaround for libexecdir on debian
 endif()
 set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
 set(CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
+
+
+##
+## Gettext
+##
+
+set(GETTEXT_PACKAGE "ayatana-indicator-display")
+add_definitions(
+    -DGETTEXT_PACKAGE="${GETTEXT_PACKAGE}"
+    -DGNOMELOCALEDIR="${CMAKE_INSTALL_FULL_LOCALEDIR}"
+)
 
 ##
 ##  Check for prerequisites
