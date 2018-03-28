@@ -34,7 +34,7 @@ msgstr "Der RSA Fingerabdruck dieses Computers ist: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr "Erlauben"
+msgstr "Zulassen"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
@@ -42,4 +42,4 @@ msgstr "Nicht zulassen"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "USB Fehlersuche erlauben"
