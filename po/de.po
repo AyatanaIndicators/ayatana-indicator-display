@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2018-03-28 09:56+0000\n"
+"PO-Revision-Date: 2018-03-28 09:57+0000\n"
 "Last-Translator: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/de/>\n"
@@ -30,15 +30,15 @@ msgstr "Rotation"
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "Der RSA Fingerabdruck dieses Computers ist: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr ""
+msgstr "Erlauben"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr ""
+msgstr "Nicht zulassen"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
