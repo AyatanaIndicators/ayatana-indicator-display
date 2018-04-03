@@ -8,36 +8,38 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2017-11-28 08:50+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-04-03 14:27+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
+"display-applet/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 2.20-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
-msgstr ""
+msgstr "Zámek otáčení"
 
 #: ../src/rotation-lock.cpp:136
 msgid "Rotation"
-msgstr ""
+msgstr "Otáčení"
 
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "Otisk RSA klíče počítače je:"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr ""
+msgstr "Umožnit"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr ""
+msgstr "Neumožnit"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "Umožnit ladění přes USB?"
