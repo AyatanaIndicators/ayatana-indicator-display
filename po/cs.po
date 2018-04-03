@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2018-04-03 14:27+0000\n"
+"PO-Revision-Date: 2018-04-04 14:35+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/cs/>\n"
@@ -30,7 +30,7 @@ msgstr "Otáčení"
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr "Otisk RSA klíče počítače je:"
+msgstr "Otisk RSA klíče počítače je: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
