@@ -8,36 +8,38 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2017-11-28 08:50+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-05-08 12:53+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/ayatana-indicators/"
+"display-applet/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.0-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
-msgstr ""
+msgstr "Draaivergrendeling"
 
 #: ../src/rotation-lock.cpp:136
 msgid "Rotation"
-msgstr ""
+msgstr "Draaiing"
 
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "De RSA-vingerafdruk van de computer is: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr ""
+msgstr "Toestaan"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr ""
+msgstr "Weigeren"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "USB-foutopsporing toestaan?"
