@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2019-11-27 16:05+0000\n"
-"Last-Translator: Yuji Hon <yuji103h+hosted.weblate@gmail.com>\n"
+"PO-Revision-Date: 2019-12-17 11:21+0000\n"
+"Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/ja/>\n"
 "Language: ja\n"
@@ -30,7 +30,7 @@ msgstr "回転"
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "コンピューターの RSA 鍵の指紋は以下の通りです: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
