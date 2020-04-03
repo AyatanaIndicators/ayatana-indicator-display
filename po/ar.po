@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2020-01-11 16:21+0000\n"
-"Last-Translator: Ahmed Mahdi Ali AL Slais <slaisam@yahoo.com>\n"
+"PO-Revision-Date: 2020-04-03 18:21+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/ar/>\n"
 "Language: ar\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.10.1\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
@@ -31,7 +31,7 @@ msgstr "الدوران"
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr "بصمة مفتاح RSA للكمبيوتر هي: ٪ s"
+msgstr "بصمة مفتاح RSA للكمبيوتر هي: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
