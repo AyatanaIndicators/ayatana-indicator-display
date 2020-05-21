@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2019-07-02 20:01+0000\n"
-"Last-Translator: Elizabeth Sherrock <lizzyd710@gmail.com>\n"
+"PO-Revision-Date: 2020-05-22 00:41+0000\n"
+"Last-Translator: wdggg <wdggg7@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,29 +17,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
-msgstr ""
+msgstr "旋转锁定"
 
 #: ../src/rotation-lock.cpp:136
 msgid "Rotation"
-msgstr ""
+msgstr "旋转"
 
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "此电脑的RSA指纹密匙是:%s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr "让"
+msgstr "允许"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr "不让"
+msgstr "不允许"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "允许使用USB调试模式?"
