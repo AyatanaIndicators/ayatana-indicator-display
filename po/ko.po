@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2019-10-05 10:56+0000\n"
-"Last-Translator: MrJang <ijin1322@gmail.com>\n"
+"PO-Revision-Date: 2020-06-15 04:41+0000\n"
+"Last-Translator: MarongHappy <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/ko/>\n"
 "Language: ko\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
@@ -30,16 +30,16 @@ msgstr "회전"
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "컴퓨터의 RSA 키 지문: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr ""
+msgstr "허용"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr ""
+msgstr "허용 안함"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "USB 디버깅을 허용하시겠습니까?"
