@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2020-06-20 15:41+0000\n"
+"PO-Revision-Date: 2020-07-30 10:41+0000\n"
 "Last-Translator: Ács Zoltán <acszoltan111@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/hu/>\n"
@@ -28,9 +28,9 @@ msgid "Rotation"
 msgstr "Elforgatás"
 
 #: ../src/usb-snap.cpp:107
-#, c-format
+#, c-format, fuzzy
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "A számítógép RSA kulcs ujjlenyomata: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
