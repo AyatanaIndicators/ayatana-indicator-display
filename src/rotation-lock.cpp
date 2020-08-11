@@ -80,7 +80,7 @@ private:
   {
     return g_value_dup_variant(value);
   }
- 
+
   GSimpleActionGroup* create_action_group()
   {
     GSimpleActionGroup* group;
@@ -97,7 +97,7 @@ private:
                                  action_state_to_settings,
                                  nullptr,
                                  nullptr);
-                                 
+
     g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
     g_object_unref(G_OBJECT(action));
     g_signal_connect_swapped(m_settings, "changed::rotation-lock",
@@ -123,7 +123,7 @@ private:
     menu = g_menu_new();
 
     menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
-    g_menu_item_set_attribute(menu_item, "x-canonical-type", "s", "org.ayatana.indicator.switch");
+    g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
     g_menu_append_item(menu, menu_item);
     g_object_unref(menu_item);
 

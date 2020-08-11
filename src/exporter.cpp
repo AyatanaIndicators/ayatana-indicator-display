@@ -90,7 +90,7 @@ private:
     GError* error;
     char* object_path;
     guint id;
-     
+
     // export the actions
 
     error = nullptr;
@@ -142,7 +142,7 @@ private:
         auto state = create_header_state(header);
         char* tmp = g_variant_print(state, true);
         g_debug("header changed; updating action state to '%s'", tmp);
-        g_action_group_change_action_state(G_ACTION_GROUP(action_group), 
+        g_action_group_change_action_state(G_ACTION_GROUP(action_group),
                                            action_name.c_str(),
                                            create_header_state(header));
         g_free(tmp);
@@ -151,7 +151,7 @@ private:
     // build the header menu
     auto detailed_action = g_strdup_printf("indicator.%s", action_name.c_str());
     GMenuItem* header = g_menu_item_new(nullptr, detailed_action);
-    g_menu_item_set_attribute(header, "x-canonical-type", "s", "org.ayatana.indicator.root");
+    g_menu_item_set_attribute(header, "x-ayatana-type", "s", "org.ayatana.indicator.root");
     g_menu_item_set_submenu(header, profile->menu_model().get());
     g_free(detailed_action);
 
