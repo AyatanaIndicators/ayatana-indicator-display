@@ -38,7 +38,7 @@ protected:
 
     std::shared_ptr<std::string> m_tmpdir;
 
-    void SetUp()
+    void SetUp() override
     {
         super::SetUp();
 
