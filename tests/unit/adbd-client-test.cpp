@@ -86,7 +86,7 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         EXPECT_EQ(test.expected_pk, pk);
         ASSERT_EQ(1, adbd_server->m_responses.size());
         EXPECT_EQ(test.expected_response, adbd_server->m_responses.front());
-   
+
         // cleanup
         connection.disconnect();
         adbd_client.reset();
