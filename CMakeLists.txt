@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8.9)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+set(PROJECT_VERSION "0.2")
 set(PACKAGE ${CMAKE_PROJECT_NAME})
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
