@@ -10,7 +10,7 @@ set(SERVICE_EXEC "${PACKAGE}-service")
 
 ##
 ##  GNU standard paths
-## 
+##
 
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
