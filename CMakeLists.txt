@@ -7,6 +7,8 @@ set(PACKAGE ${CMAKE_PROJECT_NAME})
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
+option (enable_tests "Build the package's automatic tests." ON)
+
 ##
 ##  GNU standard paths
 ## 
@@ -75,11 +77,13 @@ add_subdirectory(po)
 ##  Testing & Coverage
 ##
 
-enable_testing()
-add_subdirectory(tests)
-find_package(CoverageReport)
-ENABLE_COVERAGE_REPORT(
-  TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
-  TESTS ${COVERAGE_TEST_TARGETS}
-  FILTER /usr/include ${CMAKE_BINARY_DIR}/*
-)
+if (${enable_tests})
+    enable_testing()
+    add_subdirectory(tests)
+    find_package(CoverageReport)
+    ENABLE_COVERAGE_REPORT(
+        TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
+        TESTS ${COVERAGE_TEST_TARGETS}
+        FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+    )
+endif ()
