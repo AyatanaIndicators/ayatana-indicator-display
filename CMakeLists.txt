@@ -14,7 +14,6 @@ set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
 option(enable_tests "Build the package's automatic tests." ON)
-option(enable_coverage "Generate code coverage reports." OFF)
 
 set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
 set(CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
@@ -81,12 +80,10 @@ add_subdirectory(po)
 if(${enable_tests})
   enable_testing()
   add_subdirectory(tests)
-  if (${enable_coverage})
-    find_package(CoverageReport)
-    ENABLE_COVERAGE_REPORT(
-      TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
-      TESTS ${COVERAGE_TEST_TARGETS}
-      FILTER /usr/include ${CMAKE_BINARY_DIR}/*
-    )
-  endif()
+  find_package(CoverageReport)
+  ENABLE_COVERAGE_REPORT(
+    TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
+    TESTS ${COVERAGE_TEST_TARGETS}
+    FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+  )
 endif()
