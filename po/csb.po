@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-28 08:50+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: csb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/rotation-lock.cpp:125
+msgid "Rotation Lock"
+msgstr ""
+
+#: ../src/rotation-lock.cpp:136
+msgid "Rotation"
+msgstr ""
+
+#: ../src/usb-snap.cpp:107
+#, c-format
+msgid "The computer's RSA key fingerprint is: %s"
+msgstr ""
+
+#: ../src/usb-snap.cpp:112
+msgid "Allow"
+msgstr ""
+
+#: ../src/usb-snap.cpp:114
+msgid "Don't Allow"
+msgstr ""
+
+#: ../src/usb-snap.cpp:126
+msgid "Allow USB Debugging?"
+msgstr ""
