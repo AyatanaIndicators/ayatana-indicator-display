@@ -75,7 +75,7 @@ private:
             public_key(public_key_) {}
 
         ~PKIdleData() {g_clear_object(&cancellable);}
-        
+
     };
 
     void pass_public_key_to_main_thread(const std::string& public_key)
