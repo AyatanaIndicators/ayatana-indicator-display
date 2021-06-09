@@ -1,4 +1,7 @@
 set(CMAKE_AUTOMOC ON)
+
+SET(CMAKE_CXX_LINK_FLAGS  "${CMAKE_CXX_LINK_FLAGS} -no-pie")
+
 find_package(GMock REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Test REQUIRED)
