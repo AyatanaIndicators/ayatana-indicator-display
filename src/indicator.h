@@ -64,10 +64,10 @@ public:
   SimpleProfile(const char* name, const std::shared_ptr<GMenuModel>& menu): m_name(name), m_menu(menu) {}
   virtual ~SimpleProfile();
 
-  std::string name() const {return m_name;}
+  std::string name() const override {return m_name;}
   core::Property<Header>& header() {return m_header;}
-  const core::Property<Header>& header() const {return m_header;}
-  std::shared_ptr<GMenuModel> menu_model() const {return m_menu;}
+  const core::Property<Header>& header() const override {return m_header;}
+  std::shared_ptr<GMenuModel> menu_model() const override {return m_menu;}
 
 protected:
   const std::string m_name;
