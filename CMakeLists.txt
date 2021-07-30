@@ -1,7 +1,9 @@
 project(ayatana-indicator-display LANGUAGES C CXX)
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 3.13)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    SET(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
+endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 ##
 ##  GNU standard paths
@@ -13,7 +15,23 @@ set(PACKAGE ${CMAKE_PROJECT_NAME})
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")
 
-option(enable_tests "Build the package's automatic tests." ON)
+# Options
+
+option(ENABLE_TESTS "Enable all tests and checks" OFF)
+option(ENABLE_COVERAGE "Enable coverage reports (includes enabling all tests and checks)" OFF)
+option(ENABLE_WERROR "Treat all build warnings as errors" OFF)
+
+if(ENABLE_COVERAGE)
+    set(ENABLE_TESTS ON)
+    set(CMAKE_BUILD_TYPE "Coverage")
+else()
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+if(ENABLE_WERROR)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+endif()
 
 set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
 set(CMAKE_INSTALL_FULL_PKGLIBEXECDIR "${CMAKE_INSTALL_FULL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
@@ -77,13 +95,26 @@ add_subdirectory(po)
 ##  Testing & Coverage
 ##
 
-if(${enable_tests})
-  enable_testing()
-  add_subdirectory(tests)
-  find_package(CoverageReport)
-  ENABLE_COVERAGE_REPORT(
-    TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
-    TESTS ${COVERAGE_TEST_TARGETS}
-    FILTER /usr/include ${CMAKE_BINARY_DIR}/*
-  )
+if (ENABLE_TESTS)
+
+    include(CTest)
+    enable_testing()
+    add_subdirectory(tests)
+
+    if (ENABLE_COVERAGE)
+        find_package(CoverageReport)
+        ENABLE_COVERAGE_REPORT(
+            TARGETS ${SERVICE_LIB} ${SERVICE_EXEC}
+            TESTS ${COVERAGE_TEST_TARGETS}
+            FILTER /usr/include ${CMAKE_BINARY_DIR}/*
+        )
+
+    endif()
+
 endif()
+
+# Display config info
+
+message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Unit tests: ${ENABLE_TESTS}")
+message(STATUS "Build with -Werror: ${ENABLE_WERROR}")
