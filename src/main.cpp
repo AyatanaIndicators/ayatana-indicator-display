@@ -29,6 +29,11 @@
 
 #include <locale.h>
 
+extern "C"
+{
+    #include <ayatana/common/utils.h>
+}
+
 int
 main(int /*argc*/, char** /*argv*/)
 {
@@ -58,13 +63,16 @@ main(int /*argc*/, char** /*argv*/)
       exporters.push_back(exporter);
     }
 
-    // We need the ADBD handler running,
-    // even though it doesn't have an indicator component yet
-    static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
-    static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
-    auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
-    auto greeter = std::make_shared<Greeter>();
-    UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor, greeter};
+    if (ayatana_common_utils_is_lomiri())
+    {
+        // We need the ADBD handler running,
+        // even though it doesn't have an indicator component yet
+        static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
+        static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
+        auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
+        auto greeter = std::make_shared<Greeter>();
+        UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor, greeter};
+    }
 
     // let's go!
     g_main_loop_run(loop);

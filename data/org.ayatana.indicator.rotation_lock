@@ -8,3 +8,6 @@ ObjectPath=/org/ayatana/indicator/rotation_lock/phone
 
 [phone_greeter]
 ObjectPath=/org/ayatana/indicator/rotation_lock/phone
+
+[desktop]
+ObjectPath=/org/ayatana/indicator/rotation_lock/desktop

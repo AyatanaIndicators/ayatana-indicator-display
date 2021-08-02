@@ -64,6 +64,7 @@ find_package(PkgConfig REQUIRED)
 # glib...
 set(GLIB_MINIMUM 2.36)
 pkg_check_modules(SERVICE_DEPS REQUIRED
+    libayatana-common>=0.9.3
     gio-unix-2.0>=${GLIB_MINIMUM}
     glib-2.0>=${GLIB_MINIMUM}
     gudev-1.0
