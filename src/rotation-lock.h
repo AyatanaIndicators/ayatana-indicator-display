@@ -30,9 +30,9 @@ public:
   RotationLockIndicator();
   ~RotationLockIndicator();
 
-  const char* name() const;
-  GSimpleActionGroup* action_group() const;
-  std::vector<std::shared_ptr<Profile>> profiles() const;
+  const char* name() const override;
+  GSimpleActionGroup* action_group() const override;
+  std::vector<std::shared_ptr<Profile>> profiles() const override;
 
 protected:
   class Impl;
