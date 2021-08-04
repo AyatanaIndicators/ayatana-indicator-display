@@ -127,7 +127,7 @@ after_scripts:
   -         if [ -e ./autogen.sh ]; then
   -             ${XVFB_RUN} make check
   -         elif [ -e ./CMakeLists.txt ]; then
-  -             ${XVFB_RUN} make test
+  -             ${XVFB_RUN} env CTEST_OUTPUT_ON_FAILURE=1 make test
   -         fi
   -     fi
   - fi
