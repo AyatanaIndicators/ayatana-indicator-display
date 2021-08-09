@@ -7,6 +7,7 @@ Build-Depends: cmake,
                dbus,
                intltool,
                libglib2.0-dev (>= 2.36),
+               libgtest-dev,
                libgudev-1.0-dev,
                libproperties-cpp-dev,
 # for coverage reports
