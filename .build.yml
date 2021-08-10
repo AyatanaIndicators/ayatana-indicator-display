@@ -31,6 +31,7 @@ requires:
     - mate-common
     - dbus
     - intltool
+#   - libayatana-common-dev
     - libglib2.0-dev
     - libgudev-1.0-dev
     - libproperties-cpp-dev
@@ -55,6 +56,7 @@ requires:
     - mate-common
     - dbus
     - intltool
+#   - libayatana-common-dev
     - libglib2.0-dev
     - libgudev-1.0-dev
     - libproperties-cpp-dev
@@ -86,6 +88,16 @@ variables:
     -enable-checker alpha.unix.cstring.OutOfBounds
     -enable-checker alpha.core.FixedAddr
     -enable-checker security.insecureAPI.strcpy"'
+
+before_scripts:
+  - cd ${START_DIR}
+  - if [ ! -d libayatana-common-build ]; then
+  -     git clone --depth 1  https://github.com/AyatanaIndicators/libayatana-common.git libayatana-common-build
+  - fi
+  - cd libayatana-common-build
+  - cmake . -DCMAKE_INSTALL_PREFIX=/usr
+  - make
+  - make install
 
 build_scripts:
   - if [ ${DISTRO_NAME} == "debian" ];then
