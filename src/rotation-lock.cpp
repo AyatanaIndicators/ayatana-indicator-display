@@ -105,9 +105,11 @@ private:
     GSimpleAction* action;
 
     group = g_simple_action_group_new();
+    GVariantType *pVariantType = g_variant_type_new("b");
     action = g_simple_action_new_stateful("rotation-lock",
-                                          nullptr,
+                                          pVariantType,
                                           g_variant_new_boolean(false));
+    g_variant_type_free(pVariantType);
     g_settings_bind_with_mapping(m_settings, "rotation-lock",
                                  action, "state",
                                  G_SETTINGS_BIND_DEFAULT,
@@ -136,13 +138,34 @@ private:
   GMenuModel* create_phone_menu()
   {
     GMenu* menu;
+    GMenu* section;
     GMenuItem* menu_item;
 
     menu = g_menu_new();
-
+    section = g_menu_new();
     menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
     g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
-    g_menu_append_item(menu, menu_item);
+    g_menu_append_item(section, menu_item);
+    g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
+    g_object_unref(section);
+    g_object_unref(menu_item);
+
+    return G_MENU_MODEL(menu);
+  }
+
+  GMenuModel* create_desktop_menu()
+  {
+    GMenu* menu;
+    GMenu* section;
+    GMenuItem* menu_item;
+
+    menu = g_menu_new();
+    section = g_menu_new();
+    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
+    g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
+    g_menu_append_item(section, menu_item);
+    g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
+    g_object_unref(section);
     g_object_unref(menu_item);
 
     return G_MENU_MODEL(menu);
