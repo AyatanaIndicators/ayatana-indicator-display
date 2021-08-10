@@ -21,6 +21,11 @@
 
 #include <glib/gi18n.h>
 
+extern "C"
+{
+    #include <ayatana/common/utils.h>
+}
+
 class RotationLockIndicator::Impl
 {
 public:
@@ -29,8 +34,15 @@ public:
     m_settings(g_settings_new(m_schema_name)),
     m_action_group(create_action_group())
   {
-    // build the rotation lock icon
-    auto icon = g_themed_icon_new_with_default_fallbacks(m_rotation_lock_icon_name);
+    // build the icon
+    const char *rotation_lock_icon_name {"orientation-lock"};
+
+    if (!ayatana_common_utils_is_lomiri())
+    {
+        rotation_lock_icon_name = "display";
+    }
+
+    auto icon = g_themed_icon_new_with_default_fallbacks(rotation_lock_icon_name);
     auto icon_deleter = [](GIcon* o){g_object_unref(G_OBJECT(o));};
     m_icon.reset(icon, icon_deleter);
 
@@ -39,6 +51,11 @@ public:
     std::shared_ptr<GMenuModel> phone_menu (create_phone_menu(), menu_model_deleter);
     m_phone = std::make_shared<SimpleProfile>("phone", phone_menu);
     update_phone_header();
+
+    // build the desktop profile
+    std::shared_ptr<GMenuModel> desktop_menu (create_desktop_menu(), menu_model_deleter);
+    m_desktop = std::make_shared<SimpleProfile>("desktop", desktop_menu);
+    update_desktop_header();
   }
 
   ~Impl()
@@ -57,6 +74,7 @@ public:
   {
     std::vector<std::shared_ptr<Profile>> ret;
     ret.push_back(m_phone);
+    ret.push_back(m_desktop);
     return ret;
   }
 
@@ -130,6 +148,21 @@ private:
     return G_MENU_MODEL(menu);
   }
 
+  GMenuModel* create_desktop_menu()
+  {
+    GMenu* menu;
+    GMenuItem* menu_item;
+
+    menu = g_menu_new();
+
+    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
+    g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
+    g_menu_append_item(menu, menu_item);
+    g_object_unref(menu_item);
+
+    return G_MENU_MODEL(menu);
+  }
+
   void update_phone_header()
   {
     Header h;
@@ -138,6 +171,16 @@ private:
     h.is_visible = g_settings_get_boolean(m_settings, "rotation-lock");
     h.icon = m_icon;
     m_phone->header().set(h);
+  }
+
+  void update_desktop_header()
+  {
+    Header h;
+    h.title = _("Rotation");
+    h.a11y = h.title;
+    h.is_visible = TRUE;
+    h.icon = m_icon;
+    m_desktop->header().set(h);
   }
 
   /***
@@ -149,10 +192,10 @@ private:
 #else
   static constexpr char const * m_schema_name {"org.ayatana.display"};
 #endif
-  static constexpr char const * m_rotation_lock_icon_name {"orientation-lock"};
   GSettings* m_settings = nullptr;
   GSimpleActionGroup* m_action_group = nullptr;
   std::shared_ptr<SimpleProfile> m_phone;
+  std::shared_ptr<SimpleProfile> m_desktop;
   std::shared_ptr<GIcon> m_icon;
 };
 
