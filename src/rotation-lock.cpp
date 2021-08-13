@@ -198,7 +198,7 @@ private:
 #ifdef HAS_UBUNTU_TOUCH_SCHEMA
   static constexpr char const * m_schema_name {"com.ubuntu.touch.system"};
 #else
-  static constexpr char const * m_schema_name {"org.ayatana.indicator.display"};
+  static constexpr char const * m_schema_name {"org.ayatana.display"};
 #endif
   GSettings* m_settings = nullptr;
   GSimpleActionGroup* m_action_group = nullptr;

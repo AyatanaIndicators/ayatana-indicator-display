@@ -5,7 +5,7 @@ find_package(GSettings)
 ##
 
 if(NOT EXISTS /usr/share/glib-2.0/schemas/com.ubuntu.touch.system.gschema.xml)
-  add_schema ("org.ayatana.indicator.display.gschema.xml")
+  add_schema ("org.ayatana.display.gschema.xml")
 endif()
 
 ##
@@ -27,16 +27,6 @@ configure_file ("${SYSTEMD_USER_FILE_IN}" "${SYSTEMD_USER_FILE}")
 # install it
 install (FILES "${SYSTEMD_USER_FILE}"
          DESTINATION "${SYSTEMD_USER_DIR}")
-
-##
-##  XDG Autostart Config File
-##
-
-# build it
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.desktop.in" "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.desktop")
-
-# install it
-install (FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.desktop" DESTINATION "/etc/xdg/autostart")
 
 ##
 ##  Ayatana Indicator File
