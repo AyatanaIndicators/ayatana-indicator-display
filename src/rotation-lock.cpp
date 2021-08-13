@@ -171,21 +171,6 @@ private:
     return G_MENU_MODEL(menu);
   }
 
-  GMenuModel* create_desktop_menu()
-  {
-    GMenu* menu;
-    GMenuItem* menu_item;
-
-    menu = g_menu_new();
-
-    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
-    g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
-    g_menu_append_item(menu, menu_item);
-    g_object_unref(menu_item);
-
-    return G_MENU_MODEL(menu);
-  }
-
   void update_phone_header()
   {
     Header h;

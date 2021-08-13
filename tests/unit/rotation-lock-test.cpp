@@ -53,9 +53,12 @@ TEST_F(RotationLockFixture, CheckIndicator)
   ASSERT_TRUE(g_action_group_has_action(G_ACTION_GROUP(actions), "rotation-lock"));
 
   std::vector<std::shared_ptr<Profile>> profiles = indicator.profiles();
-  ASSERT_EQ(1, profiles.size());
+  ASSERT_EQ(2, profiles.size());
   std::shared_ptr<Profile> phone = profiles[0];
   ASSERT_EQ(std::string("phone"), phone->name());
   ASSERT_FALSE(phone->header()->is_visible);
+  std::shared_ptr<Profile> desktop = profiles[1];
+  ASSERT_EQ(std::string("desktop"), desktop->name());
+  ASSERT_TRUE(desktop->header()->is_visible);
 }
 
