@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Ayatana Indicator Display
+Exec=@CMAKE_INSTALL_FULL_LIBEXECDIR@/ayatana-indicator-display-service
+OnlyShowIn=Unity;MATE;XFCE;Budgie:GNOME;
+NoDisplay=true
+StartupNotify=false
+Terminal=false
