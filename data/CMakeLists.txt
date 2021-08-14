@@ -5,7 +5,7 @@ find_package(GSettings)
 ##
 
 if(NOT EXISTS /usr/share/glib-2.0/schemas/com.ubuntu.touch.system.gschema.xml)
-  add_schema ("org.ayatana.display.gschema.xml")
+  add_schema ("org.ayatana.indicator.display.gschema.xml")
 endif()
 
 ##
