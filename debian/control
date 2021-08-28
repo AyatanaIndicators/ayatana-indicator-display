@@ -24,7 +24,7 @@ Build-Depends: cmake,
                googletest | google-mock (>= 1.6.0+svn437),
 # for packaging
                debhelper (>= 9),
-               dh-systemd,
+               dh-systemd | hello,
 # for systemd unit
                systemd [linux-any],
 Standards-Version: 4.1.1
