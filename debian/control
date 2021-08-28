@@ -23,7 +23,7 @@ Build-Depends: cmake,
                cppcheck,
                googletest | google-mock (>= 1.6.0+svn437),
 # for packaging
-               debhelper (>= 9),
+               debhelper (>= 10),
                dh-systemd | hello,
 # for systemd unit
                systemd [linux-any],
