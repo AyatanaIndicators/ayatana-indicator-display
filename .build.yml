@@ -16,6 +16,10 @@ requires:
     - dbus
     - intltool
     - glib2
+#    - libayatana-common
+    - gobject-introspection
+#    - liblomiri-url-dispatcher
+    - vala
     # FIXME: add missing build-dependencies
 
   debian:
@@ -31,7 +35,11 @@ requires:
     - mate-common
     - dbus
     - intltool
-#   - libayatana-common-dev
+#    - libayatana-common-dev
+    - gobject-introspection
+    - libgirepository1.0-dev
+    - liblomiri-url-dispatcher-dev
+    - valac
     - libglib2.0-dev
     - libgudev-1.0-dev
     - libproperties-cpp-dev
@@ -56,7 +64,41 @@ requires:
     - mate-common
     - dbus
     - intltool
-#   - libayatana-common-dev
+#    - libayatana-common-dev
+    - gobject-introspection
+    - libgirepository1.0-dev
+    - liblomiri-url-dispatcher-dev
+    - valac
+    - libglib2.0-dev
+    - libgudev-1.0-dev
+    - libproperties-cpp-dev
+    - qtbase5-dev
+    - libqtdbusmock1-dev
+    - libqtdbustest1-dev
+    - libgtest-dev
+    - cppcheck
+    - googletest
+    - lcov
+    - gcovr
+    - systemd
+    - gsettings-ubuntu-schemas
+
+  ubuntu:focal:
+    - autopoint
+    - clang
+    - clang-tools
+    - g++
+    - git
+    - cmake
+    - cmake-extras
+    - mate-common
+    - dbus
+    - intltool
+#    - libayatana-common-dev
+    - gobject-introspection
+    - libgirepository1.0-dev
+#    - liblomiri-url-dispatcher-dev
+    - valac
     - libglib2.0-dev
     - libgudev-1.0-dev
     - libproperties-cpp-dev
