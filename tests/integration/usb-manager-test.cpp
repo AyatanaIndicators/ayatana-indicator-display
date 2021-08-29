@@ -104,10 +104,13 @@ TEST_F(UsbManagerFixture, Allow)
     // start a mock AdbdServer ready to submit a request
     const std::string public_key {"qAAAALUHllFjEZjl5jbS9ivjpQpaTNpibl28Re71D/S8sV3usNJTkbpvZYoVPfxtmHSNdCgLkWN6qcDZsHZqE/4myzmx/8Y/RqBy1oirudugi3YUUcJh7aWkY8lKQe9shCLTcrT7cFLZIJIidTvfmWTm0UcU+xmdPALze11I3lGo1Ty5KpCe9oP+qYM8suHbxhm78LKLlo0QJ2QqM8T5isr1pvoPHDgRb+mSESElG+xDIfPWA2BTu77/xk4EnXmOYfcuCr5akF3N4fRo/ACnYgXWDZFX2XdklBXyDj78lVlinF37xdMk7BMQh166X7UNkpH1uG2y5F6lUzyLg8SsFtRnJkw7eVe/gnJj3feQaFQbF5oVDhWhLMtWLtejhX6umvroVBVA4rynG4xEgs00K4u4ly8DUIIJYDO22Ml4myFR5CUm3lOlyitNdzYGh0utLXPq9oc8EbMVxM3i+O7PRxQw5Ul04X6K8GLiGUDV98DB+xYUqfEveq1BRnXi/ZrdPDhQ8Lfkg5xnLccPTFamAqutPtZXV6s7dXJInBTZf0NtBaWL0RdR2cOJBrpeBYkrc9yIyeqFLFdxr66rjaehjaa4pS4S+CD6PkGiIpPWSQtwNC4RlT10qTQ0/K9lRux2p0D8Z8ubUTFuh4kBScGUkN1OV3Z+7d7B+ghmBtZrrgleXsbehjRuKgEAAQA= foo@bar"};
     const std::string fingerprint {"12:23:5f:2d:8c:40:ae:1d:05:7b:ae:bd:88:8a:f0:80"};
+
     auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
 
     // set up a UsbManager to process the request
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
+    // cppcheck in Ubuntu 20.04 requires the unused attribute to be set here...
+    Q_UNUSED(usb_manager);
 
     // wait for the notification to show up, confirm it looks right
     wait_for_signals(notificationsSpy, 1);
@@ -171,6 +174,8 @@ TEST_F(UsbManagerFixture, USBDisconnectedDuringPrompt)
 
     // set up a UsbManager to process the request
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
+    // cppcheck in Ubuntu 20.04 requires the unused attribute to be set here...
+    Q_UNUSED(usb_manager);
 
     for (std::remove_const<decltype(N_TESTS)>::type i=0; i<N_TESTS; ++i)
     {
@@ -210,10 +215,14 @@ TEST_F(UsbManagerFixture, Greeter)
     // start a mock AdbdServer ready to submit a request
     const std::string public_key {"public_key"};
     auto adbd_server = std::make_shared<GAdbdServer>(*socket_path, std::vector<std::string>{"PK"+public_key});
+    // cppcheck in Ubuntu 20.04 requires the unused attribute to be set here...
+    Q_UNUSED(adbd_server);
 
     // set up a UsbManager to process the request
     m_greeter->m_state.set(Greeter::State::ACTIVE);
     auto usb_manager = std::make_shared<UsbManager>(*socket_path, *public_keys_path, m_usb_monitor, m_greeter);
+    // cppcheck in Ubuntu 20.04 requires the unused attribute to be set here...
+    Q_UNUSED(usb_manager);
 
     // add a signal spy to listen to the notification daemon
     QSignalSpy notificationsSpy(
