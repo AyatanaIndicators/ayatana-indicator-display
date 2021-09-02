@@ -1,4 +1,4 @@
-# Ayatana System Indicator &mdash; Display [![Build Status](https://travis-ci.com/AyatanaIndicators/ayatana-indicator-display.svg)](https://travis-ci.com/AyatanaIndicators/ayatana-indicator-display)
+# Ayatana System Indicator &mdash; Display [![Build Status](https://api.travis-ci.com/AyatanaIndicators/ayatana-indicator-display.svg)](https://travis-ci.com/github/AyatanaIndicators/ayatana-indicator-display)
 
 ## About Ayatana Indicators
 
