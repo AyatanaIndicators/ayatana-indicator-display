@@ -115,9 +115,9 @@ private:
 
         GVariantBuilder hints_builder;
         g_variant_builder_init(&hints_builder, G_VARIANT_TYPE_VARDICT);
-        g_variant_builder_add(&hints_builder, "{sv}", "x-canonical-non-shaped-icon", g_variant_new_string("true"));
-        g_variant_builder_add(&hints_builder, "{sv}", "x-canonical-snap-decisions", g_variant_new_string("true"));
-        g_variant_builder_add(&hints_builder, "{sv}", "x-canonical-private-affirmative-tint", g_variant_new_string("true"));
+        g_variant_builder_add(&hints_builder, "{sv}", "x-ayatana-non-shaped-icon", g_variant_new_string("true"));
+        g_variant_builder_add(&hints_builder, "{sv}", "x-ayatana-snap-decisions", g_variant_new_string("true"));
+        g_variant_builder_add(&hints_builder, "{sv}", "x-ayatana-private-affirmative-tint", g_variant_new_string("true"));
 
         auto args = g_variant_new("(susssasa{sv}i)",
                                   "",
