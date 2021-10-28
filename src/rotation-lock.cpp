@@ -195,8 +195,8 @@ private:
   ****
   ***/
 
-#ifdef HAS_UBUNTU_TOUCH_SCHEMA
-  static constexpr char const * m_schema_name {"com.ubuntu.touch.system"};
+#ifdef HAS_LOMIRI_TOUCH_SCHEMA
+  static constexpr char const * m_schema_name {"com.lomiri.touch.system"};
 #else
   static constexpr char const * m_schema_name {"org.ayatana.indicator.display"};
 #endif

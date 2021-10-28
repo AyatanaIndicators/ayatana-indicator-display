@@ -4,7 +4,7 @@ find_package(GSettings)
 ## GSettings
 ##
 
-if(NOT EXISTS /usr/share/glib-2.0/schemas/com.ubuntu.touch.system.gschema.xml)
+if(NOT EXISTS /usr/share/glib-2.0/schemas/com.lomiri.touch.system.gschema.xml)
   add_schema ("org.ayatana.indicator.display.gschema.xml")
 endif()
 
