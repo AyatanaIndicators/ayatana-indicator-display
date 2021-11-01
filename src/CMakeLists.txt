@@ -1,9 +1,5 @@
 add_definitions(-DG_LOG_DOMAIN="${CMAKE_PROJECT_NAME}")
 
-if(EXISTS "/usr/share/glib-2.0/schemas/com.lomiri.touch.system.gschema.xml")
-  add_definitions( -DHAS_LOMIRI_TOUCH_SCHEMA )
-endif()
-
 add_compile_options(
   ${CXX_WARNING_ARGS}
 )

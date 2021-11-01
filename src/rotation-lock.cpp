@@ -1,5 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
+ * Copyright 2021 Robert Tari
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <src/rotation-lock.h>
@@ -30,10 +32,37 @@ class RotationLockIndicator::Impl
 {
 public:
 
-  Impl():
-    m_settings(g_settings_new(m_schema_name)),
-    m_action_group(create_action_group())
+  Impl()
   {
+    GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
+
+    if (pSource != NULL)
+    {
+        GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "com.lomiri.touch.system", FALSE);
+
+        if (pSchema != NULL)
+        {
+            g_settings_schema_unref(pSchema);
+            m_settings = g_settings_new("com.lomiri.touch.system");
+        }
+        else
+        {
+            pSchema = g_settings_schema_source_lookup(pSource, "org.ayatana.indicator.display", FALSE);
+
+            if (pSchema != NULL)
+            {
+                g_settings_schema_unref(pSchema);
+                m_settings = g_settings_new("org.ayatana.indicator.display");
+            }
+            else
+            {
+                g_error("No schema could be found");
+            }
+        }
+    }
+
+    m_action_group = create_action_group();
+
     // build the icon
     const char *rotation_lock_icon_name {"orientation-lock"};
 
@@ -195,11 +224,6 @@ private:
   ****
   ***/
 
-#ifdef HAS_LOMIRI_TOUCH_SCHEMA
-  static constexpr char const * m_schema_name {"com.lomiri.touch.system"};
-#else
-  static constexpr char const * m_schema_name {"org.ayatana.indicator.display"};
-#endif
   GSettings* m_settings = nullptr;
   GSimpleActionGroup* m_action_group = nullptr;
   std::shared_ptr<SimpleProfile> m_phone;
