@@ -112,9 +112,9 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
             QVariantMap hints;
             ASSERT_TRUE(qDBusArgumentToMap(args.at(6), hints));
             ASSERT_EQ(3, hints.size());
-            ASSERT_TRUE(hints.contains("x-canonical-private-affirmative-tint"));
-            ASSERT_TRUE(hints.contains("x-canonical-non-shaped-icon"));
-            ASSERT_TRUE(hints.contains("x-canonical-snap-decisions"));
+            ASSERT_TRUE(hints.contains("x-ayatana-private-affirmative-tint"));
+            ASSERT_TRUE(hints.contains("x-ayatana-non-shaped-icon"));
+            ASSERT_TRUE(hints.contains("x-ayatana-snap-decisions"));
         }
         notificationsSpy.clear();
 
