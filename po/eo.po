@@ -8,36 +8,38 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-28 08:50+0000\n"
-"PO-Revision-Date: 2017-11-28 08:50+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-11-19 13:51+0000\n"
+"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: ../src/rotation-lock.cpp:125
 msgid "Rotation Lock"
-msgstr ""
+msgstr "Ŝloso kontraŭ turniĝo"
 
 #: ../src/rotation-lock.cpp:136
 msgid "Rotation"
-msgstr ""
+msgstr "Turniĝo"
 
 #: ../src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
+msgstr "Jen la haketaĵo de la RSA-ŝlosilo de la komputilo: %s"
 
 #: ../src/usb-snap.cpp:112
 msgid "Allow"
-msgstr ""
+msgstr "Permesi"
 
 #: ../src/usb-snap.cpp:114
 msgid "Don't Allow"
-msgstr ""
+msgstr "Malpermesi"
 
 #: ../src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr ""
+msgstr "Ĉu permesi erarserĉadon per USB?"
