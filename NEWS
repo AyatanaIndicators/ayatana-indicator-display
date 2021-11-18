@@ -1,0 +1,26 @@
+Overview of changes in ayatana-indicator-display 0.9.0
+
+  - Rename Lomiri-specific properties to x-lomiri.
+  - Rename com.ubuntu.touch.system to com.lomiri.touch.system.
+  - Rename x-canonical properties to x-ayatana.
+  - tests/CMakeFiles.txt: Suppress some cppchecks.
+  - tests/integration/usb-manager-test.cpp: Fix cppcheck test in Ubuntu
+    20.04. Mark unused adbd_server and usb_manager as such.
+  - po/CMakeLists.txt: Don't touch .pot file during builds.
+  - Add info and install instructions.
+  - Only create UsbManager instance if ADBD socket is available.
+    (Allows running this indicator on systems without ADBD support).
+  - Add XDG autostart stuff.
+  - Use -no-pie build flag for tests only.
+  - Fix rotation lock switch display.
+  - Create desktop profile. Allows using this indicator on systems that
+    are not phones.
+  - tests/test-dbus-fixture.h: Turn TestDBusFixture::TestDBusFixture
+    into an explicitly declared constructor.
+  - src/adbd-client.cpp: Fix several type warnings.
+  - Drop all references to upstart.
+  - Replace x-canonical attributes.
+  - Start indicator in systemd when ayatana-indicators.target is started.
+  - Add Travis CI configuration.
+  - Translation updates.
+  - Fork from Ubuntus' indicator-display project.
