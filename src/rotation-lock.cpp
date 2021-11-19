@@ -38,16 +38,24 @@ public:
 
     if (pSource != NULL)
     {
-        GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "com.lomiri.touch.system", FALSE);
+        if (ayatana_common_utils_is_lomiri()) {
 
-        if (pSchema != NULL)
-        {
-            g_settings_schema_unref(pSchema);
-            m_settings = g_settings_new("com.lomiri.touch.system");
+            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "com.lomiri.touch.system", FALSE);
+
+            if (pSchema != NULL)
+            {
+                g_settings_schema_unref(pSchema);
+                m_settings = g_settings_new("com.lomiri.touch.system");
+            }
+            else
+            {
+                g_error("No schema could be found");
+            }
+
         }
-        else
-        {
-            pSchema = g_settings_schema_source_lookup(pSource, "org.ayatana.indicator.display", FALSE);
+        else {
+
+            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "org.ayatana.indicator.display", FALSE);
 
             if (pSchema != NULL)
             {
@@ -58,6 +66,7 @@ public:
             {
                 g_error("No schema could be found");
             }
+
         }
     }
 

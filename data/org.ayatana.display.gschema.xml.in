@@ -10,15 +10,15 @@
   <schema id="org.ayatana.indicator.display" path="/org/ayatana/indicator/display/">
     <key name="rotation-lock" type="b">
       <default>false</default>
-      <summary>Lock rotation</summary>
-      <description>
+      <_summary>Lock rotation</_summary>
+      <_description>
       Lock automatic display rotation.
-      </description>
+      </_description>
     </key>
     <key name="orientation-lock" enum="org.ayatana.indicator.display.ScreenOrientation">
       <default>"none"</default>
-      <summary>Orientation lock</summary>
-      <description>Locks orientation to a specific value.</description>
+      <_summary>Orientation lock</_summary>
+      <_description>Locks orientation to a specific value.</_description>
     </key>
   </schema>
 </schemalist>
