@@ -5,9 +5,10 @@
  - cmake (>= 3.13)
  - cmake-extras
  - intltool
- - libayatana-common (>=0.9.3)
+ - libayatana-common (>=0.9.5)
  - glib-2.0 (>= 2.36)
  - gudev-1.0
+ - properties-cpp
  - gtest (>= 1.6.0) - **For testing**
  - qt5-base5 - **For testing**
  - libqtdbusmock1 - **For testing**
