@@ -68,6 +68,7 @@ pkg_check_modules(SERVICE_DEPS REQUIRED
     gio-unix-2.0>=${GLIB_MINIMUM}
     glib-2.0>=${GLIB_MINIMUM}
     gudev-1.0
+    properties-cpp>=0.0.1
 )
 include_directories (SYSTEM
   ${SERVICE_DEPS_INCLUDE_DIRS}
