@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Canonical Ltd.
+ * Copyright 2022 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <tests/utils/adbd-server.h>
@@ -203,7 +205,7 @@ TEST_F(UsbManagerFixture, USBDisconnectedDuringPrompt)
         notificationsSpy.clear();
     }
 
-    EXPECT_TRUE(wait_for([adbd_server, N_TESTS](){return adbd_server->m_responses.size() == N_TESTS;}, 5000));
+    EXPECT_TRUE(wait_for([adbd_server](){return adbd_server->m_responses.size() == N_TESTS;}, 5000));
     EXPECT_EQ(expected_responses, adbd_server->m_responses);
 }
 

@@ -29,8 +29,13 @@ else()
 endif()
 
 if(ENABLE_WERROR)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+    add_definitions("-Werror")
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_definitions("-Weverything")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_definitions("-Wall")
 endif()
 
 set(CMAKE_INSTALL_PKGLIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/${CMAKE_PROJECT_NAME}")
@@ -79,15 +84,7 @@ include_directories (SYSTEM
 ##
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-# set the compiler warnings
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    list(APPEND CXX_WARNING_ARGS -Weverything -Wno-c++98-compat -Wno-padded)
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    list(APPEND CXX_WARNING_ARGS -Wall -Wextra -Wpedantic)
-endif()
-
-add_compile_options(-std=c++14 -fPIC)
+add_compile_options(-fPIC)
 
 add_subdirectory(src)
 add_subdirectory(data)
