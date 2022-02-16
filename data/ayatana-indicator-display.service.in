@@ -4,7 +4,7 @@ PartOf=graphical-session.target
 PartOf=ayatana-indicators.target
 
 [Service]
-ExecStart=@pkglibexecdir@/ayatana-indicator-display-service
+ExecStart=@CMAKE_INSTALL_FULL_LIBEXECDIR@/ayatana-indicator-display/ayatana-indicator-display-service
 Restart=on-failure
 
 [Install]
