@@ -17,11 +17,17 @@ add_definitions(-DSCHEMA_DIR="${SCHEMA_DIR}")
 execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compile_schemas
                  OUTPUT_VARIABLE COMPILE_SCHEMA_EXECUTABLE
                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+# Because gschemas.compiled will be referenced multiple times independently, a level of
+# redirection is needed to prevent CMake from generating the rule for the file multiple
+# times, causing a race condition.
+# https://discourse.cmake.org/t/race-condition-when-multi-add-custom-target-deps-on-same-file-generated-by-add-custom-command/2358
+# https://bugs.debian.org/892091 (bug for ayatana-indicators-power, but applies here as well)
 add_custom_command (OUTPUT gschemas.compiled
                     DEPENDS ${CMAKE_BINARY_DIR}/data/org.ayatana.display.gschema.xml
                     COMMAND mkdir -p ${SCHEMA_DIR}
                     COMMAND cp -f ${DISPLAY_SCHEMA} ${SCHEMA_DIR}
                     COMMAND ${COMPILE_SCHEMA_EXECUTABLE} ${SCHEMA_DIR})
+add_custom_target(gschemas-compiled DEPENDS gschemas.compiled)
 
 set(SERVICE_LINK_LIBRARIES
     ${SERVICE_LIB}
@@ -46,9 +52,10 @@ add_definitions(
 function(add_test_by_name name)
   set(TEST_NAME ${name})
   set(COVERAGE_TEST_TARGETS ${COVERAGE_TEST_TARGETS} ${TEST_NAME} PARENT_SCOPE)
-  add_executable (${TEST_NAME} ${TEST_NAME}.cpp gschemas.compiled)
+  add_executable (${TEST_NAME} ${TEST_NAME}.cpp)
   target_link_options(${TEST_NAME} PRIVATE -no-pie)
   add_test(${TEST_NAME} ${TEST_NAME})
+  add_dependencies(${TEST_NAME} gschemas-compiled)
   set_property(TEST ${TEST_NAME} APPEND PROPERTY ENVIRONMENT ${CTEST_ENVIRONMENT})
   target_link_libraries(${TEST_NAME} ${SERVICE_LINK_LIBRARIES} ${TEST_LINK_LIBRARIES} ${THREAD_LINK_LIBRARIES})
 endfunction()
