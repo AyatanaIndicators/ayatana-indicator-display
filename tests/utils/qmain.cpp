@@ -22,6 +22,7 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <gtest/gtest.h>
+#include <libintl.h>
 
 #include <libqtdbusmock/DBusMock.h>
 
