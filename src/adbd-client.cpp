@@ -107,7 +107,7 @@ private:
 
     void on_public_key_response(PKResponse response)
     {
-        g_debug("%s thread %p got response %d", G_STRLOC, (void*)g_thread_self(), int(response));
+        g_debug("%s thread %p got response %d", G_STRLOC, g_thread_self(), int(response));
 
         // set m_pkresponse and wake up the waiting worker thread
         m_pkresponse = response;
@@ -125,11 +125,11 @@ private:
 
         while (!g_cancellable_is_cancelled(m_cancellable))
         {
-            g_debug("%s thread %p creating a client socket to '%s'", G_STRLOC, (void*)g_thread_self(), socket_path.c_str());
+            g_debug("%s thread %p creating a client socket to '%s'", G_STRLOC, g_thread_self(), socket_path.c_str());
             auto socket = create_client_socket(socket_path);
             bool got_valid_req = false;
 
-            g_debug("%s thread %p calling read_request", G_STRLOC, (void*)g_thread_self());
+            g_debug("%s thread %p calling read_request", G_STRLOC, g_thread_self());
             std::string reqstr;
             if (socket != nullptr)
                 reqstr = read_request(socket);
@@ -139,7 +139,7 @@ private:
             if (reqstr.substr(0,2) == "PK") {
                 PKResponse response = PKResponse::DENY;
                 const auto public_key = reqstr.substr(2);
-                g_debug("%s thread %p got pk [%s]", G_STRLOC, (void*)g_thread_self(), public_key.c_str());
+                g_debug("%s thread %p got pk [%s]", G_STRLOC, g_thread_self(), public_key.c_str());
                 if (!public_key.empty()) {
                     got_valid_req = true;
                     std::unique_lock<std::mutex> lk(m_pkresponse_mutex);
@@ -151,7 +151,7 @@ private:
                     });
                     response = m_pkresponse;
                     g_debug("%s thread %p got response '%d', is-cancelled %d", G_STRLOC,
-                            (void*)g_thread_self(),
+                            g_thread_self(),
                             int(response),
                             int(g_cancellable_is_cancelled(m_cancellable)));
                 }
