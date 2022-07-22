@@ -213,6 +213,7 @@ private:
   {
     Header h;
     h.title = _("Rotation");
+    h.tooltip = h.title;
     h.a11y = h.title;
     h.is_visible = g_settings_get_boolean(m_settings, "rotation-lock");
     h.icon = m_icon;
@@ -222,7 +223,8 @@ private:
   void update_desktop_header()
   {
     Header h;
-    h.title = _("Rotation");
+    h.title = _("Display");
+    h.tooltip = _("Display settings and features");
     h.a11y = h.title;
     h.is_visible = TRUE;
     h.icon = m_icon;

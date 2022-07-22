@@ -32,6 +32,7 @@ struct Header
   std::string title;
   std::string label;
   std::string a11y;
+  std::string tooltip;
   std::shared_ptr<GIcon> icon;
 
   bool operator== (const Header& that) const {
