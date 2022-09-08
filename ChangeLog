@@ -1,0 +1,1241 @@
+2022-07-20 Mike Gabriel
+
+        * release 22.2.1 (HEAD -> main, tag: 22.2.1)
+
+2022-07-06 Marius Gripsgard
+
+        * Merge pull request #52 from JamiKettunen/musl-tests (274b977)
+
+2022-06-30 Jami Kettunen
+
+        * src/adbd-client.cpp: Fix cppcheck (4e457ee)
+        * tests/utils/qmain.cpp: Add missing include for libintl.h (c61be87)
+
+2022-03-08 Mike Gabriel
+
+        * Merge branch
+          'ubports-personal/peat-psuwit/upstream_-_gschemas.compile-race'
+          (4d895fa)
+
+2022-03-07 Ratchanan Srirattanamet
+
+        * tests/unit: fix cmake custom command race condition (036b96b)
+
+2022-02-17 Mike Gabriel
+
+        * release 22.2.0 (cefd302) (tag: 22.2.0)
+
+2022-02-16 Mike Gabriel
+
+        * Merge branch 'tari01-pr/drop-cmake-install-full-pkglibexecdir'
+          (2600040)
+
+2022-02-16 Robert Tari
+
+        * Drop pkglibexecdir and use native CMake file configuration
+          (bab7087)
+
+2022-02-08 Robert Tari
+
+        * .travis.yml: Run CI builds on Travis CI's Ubuntu focal base system
+          (51776b6)
+
+2022-01-27 Mike Gabriel
+
+        * Merge branch 'tari01-pr/cleanup-compile-flags' (f57b15b)
+
+2022-01-12 Robert Tari
+
+        * .build.yml: Drop extra compilation flags and build with -Werror
+          (7ba756a)
+        * CMakeLists.txt: Clean up compilation flags (20b3817)
+        * tests/integration/usb-manager-test.cpp: Remove unneded lambda
+          capture (502ff92)
+
+2021-12-15 Mike Gabriel
+
+        * Merge branch
+          'tari01-pr/build-libayatana-common-with-enable-lomiri-features'
+          (6c32528)
+
+2021-12-06 Robert Tari
+
+        * .build.yml: Build libayatana-common with ENABLE_LOMIRI_FEATURES
+          (856547c)
+
+2021-12-08 Mike Gabriel
+
+        * Merge branch 'tari01-pr/fix-qt5-use-modules-warning' (29177a2)
+
+2021-12-07 Robert Tari
+
+        * tests/utils/CMakeLists.txt: Fix qt5_use_modules warning (ced7420)
+
+2021-12-08 Mike Gabriel
+
+        * Merge branch 'z3ntu-desktop-file-path' (36683d2)
+
+2021-12-06 Luca Weiss
+
+        * Fix wrong Exec= in .desktop file (c8ab74b)
+
+2021-12-08 Mike Gabriel
+
+        * Merge branch 'tari01-pr/properties-cpp-dependency' (985278a)
+
+2021-12-07 Robert Tari
+
+        * INSTALL.md: Update dependency list (f7dcfce)
+        * CMakeLists.txt: Fix missing check for properties-cpp dependency
+          (51c61cf)
+
+2021-12-08 Mike Gabriel
+
+        * Merge branch 'z3ntu-systemd' (6204a16)
+
+2021-12-06 Luca Weiss
+
+        * Do not install systemd service file if not found (2695f1d)
+
+2021-11-18 phlostically
+
+        * Translated using Weblate (Esperanto) (89937b6)
+
+2021-11-19 Robert Tari
+
+        * Merge branch 'sunweaver-pr/consolidate-gschema-usage' (809eb8c)
+
+2021-11-19 Mike Gabriel
+
+        * GSettings: Use org.ayatana.display.gschema.xml for non-Lomiri
+          sessions and unit tests. (f59500b)
+
+2021-11-18 Mike Gabriel
+
+        * AUTHORS (5a2368b)
+        * release 0.9.0 (899e8f8) (tag: 0.9.0)
+        * NEWS: Add empty file. (6bc86dd)
+
+2021-11-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/rename-to-x-lomiri' (7d12d6e)
+
+2021-11-09 Robert Tari
+
+        * Rename Lomiri-specific properties to x-lomiri (e61cc79)
+
+2021-11-03 ElectrifiedSpeed
+
+        * Translated using Weblate (Macedonian) (6b381ed)
+
+2021-11-01 Mike Gabriel
+
+        * Merge branch 'tari01-pr/drop-has-lomiri-touch-schema' (a2ecae1)
+
+2021-10-29 Robert Tari
+
+        * Drop HAS_LOMIRI_TOUCH_SCHEMA, use native schema instead (92334f7)
+
+2021-11-01 Mike Gabriel
+
+        * Merge branch 'tari01-pr/rename-com-ubuntu-touch-system' (9facc9a)
+
+2021-10-28 Robert Tari
+
+        * Rename com.ubuntu.touch.system to com.lomiri.touch.system (2626734)
+
+2021-11-01 Mike Gabriel
+
+        * Merge branch 'tari01-pr/x-canonical-to-x-ayatana' (f814857)
+
+2021-10-27 Robert Tari
+
+        * Raname x-canonical properties to x-ayatana (2cefc0f)
+
+2021-10-25 Robert Tari
+
+        * Merge branch 'sunweaver-pr/travis-cleanup' (03d55a3)
+
+2021-10-25 Mike Gabriel
+
+        * .build.yml: Remove source code of locally built dependency after it
+          has been installed. (313410a)
+        * .build.yml: Run unit tests in build_scripts: target. (f670d1c)
+        * .build.yml: Drop autogen.sh support. (e7872e7)
+        * Merge branch 'tari01-pr/suppress-constparameter-cppcheck' (e9a053a)
+
+2021-10-23 Robert Tari
+
+        * tests/CMakeFiles.txt: Suppress constParameter cppcheck (215bf8f)
+
+2021-10-22 Robert Tari
+
+        * data/CMakeLists.txt: Do not use automatic GSchema compilation
+          (db6cef8)
+
+2021-10-21 Mike Gabriel
+
+        * Merge branch 'tari01-pr/compile-gschema-during-installation'
+          (c0ca600)
+
+2021-10-20 Robert Tari
+
+        * Compile GSchema during installation (3505d7b)
+        * .travis.yml: Temporarily disable ppc64le builds (f0394c7)
+
+2021-09-02 Robert Tari
+
+        * Fix Travis status image (b2e8ec5)
+
+2021-08-30 Robert Tari
+
+        * Merge branch 'sunweaver-pr/no-potfile-updates-during-builds'
+          (0215693)
+
+2021-08-29 Mike Gabriel
+
+        * tests/integration/usb-manager-test.cpp: Fix cppcheck test in Ubuntu
+          20.04. Mark unused adbd_server and usb_manager as such.
+          (6128490)
+        * .build.yml: Also run unit tests on Ubuntu. (8310587)
+
+2021-08-29 Hosted Weblate
+
+        * Update translation files (b575086)
+
+2021-08-30 Robert Tari
+
+        * Merge branch 'sunweaver-pr/run-tests-on-focal' (34f8c06)
+
+2021-08-29 Hosted Weblate
+
+        * Update translation files (4556b7a)
+
+2021-08-29 Mike Gabriel
+
+        * tests/integration/usb-manager-test.cpp: Fix cppcheck test in Ubuntu
+          20.04. Mark unused adbd_server and usb_manager as such.
+          (3792e33)
+        * .build.yml: Also run unit tests on Ubuntu. (40c5250)
+
+2021-08-29 Hosted Weblate
+
+        * Update translation files (f1e0194)
+
+2021-08-29 Mike Gabriel
+
+        * po/CMakeLists.txt: No fiddling anymore with the .pot file during
+          builds. (30ffed7)
+        * tests/integration/usb-manager-test.cpp: Fix cppcheck test in Ubuntu
+          20.04. Mark unused adbd_server and usb_manager as such.
+          (9374f98)
+        * .build.yml: Also run unit tests on Ubuntu. (4055f28)
+        * debian/{control,compat}: Bump to level 10, this will run out tests.
+          (91d4ef0)
+        * debian/rules: Enable unit tests with the new way. (e3d2e56)
+        * debian/control: Omit B-D dh-systemd on Debian/Ubuntu versions that
+          don't have it anymore. Use alternative B-D 'hello'
+          instead. (8886a97)
+        * debian/control: Add B-D: libayatana-common-dev. (d7bd2ed)
+
+2021-08-28 Weblate
+
+        * Added translation using Weblate (Kurdish (Southern)) (1aaac50)
+        * Added translation using Weblate (Kurdish (Northern)) (db1c5c0)
+
+2021-08-28 Mike Gabriel
+
+        * po/LINGUAS: Adjust zh_* variants. (9da2328)
+        * po/zh_Hant.po: Drop duplicate file for Chinese (Tranditional).
+          (db7c639)
+        * .travis.yml: Fix branch name what is now the default branch in
+          ayatana-dev-scripts. (4ab6775)
+        * Merge branch 'sunweaver-pr/ci-fixes' (b98e368)
+        * .build.yml: Adjust to new build requirements of built-from-source
+          libayatana-common. (b47561d)
+        * Merge branch 'tari01-pr/add-info-and-install-instructions'
+          (e56ff8b)
+
+2021-08-16 Robert Tari
+
+        * Add info and install instructions (2bf38e7)
+
+2021-08-14 Mike Gabriel
+
+        * Merge branch 'tari01-pr/fix-schema-path' (8ab565a)
+
+2021-08-13 Robert Tari
+
+        * Fix schema path (18b7771)
+
+2021-08-13 Mike Gabriel
+
+        * Merge branch 'tari01-pr/check-for-adbd-socket' (07df986)
+
+2021-08-11 Robert Tari
+
+        * Check for ADBD socket before creating UsbManager (bd2347f)
+
+2021-08-13 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-xdg-autostart-stuff' (a3907f1)
+
+2021-08-03 Robert Tari
+
+        * Add XDG autostart stuff (01de53a)
+
+2021-08-13 Mike Gabriel
+
+        * Revert "Fix schema path" (7b110fc)
+        * Merge branch 'tari01-pr/fix-schema-path' (30f951b)
+
+2021-08-03 Robert Tari
+
+        * Fix schema path (fb3029c)
+
+2021-08-13 Mike Gabriel
+
+        * Merge branch
+          'tari01-pr/fix-double-declaration-of-create-desktop-menu'
+          (04baf26)
+
+2021-08-12 Robert Tari
+
+        * Fix failing build (e66c68e)
+
+2021-08-10 Mike Gabriel
+
+        * .build.yml: Add build requirement libayatana-common via a source
+          build. (7db2204)
+        * Merge branch 'tari01-pr/no-pie-only-in-tests' (6362bec)
+
+2021-08-10 Robert Tari
+
+        * Use -no-pie build flag for tests only (3ab314a)
+
+2021-08-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/fix-switch' (392eb31)
+
+2021-08-03 Robert Tari
+
+        * Fix rotation lock switch display (b40cd9a)
+
+2021-08-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-desktop-profile' (165c508)
+
+2021-08-03 Robert Tari
+
+        * Create desktop profile (287a645)
+
+2021-08-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-standard-ayatana-cmake-bits' (5f7bc0f)
+
+2021-07-30 Robert Tari
+
+        * Add standard Ayatana CMake bits (76fd52d)
+
+2021-08-09 Mike Gabriel
+
+        * debian/control: Add B-D: libgtest-dev. (c98d777)
+
+2021-08-04 Robert Tari
+
+        * Merge branch 'sunweaver-pr/travis-ci' (53bab0e)
+
+2021-08-03 Robert Tari
+
+        * tests/CMakeLists.txt: Adjust cppcheck call so that it succeeds with
+          less --suppress parameters. (3336228)
+
+2021-08-04 Mike Gabriel
+
+        * .build.yml: Enable CTEST_OUTPUT_ON_FAILURE for better cppcheck (et
+          al.) debugging. (3b76b0d)
+
+2021-06-09 Mike Gabriel
+
+        * tests/CMakeLists.txt: Build unit tests with -no-pie CXXFLAG if GNU
+          compiler is used. (95d827e)
+        * tests/test-dbus-fixture.h: Turn TestDBusFixture::TestDBusFixture
+          into an explicitly declared constructor. (800cc78)
+        * Travis CI: Initial CI build configuration. (0d1d245)
+
+2020-08-14 Mike Gabriel
+
+        * tests/CMakeLists.txt: Add options --suppress=missingInclude and
+          --suppress=unusedFunction. Be less strict and make the
+          cppcheck pass. (65cd340)
+        * tests/unit/adbd-client-test.cpp: white-space fix (8286c68)
+        * cppcheck: Add several missing override statements to make cppcheck
+          happy (which is one of our unit tests). (d1f7136)
+        * src/adbd-client.cpp: Fix several type warnings in g_debug calls()
+          by casting to (void*). (220be12)
+
+2021-06-04 Hosted Weblate
+
+        * Update translation files (4d6d205)
+
+2021-06-03 Weblate
+
+        * Added translation using Weblate (Chinese (Traditional)) (81fd6a0)
+
+2021-06-03 Hosted Weblate
+
+        * Update translation files (034c590)
+
+2021-03-30 Hosted Weblate
+
+        * Update translation files (5f85914)
+
+2021-03-29 Weblate
+
+        * Added translation using Weblate (Chinese (Simplified)
+          (zh_LATN@pinyin)) (34a9cb6)
+
+2021-03-18 Reza Almanda
+
+        * Translated using Weblate (Indonesian) (4bef7cf)
+
+2020-08-17 Mike Gabriel
+
+        * CMakeLists.txt: Revert introducing configure switch
+          -Denable_coverage, the coverage enablement is enabled via
+          CMAKE_BUILD_TYPE=coverage env var. (719c4b3)
+
+2021-02-07 Ács Zoltán
+
+        * Translated using Weblate (Hungarian) (d029e2c)
+
+2020-11-01 Hosted Weblate
+
+        * Update translation files (02822a4)
+
+2020-10-31 Weblate
+
+        * Added translation using Weblate (Italian) (3a327f2)
+        * Added translation using Weblate (Tamil (Sri Lanka)) (d2cff73)
+        * Added translation using Weblate (Dhivehi) (6d3b3e9)
+        * Added translation using Weblate (Venetian) (86bf24b)
+        * Added translation using Weblate (Kashubian) (eb3a6cc)
+        * Added translation using Weblate (Macedonian) (46daf7b)
+        * Added translation using Weblate (Friulian) (df95299)
+        * Added translation using Weblate (Tatar) (339fa9d)
+
+2020-10-26 Adrià Martín
+
+        * Translated using Weblate (Sardinian) (56c534b)
+
+2020-10-27 Hosted Weblate
+
+        * Update translation files (e5a9989)
+
+2020-10-26 Weblate
+
+        * Added translation using Weblate (Manx) (fbf8658)
+        * Added translation using Weblate (Afar) (c0c95b0)
+        * Added translation using Weblate (Nyanja) (fabc76f)
+        * Added translation using Weblate (Assamese) (ee4a6e6)
+        * Added translation using Weblate (Wolof) (b9b5bb1)
+
+2020-10-18 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (8dabbdc)
+
+2020-09-25 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (eaa0112)
+
+2020-09-04 antuketot76
+
+        * Translated using Weblate (Malay) (410bbce)
+
+2020-08-15 Robert Tari
+
+        * Merge branch
+          'sunweaver-pr/cmakelists-rework-and-optional-unit-tests'
+          Attributes GH PR #10:
+          https://github.com/AyatanaIndicators/ayatana-indicator-display/pull/10
+          (9d41d52)
+
+2020-08-14 Mike Gabriel
+
+        * Drop all references to upstart. (efcda4b)
+
+2020-08-15 Robert Tari
+
+        * Merge branch 'sunweaver-pr/drop-upstart-support' Attributes GH PR
+          #7:
+          https://github.com/AyatanaIndicators/ayatana-indicator-display/pull/7
+          (d90760c)
+
+2020-08-15 Mike Gabriel
+
+        * CMakeLists.txt: Make running unit tests at build time optional,
+          same for coverage reports. (47c3202)
+        * CMakeLists.txt: Earlier inclusion of GNUInstallDirs. (363e3a0)
+        * CMakeLists.txt: white-space fix. (db509ce)
+        * CMakeLists.txt: Add PROJECT_VERSION. (92b531a)
+
+2020-08-14 Mike Gabriel
+
+        * Drop all references to upstart. (f79961d)
+        * COPYING: Add file, GPL-3. (1c91c49)
+
+2020-08-11 Mike Gabriel
+
+        * Merge branch 'tari01-pr/replace-x-canonical-attributes' (13687b8)
+
+2020-08-11 Robert Tari
+
+        * Replace x-canonical attributes (7685f18)
+        * Merge branch 'sunweaver-pr/libexec-dir-on-Debian-too' Attributes GH
+          PR #1:
+          https://github.com/AyatanaIndicators/ayatana-indicator-display/pull/1
+          (c7aba6f)
+        * Merge branch 'pr/libexec-dir-on-Debian-too' of
+          https://github.com/sunweaver/ayatana-indicator-display
+          into sunweaver-pr/libexec-dir-on-Debian-too Attributes GH
+          PR #1:
+          https://github.com/AyatanaIndicators/ayatana-indicator-display/pull/1
+          (d055575)
+
+2020-08-10 Mike Gabriel
+
+        * debian/ayatana-indicator-display.links: Add FIXME/reminder to drop
+          manual symlinking of systemd user service file once DH
+          compat level is raised to a level above 12. (fdda527)
+        * Merge branch 'ubports-fix-systemd' (dea0206)
+
+2020-08-09 Marius Gripsgard
+
+        * Start indicator in systemd when ayatana-indicators.target is
+          started (bda4956)
+
+2020-07-29 Ács Zoltán
+
+        * Translated using Weblate (Hungarian) (acc3b1a)
+
+2020-07-24 Mike Gabriel
+
+        * CMakeLists.txt: Drop workaround for missing libexec dir on Debian.
+          Debian moved forward and now supports FHS 3.0 (since
+          Debian Policy 4.1.5). (b49abfb)
+
+2020-07-19 Tetra Homer
+
+        * Translated using Weblate (Persian) (34d6c4b)
+
+2020-07-03 Tobias p
+
+        * Translated using Weblate (Danish) (ac2f7de)
+
+2020-06-19 Ács Zoltán
+
+        * Translated using Weblate (Hungarian) (ae60036)
+
+2020-06-14 MarongHappy
+
+        * Translated using Weblate (Korean) (586bbe7)
+
+2020-05-21 wdggg
+
+        * Translated using Weblate (Chinese (Simplified)) (73ad967)
+
+2020-05-08 Abdusalam
+
+        * Translated using Weblate (Uyghur) (3093f8a)
+
+2020-05-09 iNetRoos
+
+        * Translated using Weblate (Afrikaans) (cc28b38)
+
+2020-04-27 Jeannette L
+
+        * Translated using Weblate (French (Canada)) (4ab2fa8)
+
+2020-04-22 Adolfo Jayme Barrientos
+
+        * Translated using Weblate (Catalan) (0966670)
+
+2020-04-14 Syahmin Sukhairi
+
+        * Translated using Weblate (Indonesian) (fd5e3d2)
+
+2020-04-07 Zeeshan Khan
+
+        * Translated using Weblate (Hindi) (3861faf)
+
+2020-04-03 Allan Nordhøy
+
+        * Translated using Weblate (Romanian) (d347f73)
+        * Translated using Weblate (Arabic) (bbc2a26)
+
+2020-04-01 Davit Mayilyan
+
+        * Translated using Weblate (Armenian) (6d2c64e)
+
+2020-03-29 Alexie Brindusescu
+
+        * Translated using Weblate (Romanian) (645b762)
+
+2020-03-17 Prachi Joshi
+
+        * Translated using Weblate (Marathi) (634de63)
+
+2020-01-25 Emiliano Gabriele
+
+        * Translated using Weblate (Italian) (077443a)
+
+2020-01-10 Ahmed Mahdi Ali AL Slais
+
+        * Translated using Weblate (Arabic) (2069d45)
+
+2020-01-02 Milo Ivir
+
+        * Translated using Weblate (Croatian) (7030e24)
+
+2019-12-16 Ryo Nakano
+
+        * Translated using Weblate (Japanese) (ec854dd)
+
+2019-11-26 Yuji Hon
+
+        * Translated using Weblate (Japanese) (4099975)
+
+2019-10-30 Marcela Korreshi
+
+        * Translated using Weblate (Albanian) (639dfd3)
+
+2019-10-04 MrJang
+
+        * Translated using Weblate (Korean) (83c44d6)
+
+2019-09-19 Sayed Mohamed
+
+        * Translated using Weblate (Arabic) (08f8f99)
+
+2019-08-13 Matúš Baňas
+
+        * Translated using Weblate (Slovak) (ce3f0eb)
+
+2019-08-10 M Ramani Priya
+
+        * Translated using Weblate (Telugu) (e2ef2a4)
+
+2019-07-23 Simon Picot
+
+        * Translated using Weblate (French) (abb5638)
+
+2019-07-01 Elizabeth Sherrock
+
+        * Translated using Weblate (Chinese (Simplified)) (e4df502)
+
+2019-05-21 THANOS SIOURDAKIS
+
+        * Translated using Weblate (Greek) (16c1634)
+
+2019-04-17 Rui Mendes
+
+        * Translated using Weblate (Portuguese) (d66087c)
+
+2019-01-11 Louies
+
+        * Translated using Weblate (Chinese (Traditional)) (5d0ee33)
+
+2018-11-18 ssantos
+
+        * Translated using Weblate (Portuguese) (be4dac7)
+
+2018-10-31 Petter Reinholdtsen
+
+        * Translated using Weblate (Norwegian Bokmål) (52a5728)
+
+2018-10-23 Iván Seoane
+
+        * Translated using Weblate (Galician) (29a8aba)
+
+2018-09-27 Володимир Бриняк
+
+        * Translated using Weblate (Ukrainian) (d3c5d85)
+
+2018-09-19 Henrique Combochi
+
+        * Translated using Weblate (Portuguese) (e9b5a39)
+
+2018-09-01 account1
+
+        * Translated using Weblate (German) (206f85b)
+
+2018-08-05 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (c9c1608)
+
+2018-07-29 Adrian Paun
+
+        * Translated using Weblate (Romanian) (71c5bce)
+
+2018-07-01 Tiago de Oliveira
+
+        * Translated using Weblate (Portuguese (Brazil)) (32448a9)
+
+2018-05-08 Heimen Stoffels
+
+        * Translated using Weblate (Dutch) (cb2a446)
+
+2018-05-02 Adolfo Jayme Barrientos
+
+        * Translated using Weblate (Spanish) (561167c)
+
+2018-04-17 Dariusz Król
+
+        * Translated using Weblate (Polish) (61c2365)
+
+2018-04-03 Pavel Borecki
+
+        * Translated using Weblate (Czech) (cf1498a)
+        * Translated using Weblate (Czech) (683f0d8)
+
+2018-03-28 Mike Gabriel
+
+        * Translated using Weblate (German) (84563a1)
+        * Translated using Weblate (German) (8d85aae)
+        * Translated using Weblate (German) (d74f847)
+        * Translated using Weblate (German) (86acddb)
+
+2018-02-28 Moo
+
+        * Translated using Weblate (Lithuanian) (7b92624)
+
+2018-02-28 Мира Странная
+
+        * Translated using Weblate (Russian) (3e94fdb)
+
+2018-02-08 Mertcan Gokgoz
+
+        * Translated using Weblate (Turkish) (9fadac3)
+
+2018-01-22 Марс Ямбар
+
+        * Translated using Weblate (Ukrainian) (03520f3)
+
+2017-12-31 Sebastian Rasmussen
+
+        * Translated using Weblate (Swedish) (518acd4)
+
+2017-12-18 Viktar Vauchkevich
+
+        * Translated using Weblate (Belarusian) (6ca1577)
+
+2017-12-10 Kristjan Räts
+
+        * Translated using Weblate (Estonian) (c8902dd)
+
+2017-12-06 Allan Nordhøy
+
+        * Translated using Weblate (Norwegian Bokmål) (671c373)
+
+2017-12-06 Mike Gabriel
+
+        * Rename GNOMELOCALEDIR -> LOCALEDIR. (2ca072a)
+        * CMakeLists.txt: Move gettext initialization below the
+          GNUInstallDirs include. This fixes broken i18n support.
+          (68ff3ce)
+
+2017-12-05 Mike Gabriel
+
+        * debian/postinst: Drop file. The libglib2.0-bin package has trigger
+          for schema compilation these days (and this for ages,
+          actually). (6b6fc19)
+
+2017-12-02 Mike Gabriel
+
+        * debian/control: Fix D (glib2.0-bin -> libglib2.0-bin). (5ba31c1)
+        * debian/source/format: Enforce 1.0 source format. (730cb95)
+        * debian/{control,postinst}: Recompile GSettings schemas at post
+          installation. (eb1bd99)
+
+2017-11-29 Mike Gabriel
+
+        * data/: Namespace change was incomplete. Make it complete. (d8d6fd6)
+        * update-po.sh: Preserve .pot file when updating *.po files.
+          (79549f3)
+        * update-po.sh: Fix filenames of .ini(.in) and .xml(.in) files in po
+          files. (f410b51)
+        * update-pot.sh: Fix filenames of .ini(.in) and .xml(.in) files in po
+          template file. (9a0ba66)
+
+2017-11-28 Mike Gabriel
+
+        * debian/control: Add B-D: intltool. (7e76031)
+        * po/: Add empty translation files. Prepare for Weblate registration.
+          (b07a424)
+        * Fork from Ubuntus' indicator-display project. (de76813)
+
+2017-02-10 Bileto Bot
+
+        * Releasing 0.1+17.04.20170210-0ubuntu1 (22d4585) (tag:
+          0.1+17.04.20170210-0ubuntu1)
+
+2017-02-10 Rodney Dawes
+
+        * Enable parallel builds. (e028a7b)
+        * Make coverage reporting work. (e012ca9)
+        * Use intltool support from cmake-extras. (7a9c9e0)
+        * Fix the google test dependency. (421b1f5)
+        * Remove old autostart files. (1ff41c3)
+        * Remove hard-coded -g option. (349c453)
+
+2017-02-07 Rodney Dawes
+
+        * Enable parallel builds. (9cc563e)
+        * Make coverage reporting work. (703381c)
+        * Use intltool support from cmake-extras. (907fc24)
+        * Fix the google test dependency. (5b4307e)
+
+2017-02-06 Rodney Dawes
+
+        * Remoe old autostart files. (ab90c81)
+
+2017-01-06 Bileto Bot
+
+        * Releasing 0.1+17.04.20170106-0ubuntu1 (4724458) (tag:
+          0.1+17.04.20170106-0ubuntu1)
+
+2017-01-06 Pete Woods
+
+        * Compatibility with unversioned cmake-extras modules (LP: #1563573)
+          (2877404)
+
+2016-12-07 Pete Woods
+
+        * Compatibility with unversioned cmake-extras modules (1b83d8a)
+
+2016-10-21 Bileto Bot
+
+        * Releasing 0.1+17.04.20161021.1-0ubuntu1 (4fa4985) (tag:
+          0.1+17.04.20161021.1-0ubuntu1)
+
+2016-10-21 Charles Kerr
+
+        * Fix test error in adbd-client-test (3def83e)
+
+2016-10-21 Ted Gould
+
+        * Adding a systemd user session unit (4f079d2)
+
+2016-10-21 Charles Kerr
+
+        * add block braces as suggested by dobey (7002fc4)
+
+2016-10-19 Charles Kerr
+
+        * remove dead code (144228c)
+        * remove the temporary tracers from r34 and r35 (9e5e5d7)
+
+2016-09-22 Charles Kerr
+
+        * use a std::atomic for adbd-client's m_pkresponse_ready (549cd2b)
+        * fix tyop (e616541)
+        * sync with
+          lp:~charlesk/indicator-display/lp-1572545-prompt-in-lockscreen
+          (b7c1351)
+        * keep piling 'em on (fe6fe0a)
+        * tweak the debug tracers (a17e7fc)
+        * more g_debug() tracers (c997668)
+        * in UsbSnapTest, explicitly disconnect the core::Signals at the end
+          of the test (42e7cc5)
+        * in AdbdClientTest, raise the test timeout interval from 2s to 5s
+          (0236d50)
+        * in AdbdClientDest, explicitly disconnect the core::Signals at the
+          end of the test (ec9196a)
+        * more g_debug() tracers (c19c2ea)
+        * The notifying thread does not need to hold the lock on the same
+          mutex as the one held by the waiting thread(s); in fact
+          doing so is a pessimization. (3a64406)
+        * fix r25 copypaste error, lock on the correct mutex (c17e7b8)
+        * GAdbdClient::Impl::on_public_key_response() doesn't need a
+          condition variable wait, so use std::lock_guard rather
+          than std::unique_lock (baa9f93)
+        * add a plethora of log statements to help figure out what's causing
+          the silo test failures (c58d220)
+
+2016-09-21 Charles Kerr
+
+        * adbd-client's std::condition_variable::wait() call seems to be the
+          system_error culprit, so wrapping in try-catch to be
+          cautious (b74f5f6)
+        * in adbd-client's dtor, check the worker thread's joinable() state
+          before calling join() on it (3b7185f)
+        * in PKIdleData, take the std::string argument as a const& to make
+          cppcheck happy on yakkety (996f5b9)
+        * same as trunk (9ed013f)
+
+2016-07-20 Ted Gould
+
+        * Adding a restart rule (8ede639)
+
+2016-07-19 Ted Gould
+
+        * Vivid is amazing (1d5f828)
+        * Adding a systemd user session unit (d90092b)
+
+2016-05-03 Charles Kerr
+
+        * sync UsbManagerFixture::USBDisconnectedDuringPrompt to r40, to
+          expect a 'no' each time there's a usb disconnect (403fd0a)
+        * always send a response to adb even in edge cases; e.g. send an
+          auto-NO if the usb connection is broken while the prompt
+          is up (c66c33c)
+
+2016-04-29 Charles Kerr
+
+        * don't clear the snap decision when the greeter changes state
+          (d7a0cac)
+
+2016-04-27 Charles Kerr
+
+        * increase timeout interval on usb manager integration test (dfa098f)
+        * fix two trivial 'unused parameter' warnings in glib callbacks
+          (6dfd01c)
+        * remove the temporary tracers (020e491)
+        * sync tests to r33 changes (ccfe9ef)
+        * silence 'no previous prototype' warning from clang (fcf75a5)
+        * choosing an action in the snap decision closes the notification, so
+          when that happens clear our notification_id s.t. our dtor
+          doesn't try to remove a notification that no longer exists
+          (a277302)
+        * silence clang warning in PrintTo gtest helper (2e88906)
+        * add tracers for the notification warning (f8a8646)
+
+2016-04-25 Charles Kerr
+
+        * add tracer log messages (7d2fac8)
+
+2016-04-23 Charles Kerr
+
+        * in tests/utils/adbd-server.h, fix a timing bug in the test
+          scaffolding by creating the adb socket in AdbdServer's
+          ctor instead of in its worker thread. (0f5534d)
+
+2016-04-22 Charles Kerr
+
+        * don't prompt when the greeter's not running yet: change greeter's
+          payload from an 'is_active' bool to a three-value state of
+          active, inactive, and unavailable (ce52341)
+
+2016-04-21 Charles Kerr
+
+        * tell glib not to exit when the gdbusconnection is closed (b37db33)
+        * code cleanup to prepare for MR (d4e82e7)
+        * don't pass a GDBusConnection to the Greeter ctor (3b84a37)
+
+2016-04-20 Charles Kerr
+
+        * add unit tests for greeter (e1c1a9a)
+        * remove tracers (e1284eb)
+        * watch for the Greeter to appear on the bus (cb46051)
+        * more tracers (e683501)
+        * debug tracers (1950629)
+
+2016-03-24 CI Train Bot
+
+        * Releasing 0.1+16.04.20160324.1-0ubuntu1 (621bec1) (tag:
+          0.1+16.04.20160324.1-0ubuntu1)
+
+2016-03-24 Charles Kerr
+
+        * When a new device appears to ADB, prompt the user whether or not to
+          allow the connection. Approved by: PS Jenkins bot, Charles
+          Kerr, Xavi Garcia (e3fa958)
+        * add tracer g_debug() calls for the benefit of the integration tests
+          (194d7e8)
+
+2016-03-23 Charles Kerr
+
+        * fix UsbManager dtor issue found by valgrind (9f03876)
+        * fix missing field initialization compiler warning (8f396a5)
+        * keep the adbd socket open even when the lockscreen is closed. hold
+          the pkrequest state in USBManager until the screen's
+          unlocked. (ccc831d)
+        * replace text 'Deny' with 'Don't Allow' for consistency with other
+          permission prompts (8258810)
+
+2016-03-22 Charles Kerr
+
+        * add tests for not showing snap decisions in greeter mode (4f8a17f)
+        * don't show the snap decision until we're out of the greeter
+          (a5f330f)
+        * add multiple usb requests + disconnects to confirm the notification
+          appears on subsequent requests (952552b)
+        * in the mock ADB server, keep making a request until a response is
+          received. (ba426a0)
+        * make wait_for_signals() a macro again so that the GTest log
+          messages will give the test file and line number (0b9a8d0)
+        * fix typo (cc2e226)
+
+2016-03-21 Charles Kerr
+
+        * get greeter's IsActive property working (70209f3)
+        * add Greeter skeleton (ecf802d)
+        * in UsbManager, reset AdbdClient on usb disconnect (1c4f005)
+        * if our USB device is disconnected while prompting the user for
+          ADBD, cancel the prompt. (7a25132)
+
+2016-03-18 Charles Kerr
+
+        * turn off verbose debugging (45709c4)
+        * add some extra debug statements to usb-manager.cpp to track user
+          response and the act of writing the pk out to disk
+          (ccecdd4)
+
+2016-03-17 Charles Kerr
+
+        * re-add .bzr-builddeb, which got removed by accident (f557754)
+        * sync with trunk (6cbffcb)
+        * merge
+          https://launchpadlibrarian.net/213229083/indicator-display_0.1+15.10.20150727-0ubuntu1_0.1+15.10.20150727-0ubuntu2~gcc5.1.diff.gz
+          (d2f14e0)
+        * fix warning message (ff5be6a)
+        * sync with lp:~ubuntu-branches/ubuntu/wily/indicator-display/wily/
+          to pick up 0.1+15.10.20150727-0ubuntu2~gcc5.1 (b7d7f15)
+        * introduce a QtFixture gtest base class to reduce redundancy in test
+          fixtures' helper/util code (5b6008f)
+        * de-dupe use of dbus names (c63d90d)
+        * add tests/utils/qdbus-helpers.h so that we only define
+          qDBusArgumentToMap() in one place (65eba5e)
+
+2016-03-16 Charles Kerr
+
+        * tweak class description comments (3ef931c)
+        * in usb-manager.cpp, remove the remember_choice workaround since is
+          already working around it (078459b)
+        * in POTFILES.in, fix copy-paste typo (60bcf37)
+        * use cmake-extras' EnableCoverageReport instead of home-rolled rules
+          (9482a77)
+
+2016-03-15 Charles Kerr
+
+        * Remove the minimum version of 0.4 for libqtdbusmock1-dev, it's
+          causing a failure on Jenkins wily and was only included
+          due to copy-paste from indicator-network. So let's see how
+          Wily goes without it. (1e659cd)
+        * use cmake's find_package(Threads) output everywhere instead of just
+          in src/ (2b21545)
+        * listen on /dev/socket/adbd, not /dev/socket/adb (8ddb171)
+        * oops, last commit's diagnosis was incorrect. The timing test issue
+          came from async dbus handling interfering with fast
+          setup/teardown of automated tests. Revert the last change
+          and fix by setting up the dbus signal subscription
+          immediately upon getting the dbus connection. (ee369ba)
+        * fix test timing issue, had max timeout at 1 sec for listening for
+          fdo notification user response, but the tests on the phone
+          are sometimes too slow for that timeout (670f6fd)
+        * add some debug stubs (df322a4)
+        * in tests/unit/adbd-client-test.cpp, fix tmpl character buffer
+          intialization for g++ 4.9x (4aeb345)
+        * cmake's Thread::Thread import doesn't exist in vivid's version of
+          cmake (3.0.2), so fall back gracefully to -pthread there
+          (b3f65b9)
+        * tweak a couple of 'auto' declarations that g++ 5.3.1 understands
+          but 4.9.2 on vivid doesn't (6174e92)
+        * add new CMakeLists.txt files in tests/utils/ and tests/unit/
+          (bb4fe39)
+
+2016-03-11 Charles Kerr
+
+        * clean up compile_options and warnings. Add DBUS debug log messages
+          to ctest environment variables. (0734731)
+
+2016-03-10 Charles Kerr
+
+        * add UsbManager (d8ef8e6)
+        * cmake and test directory cleanup (f8a5d99)
+        * add src/usb-snap.cpp to POTFILES.in (0194e5f)
+
+2016-03-09 Charles Kerr
+
+        * add human-readable fingerprint extraction from the adb public keys
+          (13a0b90)
+
+2016-03-08 Charles Kerr
+
+        * add fingerprint snap decisions; test with notification dbusmock
+          (68b671c)
+        * add out-of-line virtual method definitions to Indicator to silence
+          clang++ warnings (40f4847)
+
+2016-03-07 Charles Kerr
+
+        * add test to confirm on_pk() signal is fired in the main thread
+          rather than the worker thread (95277f3)
+
+2016-03-06 Charles Kerr
+
+        * add ADB server/client + tests (d911528)
+
+2016-03-04 Charles Kerr
+
+        * cosmetic: use -test as the suffix for test files (8cf3f1a)
+        * fix RotationLock shutdown issue that messed with getting clean test
+          runs (d6cf064)
+        * update glib/dbus test fixtures from indicator-datetime/15.10 branch
+          (b1be45c)
+
+2015-07-27 CI Train Bot
+
+        * Releasing 0.1+15.10.20150727-0ubuntu1 (9cf0f21) (tag:
+          0.1+15.10.20150727-0ubuntu1)
+
+2015-07-27 Charles Kerr
+
+        * drop build-dependency on g++-4.9
+          Fixes: #1452323 Approved by: Pete
+          Woods, PS Jenkins bot, Rodney Dawes (65713ad)
+
+2015-07-15 Charles Kerr
+
+        * fix explicit ctor warning from cppcheck to get tests passing
+          (83abb12)
+        * drop build-dependency on g++-4.9 (ab48c81)
+
+2015-03-02 CI Train Bot
+
+        * Releasing 0.1+15.04.20150302-0ubuntu1 (9bcea94) (tag:
+          0.1+15.04.20150302-0ubuntu1)
+
+2015-03-02 Charles Kerr
+
+        * Fix action-state-to-variant mapping
+          Fixes: #1410915 Approved by:
+          Ted Gould, PS Jenkins bot (0d5b740)
+
+2015-02-28 Charles Kerr
+
+        * use the same action-state-to-variant mapping as in the rtm-14.09
+          branch (be6ac2b)
+
+2014-11-03 CI bot
+
+        * Releasing 0.1+15.04.20141103-0ubuntu1 (bfda30a) (tag:
+          0.1+15.04.20141103-0ubuntu1)
+
+2014-11-03 Ted Gould
+
+        * Small typo in integration test plan Approved by: PS Jenkins bot
+          (1bf5171)
+
+2014-10-10 Ted Gould
+
+        * Small typo in integration test plan (acf022f)
+
+2014-10-09 CI bot
+
+        * Releasing 0.1+14.10.20141009-0ubuntu1 (8efed3f) (tag:
+          0.1+14.10.20141009-0ubuntu1)
+
+2014-10-09 Charles Kerr
+
+        * Use com.ubuntu.touch.system's "rotation-lock" boolean for the
+          rotation lock indicator.
+          Fixes: 1378078 Approved by: Ted
+          Gould, PS Jenkins bot (c8edcbe)
+
+2014-10-07 CI bot
+
+        * Releasing 0.1+14.10.20141007-0ubuntu1 (7eaeb64) (tag:
+          0.1+14.10.20141007-0ubuntu1)
+
+2014-10-07 Charles Kerr
+
+        * Change the phone header's title from "Rotation Lock" to "Rotation".
+
+          Fixes: 1377286 Approved by: Ted Gould (9caed67)
+
+2014-10-06 Charles Kerr
+
+        * don't use 'auto tmp = ...' when tmp is going to be passed to
+          g_free() (94ba0a4)
+        * make a debugging message go through g_debug() instead of
+          g_message() (997f89b)
+        * fix the settings-to-action-state mappings (0e88cc1)
+        * report unexpected g_log() calls via g_print() instead of g_log() :D
+          (7f95261)
+        * fix oops (cd87a58)
+        * fix warnings reported by flint++ -- explicit ctors, classes with
+          virtual methods but no virtual dtor, #ifdef include guards
+          (5e05830)
+        * replace 'orientation-lock' enum with 'rotation-lock' bool (460f8cc)
+
+2014-10-03 Charles Kerr
+
+        * change header title from 'Rotation lock' to 'Rotation' as per
+          I:RTMUF (dd69822)
+
+2014-09-15 CI bot
+
+        * Releasing 0.1+14.10.20140915-0ubuntu1 (4471979) (tag:
+          0.1+14.10.20140915-0ubuntu1)
+
+2014-09-15 Sebastien Bacher
+
+        * Tag to use langpacks, so launchpad imports the translations
+          template Approved by: Charles Kerr, PS Jenkins bot
+          (1d2de86)
+
+2014-09-08 Sebastien Bacher
+
+        * Tag to use langpacks, so launchpad imports the translations
+          template (562b1b6)
+
+2014-09-05 CI bot
+
+        * Releasing 0.1+14.10.20140905.1-0ubuntu1 (210ddb4) (tag:
+          0.1+14.10.20140905.1-0ubuntu1)
+
+2014-09-05 Ted Gould
+
+        * First release in CI Train Approved by: PS Jenkins bot (e847ed2)
+        * Put in disclaimer about current builds (3f3be64)
+        * Do a split build by default (8212ff2)
+        * Something must change (1033745)
+
+2014-09-05 Charles Kerr
+
+        * Add a rotation lock indicator (aa563d7)
+
+2014-08-21 Charles Kerr
+
+        * in debian/control, bump Standards-Version from 3.9.4 to 3.9.5 to
+          make lintian happy (415f18f)
+        * in control/debian, split Description into a shorter description
+          plus an extended description. (f9bbdce)
+        * in src/exporter.cpp, use G_DBUS_NAME_OWNER_FLAGS_NONE when owning
+          the busname (307dfae)
+        * fix copy-paste error (ce4b2f4)
+        * in debian/control, make the Description more informative (6240ab5)
+
+2014-08-20 Charles Kerr
+
+        * unit tests passing on desktop and phone, but not in jenkins --
+          adding gsettings-ubuntu-schemas to build-depends.
+          (8fc611f)
+        * add cmake/ directory (de41e38)
+        * remove url-dispatcher dependency. (81e6d96)
+        * add rotation lock indicator (1b90575)
+
+2014-08-19 Charles Kerr
+
+        * get skeletal service and tests building (ec2c7ec)
+        * initial pass at tests/ directory, skeleton only (41ef589)
+        * initial pass at 'hello world' src + po (2effb24)
+        * initial pass at CMakeLists.txt and cmake/ directory (b879a60)
+        * initial pass at data directory w/the standard items: unity
+          indicator file, upstart conf, desktop files (cc63804)
+        * initial pass at debian/ directory (41f91fb)
+
+2014-08-13 Ted Gould
+
+        * First commit, README (8e0ddac)
