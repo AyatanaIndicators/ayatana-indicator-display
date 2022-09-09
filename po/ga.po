@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-28 08:50+0000\n"
+"POT-Creation-Date: 2022-09-09 08:07+0200\n"
 "PO-Revision-Date: 2017-11-28 08:50+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,12 +17,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
 
-#: ../src/rotation-lock.cpp:125
+#: ../data/org.ayatana.indicator.display.gschema.xml:1
+msgid "Lock rotation"
+msgstr ""
+
+#: ../data/org.ayatana.indicator.display.gschema.xml:2
+msgid "Lock automatic display rotation."
+msgstr ""
+
+#: ../data/org.ayatana.indicator.display.gschema.xml:3
+msgid "Orientation lock"
+msgstr ""
+
+#: ../data/org.ayatana.indicator.display.gschema.xml:4
+msgid "Locks orientation to a specific value."
+msgstr ""
+
+#: ../src/rotation-lock.cpp:184 ../src/rotation-lock.cpp:202
 msgid "Rotation Lock"
 msgstr ""
 
-#: ../src/rotation-lock.cpp:136
+#: ../src/rotation-lock.cpp:215
 msgid "Rotation"
+msgstr ""
+
+#: ../src/rotation-lock.cpp:226
+msgid "Display"
+msgstr ""
+
+#: ../src/rotation-lock.cpp:227
+msgid "Display settings and features"
 msgstr ""
 
 #: ../src/usb-snap.cpp:107
