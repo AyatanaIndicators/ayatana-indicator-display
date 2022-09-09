@@ -12,7 +12,7 @@ set_source_files_properties (gschemas.compiled GENERATED)
 # and help the tests to find that file by setting -DSCHEMA_DIR
 set (XDG_DATA_DIRS "${CMAKE_CURRENT_BINARY_DIR}/gsettings-schemas")
 set (SCHEMA_DIR "${XDG_DATA_DIRS}/glib-2.0/schemas")
-set (DISPLAY_SCHEMA ${CMAKE_BINARY_DIR}/data/org.ayatana.display.gschema.xml)
+set (DISPLAY_SCHEMA ${CMAKE_BINARY_DIR}/data/org.ayatana.indicator.display.gschema.xml)
 add_definitions(-DSCHEMA_DIR="${SCHEMA_DIR}")
 execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compile_schemas
                  OUTPUT_VARIABLE COMPILE_SCHEMA_EXECUTABLE
@@ -23,7 +23,7 @@ execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compil
 # https://discourse.cmake.org/t/race-condition-when-multi-add-custom-target-deps-on-same-file-generated-by-add-custom-command/2358
 # https://bugs.debian.org/892091 (bug for ayatana-indicators-power, but applies here as well)
 add_custom_command (OUTPUT gschemas.compiled
-                    DEPENDS ${CMAKE_BINARY_DIR}/data/org.ayatana.display.gschema.xml
+                    DEPENDS ${CMAKE_BINARY_DIR}/data/org.ayatana.indicator.display.gschema.xml
                     COMMAND mkdir -p ${SCHEMA_DIR}
                     COMMAND cp -f ${DISPLAY_SCHEMA} ${SCHEMA_DIR}
                     COMMAND ${COMPILE_SCHEMA_EXECUTABLE} ${SCHEMA_DIR})

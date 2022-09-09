@@ -1,3 +1,4 @@
+data/org.ayatana.indicator.display.gschema.xml
 src/adbd-client.cpp
 src/exporter.cpp
 src/greeter.cpp
