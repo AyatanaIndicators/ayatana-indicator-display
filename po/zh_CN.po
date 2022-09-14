@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-09 08:07+0200\n"
+"POT-Creation-Date: 2022-09-14 08:42+0200\n"
 "PO-Revision-Date: 2022-09-09 06:27+0000\n"
 "Last-Translator: Eric <hamburger1024@firemail.cc>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -19,51 +19,51 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.14.1-dev\n"
 
-#: ../data/org.ayatana.indicator.display.gschema.xml:1
+#: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
 msgstr "锁定旋转"
 
-#: ../data/org.ayatana.indicator.display.gschema.xml:2
+#: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
 msgstr ""
 
-#: ../data/org.ayatana.indicator.display.gschema.xml:3
+#: data/org.ayatana.indicator.display.gschema.xml:3
 msgid "Orientation lock"
 msgstr "方向锁定"
 
-#: ../data/org.ayatana.indicator.display.gschema.xml:4
+#: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
 msgstr ""
 
-#: ../src/rotation-lock.cpp:184 ../src/rotation-lock.cpp:202
+#: src/rotation-lock.cpp:184 src/rotation-lock.cpp:202
 msgid "Rotation Lock"
 msgstr "旋转锁定"
 
-#: ../src/rotation-lock.cpp:215
+#: src/rotation-lock.cpp:215
 msgid "Rotation"
 msgstr "旋转"
 
-#: ../src/rotation-lock.cpp:226
+#: src/rotation-lock.cpp:226
 msgid "Display"
 msgstr ""
 
-#: ../src/rotation-lock.cpp:227
+#: src/rotation-lock.cpp:227
 msgid "Display settings and features"
 msgstr ""
 
-#: ../src/usb-snap.cpp:107
+#: src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
 msgstr "此电脑的RSA指纹密匙是:%s"
 
-#: ../src/usb-snap.cpp:112
+#: src/usb-snap.cpp:112
 msgid "Allow"
 msgstr "允许"
 
-#: ../src/usb-snap.cpp:114
+#: src/usb-snap.cpp:114
 msgid "Don't Allow"
 msgstr "不允许"
 
-#: ../src/usb-snap.cpp:126
+#: src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
 msgstr "允许使用USB调试模式?"
