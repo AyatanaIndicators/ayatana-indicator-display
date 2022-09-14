@@ -1,6 +1,92 @@
+2022-09-14 Mike Gabriel
+
+        * release 22.9.0 (HEAD -> main, tag: 22.9.0)
+
+2022-09-14 Milan Korecky
+
+        * Translated using Weblate (Czech) (3c559f9)
+
+2022-09-14 Mike Gabriel
+
+        * po/*.po{,t}: Translation strings update (esp. source file
+          references). (a1703eb)
+        * update-po{,t}.sh: Also catch multi-file source file references.
+          (99a3ea4)
+
+2022-09-13 Robert Tari
+
+        * Merge branch 'sunweaver-pr/beautify-paths-in-pot-file' (7e252ae)
+
+2022-09-09 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (d8abb6b)
+
+2022-09-09 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (5bd86ff)
+
+2022-09-09 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (ab58097)
+
+2022-09-11 Mike Gabriel
+
+        * po/ayatana-indicator-display.pot: Update file. (35073f5)
+        * update-po{,t}.sh: Omit ../ at beginning of file names in .pot file.
+          (183f41e)
+
+2022-09-09 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (276c387)
+
+2022-09-09 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (51b8fa6)
+
+2022-09-09 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (86b7034)
+
+2022-09-09 Eric
+
+        * Translated using Weblate (Chinese (Simplified)) (9989e05)
+
+2022-09-09 Mike Gabriel
+
+        * Translated using Weblate (German) (ae80e7c)
+        * po/*.po: Update translation strings in .po files. (e22388d)
+
+2022-09-09 Robert Tari
+
+        * Merge branch 'sunweaver-pr/update-and-fix-translations' (41950de)
+
+2022-09-08 Mike Gabriel
+
+        * ChangeLog: Forgotten to be added. Add it now. (6805522)
+
+2022-09-09 Robert Tari
+
+        * Merge branch 'sunweaver-pr/changelog' (5d0960e)
+
+2022-09-08 Mike Gabriel
+
+        * po/ayatana-indicator-display.pot: Update translation strings.
+          (a384b48)
+        * data/: Rename org.ayatana.display.gschema.xml.in to
+          org.ayatana.indicator.display.gschema.xml. Fix and
+          simplify translations of .gschema.xml strings with it.
+          (b3a400f)
+        * ChangeLog: Forgotten to be added. Add it now. (ee89d2f)
+        * Merge branch 'sunweaver-pr/tooltip-support' (98ae0c7)
+
+2022-07-22 Mike Gabriel
+
+        * src/rotation-lock.cpp: Add tooltip, rename indicator title from
+          'Rotation' to 'Display' on desktops. (af65c5d)
+
 2022-07-20 Mike Gabriel
 
-        * release 22.2.1 (HEAD -> main, tag: 22.2.1)
+        * release 22.2.1 (f3b8d73) (tag: 22.2.1)
 
 2022-07-06 Marius Gripsgard
 
