@@ -29,7 +29,7 @@ endif()
 
 add_compile_options(${CXX_WARNING_ARGS})
 
-add_test(cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline-suppr --library=qt -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/tests/utils/qmain.cpp -i${CMAKE_SOURCE_DIR}/tests/gmock ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/tests --suppress=missingIncludeSystem --suppress=uninitDerivedMemberVar --suppress=unmatchedSuppression --suppress=constParameter)
+add_test(cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline-suppr --library=qt -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/tests/utils/qmain.cpp -i${CMAKE_SOURCE_DIR}/tests/gmock ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/tests --suppress=missingIncludeSystem --suppress=uninitDerivedMemberVar --suppress=unmatchedSuppression --suppress=constParameter --suppress=unusedFunction)
 
 add_subdirectory(integration)
 add_subdirectory(unit)

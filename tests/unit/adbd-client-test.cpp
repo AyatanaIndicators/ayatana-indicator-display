@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Canonical Ltd.
+ * Copyright 2022 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <tests/utils/test-dbus-fixture.h>
@@ -56,7 +58,7 @@ TEST_F(AdbdClientFixture, SocketPlumbing)
         const std::string expected_pk;
         AdbdClient::PKResponse response;
         const std::string expected_response;
-    } tests[] = {
+    } const tests[] = {
         { "PKHelloWorld", "HelloWorld", AdbdClient::PKResponse::ALLOW, "OK" },
         { "PKHelloWorld", "HelloWorld", AdbdClient::PKResponse::DENY,  "NO" },
         { "PKFooBar",     "FooBar",     AdbdClient::PKResponse::ALLOW, "OK" },
