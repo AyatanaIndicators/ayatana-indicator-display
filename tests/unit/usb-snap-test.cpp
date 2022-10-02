@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Canonical Ltd.
+ * Copyright 2022 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <tests/utils/qt-fixture.h>
@@ -68,7 +70,7 @@ TEST_F(UsbSnapFixture, TestRoundTrip)
         const char* fingerprint;
         const char* action_to_invoke;
         const AdbdClient::PKResponse expected_response;
-    } tests[] = {
+    } const tests[] = {
         { "Fingerprint",  "allow", AdbdClient::PKResponse::ALLOW },
         { "Fingerprint",  "deny",  AdbdClient::PKResponse::DENY }
     };
