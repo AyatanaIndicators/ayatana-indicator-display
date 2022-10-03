@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2021 Robert Tari
+ * Copyright 2022 Robert Tari
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,6 +161,11 @@ private:
     g_signal_connect_swapped(m_settings, "changed::rotation-lock",
                              G_CALLBACK(on_rotation_lock_setting_changed), this);
 
+    action = g_simple_action_new ("settings", NULL);
+    g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+    g_object_unref (G_OBJECT (action));
+    g_signal_connect (action, "activate", G_CALLBACK (onSettings), this);
+
     return group;
   }
 
@@ -191,6 +196,22 @@ private:
     return G_MENU_MODEL(menu);
   }
 
+  static void onSettings (GSimpleAction *pAction, GVariant *pVariant, gpointer pData)
+  {
+    if (ayatana_common_utils_is_mate ())
+    {
+      ayatana_common_utils_execute_command ("mate-display-properties");
+    }
+    else if (ayatana_common_utils_is_xfce ())
+    {
+      ayatana_common_utils_execute_command ("xfce4-display-settings");
+    }
+    else
+    {
+      ayatana_common_utils_execute_command ("gnome-control-center display");
+    }
+  }
+
   GMenuModel* create_desktop_menu()
   {
     GMenu* menu;
@@ -205,6 +226,16 @@ private:
     g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
     g_object_unref(section);
     g_object_unref(menu_item);
+
+    if (ayatana_common_utils_is_lomiri() == FALSE)
+    {
+        section = g_menu_new ();
+        menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
+        g_menu_append_item (section, menu_item);
+        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+        g_object_unref (section);
+        g_object_unref (menu_item);
+    }
 
     return G_MENU_MODEL(menu);
   }
