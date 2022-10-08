@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 08:41+0200\n"
+"POT-Creation-Date: 2022-10-08 23:43+0200\n"
 "PO-Revision-Date: 2022-09-14 11:45+0000\n"
 "Last-Translator: Milan Korecky <milan.korecky@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
@@ -35,19 +35,24 @@ msgstr "Zámek orientace obrazovky"
 msgid "Locks orientation to a specific value."
 msgstr "Uzamkne orientaci obrazovky na určitou hodnotu."
 
-#: src/rotation-lock.cpp:184 src/rotation-lock.cpp:202
+#: src/rotation-lock.cpp:189 src/rotation-lock.cpp:223
 msgid "Rotation Lock"
 msgstr "Zámek otáčení"
 
-#: src/rotation-lock.cpp:215
+#: src/rotation-lock.cpp:233
+#, fuzzy
+msgid "Display settings…"
+msgstr "Nastavení a funkce obrazovky"
+
+#: src/rotation-lock.cpp:246
 msgid "Rotation"
 msgstr "Otáčení"
 
-#: src/rotation-lock.cpp:226
+#: src/rotation-lock.cpp:257
 msgid "Display"
 msgstr "Obrazovka"
 
-#: src/rotation-lock.cpp:227
+#: src/rotation-lock.cpp:258
 msgid "Display settings and features"
 msgstr "Nastavení a funkce obrazovky"
 
