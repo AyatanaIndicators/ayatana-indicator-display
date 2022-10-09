@@ -77,7 +77,7 @@ public:
 
     if (!ayatana_common_utils_is_lomiri())
     {
-        rotation_lock_icon_name = "display";
+        rotation_lock_icon_name = "display-panel";
     }
 
     auto icon = g_themed_icon_new_with_default_fallbacks(rotation_lock_icon_name);
