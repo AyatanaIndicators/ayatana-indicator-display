@@ -123,6 +123,9 @@ private:
     if (!h.label.empty())
       g_variant_builder_add(&b, "{sv}", "label", g_variant_new_string(h.label.c_str()));
 
+    if (!h.tooltip.empty())
+      g_variant_builder_add(&b, "{sv}", "tooltip", g_variant_new_string(h.tooltip.c_str()));
+
     if (!h.title.empty() || !h.label.empty())
       g_variant_builder_add(&b, "{sv}", "accessible-desc", g_variant_new_string(!h.label.empty() ? h.label.c_str() : h.title.c_str()));
 
