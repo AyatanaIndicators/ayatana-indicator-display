@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-08 23:43+0200\n"
-"PO-Revision-Date: 2022-09-26 14:21+0000\n"
+"PO-Revision-Date: 2022-10-10 18:04+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/tr/>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,9 +40,8 @@ msgid "Rotation Lock"
 msgstr "Ekran yön kilidi"
 
 #: src/rotation-lock.cpp:233
-#, fuzzy
 msgid "Display settings…"
-msgstr "Ekran ayarları ve özellikleri"
+msgstr "Ekran ayarları…"
 
 #: src/rotation-lock.cpp:246
 msgid "Rotation"
