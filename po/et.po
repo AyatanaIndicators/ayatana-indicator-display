@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-08 23:43+0200\n"
-"PO-Revision-Date: 2022-10-19 10:03+0000\n"
+"PO-Revision-Date: 2022-10-20 11:02+0000\n"
 "Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/et/>\n"
@@ -41,7 +41,7 @@ msgstr "Pööramise lukustus"
 
 #: src/rotation-lock.cpp:233
 msgid "Display settings…"
-msgstr ""
+msgstr "Kuva seaded…"
 
 #: src/rotation-lock.cpp:246
 msgid "Rotation"
@@ -49,11 +49,11 @@ msgstr "Pööramine"
 
 #: src/rotation-lock.cpp:257
 msgid "Display"
-msgstr ""
+msgstr "Kuva"
 
 #: src/rotation-lock.cpp:258
 msgid "Display settings and features"
-msgstr ""
+msgstr "Kuva seaded ja funktsioonid"
 
 #: src/usb-snap.cpp:107
 #, c-format
