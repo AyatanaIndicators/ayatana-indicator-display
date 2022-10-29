@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-08 23:43+0200\n"
-"PO-Revision-Date: 2022-09-10 17:21+0000\n"
+"PO-Revision-Date: 2022-10-30 21:03+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/oc/>\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/oc/>\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -40,9 +40,8 @@ msgid "Rotation Lock"
 msgstr "Verrolhar la rotacion"
 
 #: src/rotation-lock.cpp:233
-#, fuzzy
 msgid "Display settings…"
-msgstr "Paramètres e foncionalitats d’afichatge"
+msgstr "Paramètres d’afichatge…"
 
 #: src/rotation-lock.cpp:246
 msgid "Rotation"
