@@ -56,3 +56,9 @@ set (AYATANA_INDICATOR_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${AYATANA_INDICATOR_NAM
 
 install (FILES "${AYATANA_INDICATOR_FILE}"
          DESTINATION "${AYATANA_INDICATOR_DIR}")
+
+
+# ayatana-indicator-display-colortemp-off.svg
+# ayatana-indicator-display-colortemp-on.svg
+
+install (DIRECTORY "icons/" DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/status" FILES_MATCHING PATTERN "*.svg")
