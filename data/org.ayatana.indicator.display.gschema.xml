@@ -20,5 +20,11 @@
       <summary>Orientation lock</summary>
       <description>Locks orientation to a specific value.</description>
     </key>
+    <key name="color-temp" type="q">
+      <range min="3500" max="6500"/>
+      <default>6500</default>
+      <summary>Color temperature</summary>
+      <description>Sets the color temperature of your screen. The lower the value, the higher the intensity of the redness effect applied to the display.</description>
+    </key>
   </schema>
 </schemalist>
