@@ -38,6 +38,7 @@ Depends: ${shlibs:Depends},
          ${misc:Depends},
          ayatana-indicator-common,
          libglib2.0-bin,
+         xsct,
 Description: Ayatana Indicator for Display configuration
  This Ayatana Indicator is designed to be placed on the right side of a
  panel and give the user easy control for changing their display settings.
