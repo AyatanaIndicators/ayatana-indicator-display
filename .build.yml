@@ -49,6 +49,9 @@ requires:
     - lcov
     - gcovr
     - systemd
+# For xsct
+    - libx11-dev
+    - libxrandr-dev
 
   ubuntu:
     - clang
@@ -77,6 +80,9 @@ requires:
     - gcovr
     - systemd
     - gsettings-ubuntu-schemas
+# For xsct
+    - libx11-dev
+    - libxrandr-dev
 
   ubuntu:focal:
     - clang
@@ -105,6 +111,9 @@ requires:
     - gcovr
     - systemd
     - gsettings-ubuntu-schemas
+# For xsct
+    - libx11-dev
+    - libxrandr-dev
 
 variables:
   - 'CHECKERS="
@@ -139,6 +148,16 @@ before_scripts:
   - make install
   - cd -
   - rm -Rf libayatana-common-build/
+  -
+  - cd ${START_DIR}
+  - if [ ! -d xsct-build ]; then
+  -     git clone --depth 1  https://github.com/faf0/sct.git xsct-build
+  - fi
+  - cd xsct-build
+  - make
+  - make install
+  - cd -
+  - rm -Rf xsct-build/
 
 build_scripts:
   - if [ ${DISTRO_NAME} == "debian" ];then
