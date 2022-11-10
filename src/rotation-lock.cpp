@@ -20,7 +20,7 @@
  */
 
 #include <src/rotation-lock.h>
-
+#include <glib-unix.h>
 #include <glib/gi18n.h>
 
 extern "C"
@@ -94,10 +94,14 @@ public:
     std::shared_ptr<GMenuModel> desktop_menu (create_desktop_menu(), menu_model_deleter);
     m_desktop = std::make_shared<SimpleProfile>("desktop", desktop_menu);
     update_desktop_header();
+
+    g_unix_signal_add (SIGINT, onSigInt, m_settings);
+    onColorTemp (m_settings, "color-temp", NULL);
   }
 
   ~Impl()
   {
+    onColorTemp (m_settings, "color-temp", GUINT_TO_POINTER (6500));
     g_signal_handlers_disconnect_by_data(m_settings, this);
     g_clear_object(&m_action_group);
     g_clear_object(&m_settings);
@@ -118,6 +122,13 @@ public:
 
 private:
 
+  static gboolean onSigInt (gpointer pData)
+  {
+    onColorTemp (G_SETTINGS (pData), "color-temp", GUINT_TO_POINTER (6500));
+
+    return G_SOURCE_REMOVE;
+  }
+
   /***
   ****  Actions
   ***/
@@ -135,6 +146,27 @@ private:
                                             gpointer /*unused*/)
   {
     return g_value_dup_variant(value);
+  }
+
+  static gboolean settingsToActionStateDouble (GValue *pValue, GVariant *pVariant, gpointer pData)
+  {
+    gdouble fVariant = (gdouble) g_variant_get_uint16 (pVariant);
+    GVariant *pVariantDouble = g_variant_new_double (fVariant);
+    g_value_set_variant (pValue, pVariantDouble);
+
+    return TRUE;
+  }
+
+  static GVariant* actionStateToSettingsInt (const GValue *pValue, const GVariantType *pVariantType, gpointer pData)
+  {
+    GVariant *pVariantDouble = g_value_get_variant (pValue);
+    guint16 nValue = (guint16) g_variant_get_double (pVariantDouble);
+    GVariant *pVariantInt = g_variant_new_uint16 (nValue);
+    GValue cValue = G_VALUE_INIT;
+    g_value_init (&cValue, G_TYPE_VARIANT);
+    g_value_set_variant (&cValue, pVariantInt);
+
+    return g_value_dup_variant (&cValue);
   }
 
   GSimpleActionGroup* create_action_group()
@@ -160,6 +192,20 @@ private:
     g_object_unref(G_OBJECT(action));
     g_signal_connect_swapped(m_settings, "changed::rotation-lock",
                              G_CALLBACK(on_rotation_lock_setting_changed), this);
+
+    pVariantType = g_variant_type_new ("d");
+    action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (0));
+    g_variant_type_free (pVariantType);
+    g_settings_bind_with_mapping (m_settings, "color-temp", action, "state", G_SETTINGS_BIND_DEFAULT, settingsToActionStateDouble, actionStateToSettingsInt, NULL, NULL);
+    g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+    g_object_unref(G_OBJECT (action));
+    g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTemp), NULL);
+
+    pVariantType = g_variant_type_new ("s");
+    action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string("1"));
+    g_variant_type_free (pVariantType);
+    g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
+    g_object_unref(G_OBJECT(action));
 
     action = g_simple_action_new ("settings", NULL);
     g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
@@ -196,6 +242,33 @@ private:
     return G_MENU_MODEL(menu);
   }
 
+  static void onColorTemp (GSettings *pSettings, const gchar *sKey, gpointer pData)
+  {
+    guint16 nTemp = 0;
+
+    if (pData)
+    {
+      nTemp = GPOINTER_TO_UINT (pData);
+    }
+    else
+    {
+      GVariant *pTemp = g_settings_get_value (pSettings, sKey);
+      nTemp = g_variant_get_uint16 (pTemp);
+    }
+
+    GError *pError = NULL;
+    gchar *sCommand = g_strdup_printf ("xsct %u", nTemp);
+    gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
+
+    if (!bSuccess)
+    {
+      g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+      g_error_free (pError);
+    }
+
+    g_free (sCommand);
+  }
+
   static void onSettings (GSimpleAction *pAction, GVariant *pVariant, gpointer pData)
   {
     if (ayatana_common_utils_is_mate ())
@@ -229,6 +302,38 @@ private:
 
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
+        section = g_menu_new ();
+        GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
+        GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
+        GVariant *pIconMinSerialised = g_icon_serialize (pIconMin);
+        GVariant *pIconMaxSerialised = g_icon_serialize (pIconMax);
+        menu_item = g_menu_item_new (_("Color temperature"), "indicator.color-temp");
+        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+        g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
+        g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
+        g_menu_item_set_attribute (menu_item, "min-value", "d", 3500.0);
+        g_menu_item_set_attribute (menu_item, "max-value", "d", 6500.0);
+        g_menu_item_set_attribute (menu_item, "step", "d", 100.0);
+        g_menu_append_item (section, menu_item);
+
+        GMenu *pMenuProfiles = g_menu_new ();
+        GMenuItem *pItemProfile1 = g_menu_item_new (_("Manual"), "indicator.profile::1");
+        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profiles"), G_MENU_MODEL (pMenuProfiles));
+        g_menu_append_item (pMenuProfiles, pItemProfile1);
+        g_object_unref (pItemProfile1);
+        g_menu_append_item (section, pItemProfiles);
+        g_object_unref (pItemProfiles);
+        g_object_unref (pMenuProfiles);
+
+        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+        g_object_unref (pIconMin);
+        g_object_unref (pIconMax);
+        g_variant_unref (pIconMinSerialised);
+        g_variant_unref (pIconMaxSerialised);
+        g_object_unref (section);
+        g_object_unref (menu_item);
+
         section = g_menu_new ();
         menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
         g_menu_append_item (section, menu_item);
