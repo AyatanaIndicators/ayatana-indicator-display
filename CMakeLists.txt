@@ -20,6 +20,7 @@ set(SERVICE_EXEC "${PACKAGE}-service")
 option(ENABLE_TESTS "Enable all tests and checks" OFF)
 option(ENABLE_COVERAGE "Enable coverage reports (includes enabling all tests and checks)" OFF)
 option(ENABLE_WERROR "Treat all build warnings as errors" OFF)
+option(ENABLE_LOMIRI_FEATURES "Build with Lomiri-specific libraries, schemas and media" OFF)
 
 if(ENABLE_COVERAGE)
     set(ENABLE_TESTS ON)
@@ -65,10 +66,16 @@ find_package(PkgConfig REQUIRED)
 
 # glib...
 set(GLIB_MINIMUM 2.36)
-set (SERVICE_DEPS libayatana-common>=0.9.3 gio-unix-2.0>=${GLIB_MINIMUM} glib-2.0>=${GLIB_MINIMUM} gudev-1.0)
+set (SERVICE_DEPS libayatana-common>=0.9.3 gio-unix-2.0>=${GLIB_MINIMUM} glib-2.0>=${GLIB_MINIMUM})
 
 if (ENABLE_TESTS)
     list (APPEND SERVICE_DEPS properties-cpp>=0.0.1)
+endif ()
+
+if (ENABLE_LOMIRI_FEATURES)
+    find_package(Qt5Core REQUIRED)
+    list (APPEND SERVICE_DEPS gudev-1.0)
+    add_definitions (-DLOMIRI_FEATURES_ENABLED)
 endif ()
 
 pkg_check_modules (SERVICE_DEPS REQUIRED ${SERVICE_DEPS})
@@ -115,3 +122,4 @@ endif()
 message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Unit tests: ${ENABLE_TESTS}")
 message(STATUS "Build with -Werror: ${ENABLE_WERROR}")
+message(STATUS "Build with Lomiri features: ${ENABLE_LOMIRI_FEATURES}")

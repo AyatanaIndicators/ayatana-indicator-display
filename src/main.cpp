@@ -1,5 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
+ * Copyright 2022 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,21 +16,23 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <src/exporter.h>
 #include <src/rotation-lock.h>
 
+#ifdef LOMIRI_FEATURES_ENABLED
 #include <src/greeter.h>
 #include <src/usb-manager.h>
 #include <src/usb-monitor.h>
+#include <sys/stat.h>
+#include <errno.h>
+#endif
 
 #include <glib/gi18n.h> // bindtextdomain()
 #include <gio/gio.h>
-
 #include <locale.h>
-#include <sys/stat.h>
-#include <errno.h>
 
 extern "C"
 {
@@ -65,6 +68,8 @@ main(int /*argc*/, char** /*argv*/)
       exporters.push_back(exporter);
     }
 
+#ifdef LOMIRI_FEATURES_ENABLED
+
     gboolean bHasSocket = FALSE;
 
     if (ayatana_common_utils_is_lomiri())
@@ -91,6 +96,8 @@ main(int /*argc*/, char** /*argv*/)
     {
         g_message("No /dev/socket/adbd socket found, skipping UsbManager");
     }
+
+#endif
 
     // let's go!
     g_main_loop_run(loop);
