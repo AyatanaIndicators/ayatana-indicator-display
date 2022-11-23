@@ -292,15 +292,18 @@ private:
     GMenuItem* menu_item;
 
     menu = g_menu_new();
-    section = g_menu_new();
-    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
-    g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
-    g_menu_append_item(section, menu_item);
-    g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
-    g_object_unref(section);
-    g_object_unref(menu_item);
 
-    if (ayatana_common_utils_is_lomiri() == FALSE)
+    if (ayatana_common_utils_is_lomiri())
+    {
+        section = g_menu_new();
+        menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
+        g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
+        g_menu_append_item(section, menu_item);
+        g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
+        g_object_unref(section);
+        g_object_unref(menu_item);
+    }
+    else
     {
         section = g_menu_new ();
         GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
