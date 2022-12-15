@@ -1,3 +1,7 @@
+Overview of changes in ayatana-indicator-display 22.9.3
+
+  - German translation update.
+
 Overview of changes in ayatana-indicator-display 22.9.2
 
   - src/rotation-lock.cpp: make MenuItem QMenuModel-compatible.

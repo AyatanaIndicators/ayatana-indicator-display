@@ -1,6 +1,9 @@
 2022-12-15 Mike Gabriel
 
-        * release 22.9.2 (HEAD -> main, tag: 22.9.2)
+        * release 22.9.3 (HEAD -> main, tag: 22.9.3)
+        * Translated using Weblate (German) (29c9429)
+        * po/: Update translation files. (cf39314)
+        * release 22.9.2 (663e4db) (tag: 22.9.2)
 
 2022-12-15 Ratchanan Srirattanamet
 
