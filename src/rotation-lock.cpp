@@ -232,7 +232,7 @@ private:
 
     menu = g_menu_new();
     section = g_menu_new();
-    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
+    menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock(true)");
     g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
     g_menu_append_item(section, menu_item);
     g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
@@ -296,7 +296,7 @@ private:
     if (ayatana_common_utils_is_lomiri())
     {
         section = g_menu_new();
-        menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock");
+        menu_item = g_menu_item_new(_("Rotation Lock"), "indicator.rotation-lock(true)");
         g_menu_item_set_attribute(menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.switch");
         g_menu_append_item(section, menu_item);
         g_menu_append_section(menu, NULL, G_MENU_MODEL(section));
