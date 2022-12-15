@@ -1,6 +1,109 @@
+2022-12-15 Mike Gabriel
+
+        * release 22.9.2 (HEAD -> main, tag: 22.9.2)
+
+2022-12-15 Ratchanan Srirattanamet
+
+        * src/rotation-lock.cpp: make MenuItem QMenuModel-compatible
+          (853f224)
+
+2022-12-15 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-lomiri-features-flag' (59f1574)
+
+2022-11-14 Robert Tari
+
+        * .build.yml: Build with ENABLE_LOMIRI_FEATURES (260817c)
+        * Allow building with(out) Lomiri features (f26dba3)
+
+2022-11-23 Mike Gabriel
+
+        * Merge branch 'tari01-pr/disable-rotation-on-desktops' (796525b)
+
+2022-11-17 Robert Tari
+
+        * src/rotation-lock.cpp: Hide the rotation switch on desktops
+          (adec0ba)
+
+2022-11-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/fix-test-dependencies' (275ebbc)
+
+2022-11-08 Robert Tari
+
+        * CMakeLists.txt: Skip test dependencies when testing is off
+          (214a511)
+
+2022-11-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-colourtemp' (2b11125)
+
+2022-11-07 Robert Tari
+
+        * .build.yml: Build xsct from source (353d95c)
+        * debian/control: Add xsct as a dependency (f3d919b)
+        * Provide icons for the colour temperature slider (6756534)
+        * Add colour temperature changing functionality (f582007)
+
+2022-11-07 Mike Gabriel
+
+        * Merge branch 'tari01-pr/symbolic-panel-icon' (a8c45b7)
+
+2022-10-09 Robert Tari
+
+        * src/rotation-lock.cpp: Prefer a symbolic panel icon (97b5e15)
+
+2022-10-29 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (21c5f70)
+
+2022-10-19 Kristjan Räts
+
+        * Translated using Weblate (Estonian) (174fe2c)
+        * Translated using Weblate (Estonian) (add9f01)
+
+2022-10-17 Gediminas Murauskas
+
+        * Translated using Weblate (Lithuanian) (67f2e80)
+
+2022-10-15 Sergii Horichenko
+
+        * Translated using Weblate (Ukrainian) (22dcb2a)
+        * Translated using Weblate (Russian) (6a5b768)
+
+2022-10-11 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (c3fe3ee)
+
+2022-10-11 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (9fad02c)
+
+2022-10-09 Oğuz Ersen
+
+        * Translated using Weblate (Turkish) (80fecab)
+
+2022-10-09 Mike Gabriel
+
+        * Merge branch 'tari01-pr/fix-tooltip' (b898993)
+
+2022-10-09 Robert Tari
+
+        * src/exporter.cpp: Add missing tooltip to header (3007243)
+
+2022-10-08 Mike Gabriel
+
+        * Translated using Weblate (German) (645579b)
+        * po/: Update translation template. (6045e45)
+        * Merge branch 'tari01-pr/add-display-settings' (8923620)
+
+2022-10-04 Robert Tari
+
+        * src/rotation-lock.cpp: Add display setting menu item (8352ae8)
+
 2022-10-02 Mike Gabriel
 
-        * release 22.9.1 (HEAD -> main, tag: 22.9.1)
+        * release 22.9.1 (7407056) (tag: 22.9.1)
         * Merge branch 'tari01-pr/fix-cppcheck' (64b2cf0)
 
 2022-09-25 Robert Tari

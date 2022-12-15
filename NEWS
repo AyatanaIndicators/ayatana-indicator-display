@@ -1,3 +1,14 @@
+Overview of changes in ayatana-indicator-display 22.9.2
+
+  - src/rotation-lock.cpp: make MenuItem QMenuModel-compatible.
+  - Allow building with(out) Lomiri features.
+  - src/rotation-lock.cpp: Hide the rotation switch on desktops.
+  - CMakeLists.txt: Skip test dependencies when testing is off.
+  - Add colour temperature changing functionality.
+  - src/rotation-lock.cpp: Prefer a symbolic panel icon.
+  - src/rotation-lock.cpp: Add display setting menu item.
+  - Translation updates.
+
 Overview of changes in ayatana-indicator-display 22.9.1
 
   - Fix failing cppcheck.
