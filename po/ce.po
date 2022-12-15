@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 23:43+0200\n"
+"POT-Creation-Date: 2022-12-15 23:40+0100\n"
 "PO-Revision-Date: 2017-11-28 08:50+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,23 +32,42 @@ msgstr ""
 msgid "Locks orientation to a specific value."
 msgstr ""
 
-#: src/rotation-lock.cpp:189 src/rotation-lock.cpp:223
+#: data/org.ayatana.indicator.display.gschema.xml:5
+#: src/rotation-lock.cpp:313
+msgid "Color temperature"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:6
+msgid ""
+"Sets the color temperature of your screen. The lower the value, the higher "
+"the intensity of the redness effect applied to the display."
+msgstr ""
+
+#: src/rotation-lock.cpp:235 src/rotation-lock.cpp:299
 msgid "Rotation Lock"
 msgstr ""
 
-#: src/rotation-lock.cpp:233
+#: src/rotation-lock.cpp:324
+msgid "Manual"
+msgstr ""
+
+#: src/rotation-lock.cpp:325
+msgid "Color temperature profiles"
+msgstr ""
+
+#: src/rotation-lock.cpp:341
 msgid "Display settings…"
 msgstr ""
 
-#: src/rotation-lock.cpp:246
+#: src/rotation-lock.cpp:354
 msgid "Rotation"
 msgstr ""
 
-#: src/rotation-lock.cpp:257
+#: src/rotation-lock.cpp:365
 msgid "Display"
 msgstr ""
 
-#: src/rotation-lock.cpp:258
+#: src/rotation-lock.cpp:366
 msgid "Display settings and features"
 msgstr ""
 
