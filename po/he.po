@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-15 23:40+0100\n"
-"PO-Revision-Date: 2022-10-12 14:34+0000\n"
+"PO-Revision-Date: 2022-12-19 02:50+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/he/>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -39,13 +39,15 @@ msgstr "נעילת הכיוון לערך מסוים."
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:313
 msgid "Color temperature"
-msgstr ""
+msgstr "חום הצבע"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"מגדיר את חום הצבע של המסך שלך. ככל שהערך נמוך יותר, ככה עוצמת הגוון האדום "
+"שחלה על התצוגה חזקה יותר."
 
 #: src/rotation-lock.cpp:235 src/rotation-lock.cpp:299
 msgid "Rotation Lock"
@@ -53,11 +55,11 @@ msgstr "נעילת סיבוב"
 
 #: src/rotation-lock.cpp:324
 msgid "Manual"
-msgstr ""
+msgstr "ידני"
 
 #: src/rotation-lock.cpp:325
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "פרופילי חום צבע"
 
 #: src/rotation-lock.cpp:341
 msgid "Display settings…"
