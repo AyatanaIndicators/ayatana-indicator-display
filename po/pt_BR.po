@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-15 23:41+0100\n"
-"PO-Revision-Date: 2022-10-12 14:34+0000\n"
+"PO-Revision-Date: 2022-12-19 02:50+0000\n"
 "Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -38,25 +38,27 @@ msgstr "Faz o bloqueio da orientação para um valor específico."
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:313
 msgid "Color temperature"
-msgstr ""
+msgstr "Temperatura da cor"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Define a temperatura da cor da tela. Quanto menor o valor, maior a "
+"intensidade do efeito de vermelhidão aplicado à tela."
 
 #: src/rotation-lock.cpp:235 src/rotation-lock.cpp:299
 msgid "Rotation Lock"
-msgstr "Bloqueio de rotação"
+msgstr "Bloqueio da rotação"
 
 #: src/rotation-lock.cpp:324
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/rotation-lock.cpp:325
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "Perfis de temperatura da cor"
 
 #: src/rotation-lock.cpp:341
 msgid "Display settings…"
