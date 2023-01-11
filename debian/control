@@ -11,6 +11,7 @@ Build-Depends: cmake,
                libgtest-dev,
                libgudev-1.0-dev,
                libproperties-cpp-dev,
+               libgeoclue-2-dev,
 # for coverage reports
                gcovr,
                lcov,
@@ -38,6 +39,7 @@ Depends: ${shlibs:Depends},
          ${misc:Depends},
          ayatana-indicator-common,
          libglib2.0-bin,
+         libgeoclue-2-0,
          xsct,
 Description: Ayatana Indicator for Display configuration
  This Ayatana Indicator is designed to be placed on the right side of a
