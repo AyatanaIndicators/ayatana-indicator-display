@@ -21,6 +21,7 @@ option(ENABLE_TESTS "Enable all tests and checks" OFF)
 option(ENABLE_COVERAGE "Enable coverage reports (includes enabling all tests and checks)" OFF)
 option(ENABLE_WERROR "Treat all build warnings as errors" OFF)
 option(ENABLE_LOMIRI_FEATURES "Build with Lomiri-specific libraries, schemas and media" OFF)
+option(ENABLE_COLOR_TEMP "Include colour temperature specific code in the build" ON)
 
 if(ENABLE_COVERAGE)
     set(ENABLE_TESTS ON)
@@ -78,6 +79,11 @@ if (ENABLE_LOMIRI_FEATURES)
     add_definitions (-DLOMIRI_FEATURES_ENABLED)
 endif ()
 
+if (ENABLE_COLOR_TEMP)
+    list (APPEND SERVICE_DEPS libgeoclue-2.0)
+    add_definitions (-DCOLOR_TEMP_ENABLED)
+endif ()
+
 pkg_check_modules (SERVICE_DEPS REQUIRED ${SERVICE_DEPS})
 
 include_directories (SYSTEM
@@ -123,3 +129,4 @@ message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Unit tests: ${ENABLE_TESTS}")
 message(STATUS "Build with -Werror: ${ENABLE_WERROR}")
 message(STATUS "Build with Lomiri features: ${ENABLE_LOMIRI_FEATURES}")
+message(STATUS "Build with colour temperature code: ${ENABLE_COLOR_TEMP}")

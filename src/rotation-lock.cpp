@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2022 Robert Tari
+ * Copyright 2023 Robert Tari
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,38 @@
  */
 
 #include <src/rotation-lock.h>
-#include <glib-unix.h>
 #include <glib/gi18n.h>
+
+#ifdef COLOR_TEMP_ENABLED
+#include <geoclue.h>
+#endif
 
 extern "C"
 {
     #include <ayatana/common/utils.h>
+
+    #ifdef COLOR_TEMP_ENABLED
+    #include "solar.h"
+    #endif
 }
+
+#ifdef COLOR_TEMP_ENABLED
+typedef struct
+{
+   guint nTempLow;
+   guint nTempHigh;
+   gchar *sName;
+} TempProfile;
+
+TempProfile m_lTempProfiles[] =
+{
+    {0, 0, _("Manual")},
+    {4500, 6500, _("Adaptive (Colder)")},
+    {3627, 4913, _("Adaptive")},
+    {3058, 4913, _("Adaptive (Warmer)")},
+    {0, 0, NULL}
+};
+#endif
 
 class RotationLockIndicator::Impl
 {
@@ -95,13 +120,26 @@ public:
     m_desktop = std::make_shared<SimpleProfile>("desktop", desktop_menu);
     update_desktop_header();
 
-    g_unix_signal_add (SIGINT, onSigInt, m_settings);
-    onColorTemp (m_settings, "color-temp", NULL);
+#ifdef COLOR_TEMP_ENABLED
+    if (ayatana_common_utils_is_lomiri() == FALSE)
+    {
+        gclue_simple_new_with_thresholds ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, 0, 0, NULL, onGeoClueLoaded, this);
+
+        GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
+        guint nProfile = g_variant_get_uint16 (pProfile);
+
+        if (nProfile != 0)
+        {
+            this->nCallback = g_timeout_add_seconds (60, updateColorTemp, this);
+        }
+
+        updateColorTemp (this);
+    }
+#endif
   }
 
   ~Impl()
   {
-    onColorTemp (m_settings, "color-temp", GUINT_TO_POINTER (6500));
     g_signal_handlers_disconnect_by_data(m_settings, this);
     g_clear_object(&m_action_group);
     g_clear_object(&m_settings);
@@ -122,12 +160,153 @@ public:
 
 private:
 
-  static gboolean onSigInt (gpointer pData)
-  {
-    onColorTemp (G_SETTINGS (pData), "color-temp", GUINT_TO_POINTER (6500));
+#ifdef COLOR_TEMP_ENABLED
+    static gboolean updateColorTemp (gpointer pData)
+    {
+        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        guint nTemperature = 6500;
+        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
+        guint nProfile = g_variant_get_uint16 (pProfile);
 
-    return G_SOURCE_REMOVE;
-  }
+        if (nProfile == 0)
+        {
+            GVariant *pTemperature = g_settings_get_value (pImpl->m_settings, "color-temp");
+            nTemperature = g_variant_get_uint16 (pTemperature);
+
+            g_debug("%i", nTemperature);
+        }
+        else
+        {
+            gint64 nNow = g_get_real_time ();
+            gdouble fElevation = solar_elevation((gdouble) nNow / 1000000.0, pImpl->fLatitude, pImpl->fLongitude);
+            gdouble fShifting = 0.0;
+
+            if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
+            {
+                fShifting = 1.0;
+            }
+            else if (fElevation < 3.0)
+            {
+                fShifting = 1.0 - ((SOLAR_CIVIL_TWILIGHT_ELEV - fElevation) / (SOLAR_CIVIL_TWILIGHT_ELEV - 3.0));
+            }
+
+            nTemperature = m_lTempProfiles[nProfile].nTempHigh - (m_lTempProfiles[nProfile].nTempHigh - m_lTempProfiles[nProfile].nTempLow) * fShifting;
+            pImpl->bAutoSliderUpdate = TRUE;
+
+            g_debug("%f, %f, %i", fShifting, fElevation, nTemperature);
+        }
+
+        GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
+        GVariant *pTemperature = g_variant_new_double (nTemperature);
+        g_action_change_state (pAction, pTemperature);
+
+        GError *pError = NULL;
+        gchar *sCommand = g_strdup_printf ("xsct %u", nTemperature);
+        gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
+
+        if (!bSuccess)
+        {
+            g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+            g_error_free (pError);
+        }
+
+        g_free (sCommand);
+
+        return G_SOURCE_CONTINUE;
+    }
+
+    static void onGeoClueLoaded (GObject *pObject, GAsyncResult *pResult, gpointer pData)
+    {
+        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        GError *pError = NULL;
+        GClueSimple *pSimple = gclue_simple_new_with_thresholds_finish (pResult, &pError);
+
+        if (pError != NULL)
+        {
+            g_warning ("Failed to connect to GeoClue2 service: %s", pError->message);
+        }
+        else
+        {
+            GClueLocation *pLocation = gclue_simple_get_location (pSimple);
+            pImpl->fLatitude = gclue_location_get_latitude (pLocation);
+            pImpl->fLongitude = gclue_location_get_longitude (pLocation);
+        }
+
+        updateColorTemp (pImpl);
+    }
+
+    static void onColorTempSettings (GSettings *pSettings, const gchar *sKey, gpointer pData)
+    {
+        GVariant *pProfile = g_variant_new_uint16 (0);
+        g_settings_set_value (pSettings, "color-temp-profile", pProfile);
+
+        updateColorTemp (pData);
+    }
+
+    static void onColorTempProfile (GSettings *pSettings, const gchar *sKey, gpointer pData)
+    {
+        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
+        guint nProfile = g_variant_get_uint16 (pProfile);
+
+        if (nProfile == 0 && pImpl->nCallback != 0)
+        {
+            g_source_remove (pImpl->nCallback);
+            pImpl->nCallback = 0;
+        }
+        else if (nProfile != 0 && pImpl->nCallback == 0)
+        {
+            pImpl->nCallback = g_timeout_add_seconds (60, updateColorTemp, pImpl);
+        }
+
+        updateColorTemp (pImpl);
+    }
+
+    static gboolean settingsIntToActionStateString (GValue *pValue, GVariant *pVariant, gpointer pData)
+    {
+        guint16 nVariant = g_variant_get_uint16 (pVariant);
+        gchar *sVariant = g_strdup_printf ("%u", nVariant);
+        GVariant *pVariantString = g_variant_new_string (sVariant);
+        g_free (sVariant);
+        g_value_set_variant (pValue, pVariantString);
+
+        return TRUE;
+    }
+
+    static GVariant* actionStateStringToSettingsInt (const GValue *pValue, const GVariantType *pVariantType, gpointer pData)
+    {
+        GVariant *pVariantString = g_value_get_variant (pValue);
+        const gchar *sValue = g_variant_get_string (pVariantString, NULL);
+        guint16 nValue = (guint16) g_ascii_strtoull (sValue, NULL, 10);
+        GVariant *pVariantInt = g_variant_new_uint16 (nValue);
+        GValue cValue = G_VALUE_INIT;
+        g_value_init (&cValue, G_TYPE_VARIANT);
+        g_value_set_variant (&cValue, pVariantInt);
+
+        return g_value_dup_variant (&cValue);
+    }
+
+    static void onColorTempState (GSimpleAction *pAction, GVariant *pVariant, gpointer pData)
+    {
+        g_simple_action_set_state (pAction, pVariant);
+
+        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+
+        if (pImpl->bAutoSliderUpdate)
+        {
+            pImpl->bAutoSliderUpdate = FALSE;
+
+            return;
+        }
+
+        GVariant *pProfile = g_variant_new_uint16 (0);
+        g_settings_set_value (pImpl->m_settings, "color-temp-profile", pProfile);
+
+        guint16 nTemperature = (guint16) g_variant_get_double (pVariant);
+        GVariant *pTemperature = g_variant_new_uint16 (nTemperature);
+        g_settings_set_value (pImpl->m_settings, "color-temp", pTemperature);
+    }
+#endif
 
   /***
   ****  Actions
@@ -146,27 +325,6 @@ private:
                                             gpointer /*unused*/)
   {
     return g_value_dup_variant(value);
-  }
-
-  static gboolean settingsToActionStateDouble (GValue *pValue, GVariant *pVariant, gpointer pData)
-  {
-    gdouble fVariant = (gdouble) g_variant_get_uint16 (pVariant);
-    GVariant *pVariantDouble = g_variant_new_double (fVariant);
-    g_value_set_variant (pValue, pVariantDouble);
-
-    return TRUE;
-  }
-
-  static GVariant* actionStateToSettingsInt (const GValue *pValue, const GVariantType *pVariantType, gpointer pData)
-  {
-    GVariant *pVariantDouble = g_value_get_variant (pValue);
-    guint16 nValue = (guint16) g_variant_get_double (pVariantDouble);
-    GVariant *pVariantInt = g_variant_new_uint16 (nValue);
-    GValue cValue = G_VALUE_INIT;
-    g_value_init (&cValue, G_TYPE_VARIANT);
-    g_value_set_variant (&cValue, pVariantInt);
-
-    return g_value_dup_variant (&cValue);
   }
 
   GSimpleActionGroup* create_action_group()
@@ -193,24 +351,31 @@ private:
     g_signal_connect_swapped(m_settings, "changed::rotation-lock",
                              G_CALLBACK(on_rotation_lock_setting_changed), this);
 
-    pVariantType = g_variant_type_new ("d");
-    action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (0));
-    g_variant_type_free (pVariantType);
-    g_settings_bind_with_mapping (m_settings, "color-temp", action, "state", G_SETTINGS_BIND_DEFAULT, settingsToActionStateDouble, actionStateToSettingsInt, NULL, NULL);
-    g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
-    g_object_unref(G_OBJECT (action));
-    g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTemp), NULL);
+#ifdef COLOR_TEMP_ENABLED
+    if (ayatana_common_utils_is_lomiri() == FALSE)
+    {
+        pVariantType = g_variant_type_new ("d");
+        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (0));
+        g_variant_type_free (pVariantType);
+        g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+        g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTempSettings), this);
+        g_signal_connect (action, "change-state", G_CALLBACK (onColorTempState), this);
+        g_object_unref(G_OBJECT (action));
 
-    pVariantType = g_variant_type_new ("s");
-    action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string("1"));
-    g_variant_type_free (pVariantType);
-    g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
-    g_object_unref(G_OBJECT(action));
+        pVariantType = g_variant_type_new ("s");
+        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string ("0"));
+        g_variant_type_free (pVariantType);
+        g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
+        g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
+        g_object_unref(G_OBJECT(action));
+        g_signal_connect (m_settings, "changed::color-temp-profile", G_CALLBACK (onColorTempProfile), this);
+    }
+#endif
 
     action = g_simple_action_new ("settings", NULL);
     g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
-    g_object_unref (G_OBJECT (action));
     g_signal_connect (action, "activate", G_CALLBACK (onSettings), this);
+    g_object_unref (G_OBJECT (action));
 
     return group;
   }
@@ -240,33 +405,6 @@ private:
     g_object_unref(menu_item);
 
     return G_MENU_MODEL(menu);
-  }
-
-  static void onColorTemp (GSettings *pSettings, const gchar *sKey, gpointer pData)
-  {
-    guint16 nTemp = 0;
-
-    if (pData)
-    {
-      nTemp = GPOINTER_TO_UINT (pData);
-    }
-    else
-    {
-      GVariant *pTemp = g_settings_get_value (pSettings, sKey);
-      nTemp = g_variant_get_uint16 (pTemp);
-    }
-
-    GError *pError = NULL;
-    gchar *sCommand = g_strdup_printf ("xsct %u", nTemp);
-    gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
-
-    if (!bSuccess)
-    {
-      g_error ("The call to '%s' failed: %s", sCommand, pError->message);
-      g_error_free (pError);
-    }
-
-    g_free (sCommand);
   }
 
   static void onSettings (GSimpleAction *pAction, GVariant *pVariant, gpointer pData)
@@ -305,6 +443,7 @@ private:
     }
     else
     {
+#ifdef COLOR_TEMP_ENABLED
         section = g_menu_new ();
         GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
         GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
@@ -315,16 +454,26 @@ private:
         g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
         g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
         g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
-        g_menu_item_set_attribute (menu_item, "min-value", "d", 3500.0);
+        g_menu_item_set_attribute (menu_item, "min-value", "d", 3000.0);
         g_menu_item_set_attribute (menu_item, "max-value", "d", 6500.0);
         g_menu_item_set_attribute (menu_item, "step", "d", 100.0);
         g_menu_append_item (section, menu_item);
 
         GMenu *pMenuProfiles = g_menu_new ();
-        GMenuItem *pItemProfile1 = g_menu_item_new (_("Manual"), "indicator.profile::1");
         GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profiles"), G_MENU_MODEL (pMenuProfiles));
-        g_menu_append_item (pMenuProfiles, pItemProfile1);
-        g_object_unref (pItemProfile1);
+        guint nProfile = 0;
+
+        while (m_lTempProfiles[nProfile].sName != NULL)
+        {
+            gchar *sAction = g_strdup_printf ("indicator.profile::%u", nProfile);
+            GMenuItem *pItemProfile = g_menu_item_new (m_lTempProfiles[nProfile].sName, sAction);
+            g_free(sAction);
+            g_menu_append_item (pMenuProfiles, pItemProfile);
+            g_object_unref (pItemProfile);
+
+            nProfile++;
+        }
+
         g_menu_append_item (section, pItemProfiles);
         g_object_unref (pItemProfiles);
         g_object_unref (pMenuProfiles);
@@ -336,7 +485,7 @@ private:
         g_variant_unref (pIconMaxSerialised);
         g_object_unref (section);
         g_object_unref (menu_item);
-
+#endif
         section = g_menu_new ();
         menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
         g_menu_append_item (section, menu_item);
@@ -379,6 +528,12 @@ private:
   std::shared_ptr<SimpleProfile> m_phone;
   std::shared_ptr<SimpleProfile> m_desktop;
   std::shared_ptr<GIcon> m_icon;
+#ifdef COLOR_TEMP_ENABLED
+  gdouble fLatitude = 51.4825766;
+  gdouble fLongitude = -0.0076589;
+  gboolean bAutoSliderUpdate = FALSE;
+  guint nCallback = 0;
+#endif
 };
 
 /***

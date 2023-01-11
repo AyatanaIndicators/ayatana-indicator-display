@@ -21,6 +21,13 @@ if (ENABLE_LOMIRI_FEATURES)
     )
 endif ()
 
+if (ENABLE_COLOR_TEMP)
+    list (APPEND
+          SERVICE_LIB_SOURCES
+          solar.c
+    )
+endif ()
+
 add_library (${SERVICE_LIB} STATIC ${SERVICE_LIB_SOURCES})
 
 if (ENABLE_LOMIRI_FEATURES)
