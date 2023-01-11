@@ -10,16 +10,13 @@ requires:
     - make
     - startup-notification
     - which
-    - cmake
     - cmake-extras
-    - dbus
     - intltool
     - glib2
+    - systemd
+    - geoclue
 #    - libayatana-common
-    - gobject-introspection
-#    - liblomiri-url-dispatcher
-    - vala
-    # FIXME: add missing build-dependencies
+#    - xsct
 
   debian:
     # Useful URL: https://salsa.debian.org/debian-ayatana-team/ayatana-indicator-display
@@ -49,6 +46,7 @@ requires:
     - lcov
     - gcovr
     - systemd
+    - libgeoclue-2-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -80,6 +78,7 @@ requires:
     - gcovr
     - systemd
     - gsettings-ubuntu-schemas
+    - libgeoclue-2-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -111,6 +110,7 @@ requires:
     - gcovr
     - systemd
     - gsettings-ubuntu-schemas
+    - libgeoclue-2-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev
