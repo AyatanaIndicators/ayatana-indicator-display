@@ -21,10 +21,15 @@
       <description>Locks orientation to a specific value.</description>
     </key>
     <key name="color-temp" type="q">
-      <range min="3500" max="6500"/>
-      <default>6500</default>
+      <range min="3000" max="6500"/>
+      <default>4913</default>
       <summary>Color temperature</summary>
       <description>Sets the color temperature of your screen. The lower the value, the higher the intensity of the redness effect applied to the display.</description>
+    </key>
+    <key name="color-temp-profile" type="q">
+      <default>2</default>
+      <summary>Color temperature profile</summary>
+      <description>The current color temperature profile being used by the indicator.</description>
     </key>
   </schema>
 </schemalist>
