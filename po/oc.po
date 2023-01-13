@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-15 23:41+0100\n"
-"PO-Revision-Date: 2022-10-30 21:03+0000\n"
+"PO-Revision-Date: 2023-01-14 23:56+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/oc/>\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/oc/>\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -38,13 +38,15 @@ msgstr "Verrolha l’orientacion sus una valor especifica."
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:313
 msgid "Color temperature"
-msgstr ""
+msgstr "Temperatura color"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Definís la temperatura de color de l’ecran. Una valor bassa indica una mai "
+"fòrta intensitat de l’efièch roge aplicat a l’afichatge."
 
 #: src/rotation-lock.cpp:235 src/rotation-lock.cpp:299
 msgid "Rotation Lock"
@@ -52,11 +54,11 @@ msgstr "Verrolhar la rotacion"
 
 #: src/rotation-lock.cpp:324
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/rotation-lock.cpp:325
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "Perfils de temperatura de color"
 
 #: src/rotation-lock.cpp:341
 msgid "Display settings…"
