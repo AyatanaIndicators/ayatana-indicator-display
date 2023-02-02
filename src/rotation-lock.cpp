@@ -123,7 +123,12 @@ public:
 #ifdef COLOR_TEMP_ENABLED
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
-        gclue_simple_new_with_thresholds ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, 0, 0, NULL, onGeoClueLoaded, this);
+        const gchar *sTest = g_getenv ("TEST_NAME");
+
+        if (sTest == NULL || !g_str_equal (sTest, "rotation-lock-test"))
+        {
+            gclue_simple_new_with_thresholds ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, 0, 0, NULL, onGeoClueLoaded, this);
+        }
 
         GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
         guint nProfile = g_variant_get_uint16 (pProfile);
