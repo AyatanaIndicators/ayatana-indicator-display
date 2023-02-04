@@ -1,6 +1,48 @@
+2023-02-04 Mike Gabriel
+
+        * release 22.9.4 (HEAD -> main, tag: 22.9.4)
+
+2023-01-12 Robert Tari
+
+        * .build.yml: Add geoclue build dependency (decf609)
+        * debian/control: Add libgeoclue-2 dependencies (4e5098b)
+
+2023-02-02 Robert Tari
+
+        * Skip geoclue calls during the rotation lock test (94df80b)
+
+2023-01-12 Robert Tari
+
+        * Implement adaptive colour temperature profiles (0db5d4e)
+        * src/solar.*: Add solar elevation calculation from Redshift
+          (2d4a732)
+        * data/org.ayatana.indicator.display.gschema.xml: Store colour
+          profile + change default temperature (5b36667)
+
+2023-01-13 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (b13b8b9)
+
+2022-12-30 Milo Ivir
+
+        * Translated using Weblate (Croatian) (ef654f0)
+
+2022-12-18 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (723be17)
+
+2022-12-17 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (729d822)
+
+2022-12-16 Oğuz Ersen
+
+        * Translated using Weblate (Turkish) (70c1f4d)
+
 2022-12-15 Mike Gabriel
 
-        * release 22.9.3 (HEAD -> main, tag: 22.9.3)
+        * Translated using Weblate (German) (fa13859)
+        * release 22.9.3 (868f232) (tag: 22.9.3)
         * Translated using Weblate (German) (29c9429)
         * po/: Update translation files. (cf39314)
         * release 22.9.2 (663e4db) (tag: 22.9.2)
