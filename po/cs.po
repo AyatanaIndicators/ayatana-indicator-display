@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-15 23:40+0100\n"
-"PO-Revision-Date: 2022-09-14 11:45+0000\n"
-"Last-Translator: Milan Korecky <milan.korecky@gmail.com>\n"
+"PO-Revision-Date: 2023-02-25 08:25+0000\n"
+"Last-Translator: Tomáš Marný <tomik.marny@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -38,13 +38,15 @@ msgstr "Uzamkne orientaci obrazovky na určitou hodnotu."
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:313
 msgid "Color temperature"
-msgstr ""
+msgstr "Barevná teplota"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Nastaví teplotu barev obrazovky. Čím nižší je hodnota, tím vyšší je "
+"intenzita efektu zarudnutí aplikovaného na displej."
 
 #: src/rotation-lock.cpp:235 src/rotation-lock.cpp:299
 msgid "Rotation Lock"
@@ -52,16 +54,15 @@ msgstr "Zámek otáčení"
 
 #: src/rotation-lock.cpp:324
 msgid "Manual"
-msgstr ""
+msgstr "Manuál"
 
 #: src/rotation-lock.cpp:325
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "Profily barevné teploty"
 
 #: src/rotation-lock.cpp:341
-#, fuzzy
 msgid "Display settings…"
-msgstr "Nastavení a funkce obrazovky"
+msgstr "Nastavení obrazovky…"
 
 #: src/rotation-lock.cpp:354
 msgid "Rotation"
