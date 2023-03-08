@@ -127,7 +127,7 @@ public:
 
         if (sTest == NULL || !g_str_equal (sTest, "rotation-lock-test"))
         {
-            gclue_simple_new_with_thresholds ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, 0, 0, NULL, onGeoClueLoaded, this);
+            gclue_simple_new ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, NULL, onGeoClueLoaded, this);
         }
 
         GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
@@ -224,7 +224,7 @@ private:
     {
         RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
         GError *pError = NULL;
-        GClueSimple *pSimple = gclue_simple_new_with_thresholds_finish (pResult, &pError);
+        GClueSimple *pSimple = gclue_simple_new_finish (pResult, &pError);
 
         if (pError != NULL)
         {
