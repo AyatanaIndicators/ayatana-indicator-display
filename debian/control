@@ -40,7 +40,7 @@ Depends: ${shlibs:Depends},
          ayatana-indicator-common,
          libglib2.0-bin,
          libgeoclue-2-0,
-         xsct,
+         xsct (>= 1.9),
 Description: Ayatana Indicator for Display configuration
  This Ayatana Indicator is designed to be placed on the right side of a
  panel and give the user easy control for changing their display settings.
