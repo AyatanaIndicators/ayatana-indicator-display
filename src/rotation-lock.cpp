@@ -127,7 +127,7 @@ public:
 
         if (sTest == NULL || !g_str_equal (sTest, "rotation-lock-test"))
         {
-            gclue_simple_new_with_thresholds ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, 0, 0, NULL, onGeoClueLoaded, this);
+            gclue_simple_new ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, NULL, onGeoClueLoaded, this);
         }
 
         GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
@@ -172,6 +172,8 @@ private:
         guint nTemperature = 6500;
         GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
         guint nProfile = g_variant_get_uint16 (pProfile);
+        GVariant *pBrightness = g_settings_get_value (pImpl->m_settings, "brightness");
+        gdouble fBrightness = g_variant_get_double (pBrightness);
 
         if (nProfile == 0)
         {
@@ -206,7 +208,7 @@ private:
         g_action_change_state (pAction, pTemperature);
 
         GError *pError = NULL;
-        gchar *sCommand = g_strdup_printf ("xsct %u", nTemperature);
+        gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
         gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
 
         if (!bSuccess)
@@ -224,7 +226,7 @@ private:
     {
         RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
         GError *pError = NULL;
-        GClueSimple *pSimple = gclue_simple_new_with_thresholds_finish (pResult, &pError);
+        GClueSimple *pSimple = gclue_simple_new_finish (pResult, &pError);
 
         if (pError != NULL)
         {
@@ -245,6 +247,11 @@ private:
         GVariant *pProfile = g_variant_new_uint16 (0);
         g_settings_set_value (pSettings, "color-temp-profile", pProfile);
 
+        updateColorTemp (pData);
+    }
+
+    static void onBrightnessSettings (GSettings *pSettings, const gchar *sKey, gpointer pData)
+    {
         updateColorTemp (pData);
     }
 
@@ -374,6 +381,14 @@ private:
         g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
         g_object_unref(G_OBJECT(action));
         g_signal_connect (m_settings, "changed::color-temp-profile", G_CALLBACK (onColorTempProfile), this);
+
+        pVariantType = g_variant_type_new("d");
+        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (0));
+        g_variant_type_free(pVariantType);
+        g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
+        g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+        g_object_unref (G_OBJECT (action));
+        g_signal_connect (m_settings, "changed::brightness", G_CALLBACK (onBrightnessSettings), this);
     }
 #endif
 
@@ -450,10 +465,25 @@ private:
     {
 #ifdef COLOR_TEMP_ENABLED
         section = g_menu_new ();
-        GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
-        GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
+
+        GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-low");
+        GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-high");
         GVariant *pIconMinSerialised = g_icon_serialize (pIconMin);
         GVariant *pIconMaxSerialised = g_icon_serialize (pIconMax);
+        menu_item = g_menu_item_new (_("Brightness"), "indicator.brightness");
+        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+        g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
+        g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
+        g_menu_item_set_attribute (menu_item, "min-value", "d", 0.5);
+        g_menu_item_set_attribute (menu_item, "max-value", "d", 1.0);
+        g_menu_item_set_attribute (menu_item, "step", "d", 0.005);
+        g_menu_append_item (section, menu_item);
+
+        pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
+        pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
+        pIconMinSerialised = g_icon_serialize (pIconMin);
+        pIconMaxSerialised = g_icon_serialize (pIconMax);
         menu_item = g_menu_item_new (_("Color temperature"), "indicator.color-temp");
         g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
         g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");

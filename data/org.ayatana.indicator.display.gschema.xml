@@ -31,5 +31,11 @@
       <summary>Color temperature profile</summary>
       <description>The current color temperature profile being used by the indicator.</description>
     </key>
+    <key name="brightness" type="d">
+      <range min="0.5" max="1.0"/>
+      <default>1.0</default>
+      <summary>Screen brightness</summary>
+      <description>Stores the current brightness value of your screen.</description>
+    </key>
   </schema>
 </schemalist>
