@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-09 08:07+0100\n"
-"PO-Revision-Date: 2022-12-19 02:50+0000\n"
+"PO-Revision-Date: 2023-03-10 18:42+0000\n"
 "Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -49,21 +49,20 @@ msgstr ""
 "intensidade do efeito de vermelhidão aplicado à tela."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7
-#, fuzzy
 msgid "Color temperature profile"
-msgstr "Perfis de temperatura da cor"
+msgstr "Perfis da temperatura da cor"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "O perfil atual da temperatura da cor usada pelo indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Brilho da tela"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Armazena o valor do brilho atual da sua tela."
 
 #: src/rotation-lock.cpp:48
 msgid "Manual"
@@ -71,15 +70,15 @@ msgstr "Manual"
 
 #: src/rotation-lock.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptativo (frio)"
 
 #: src/rotation-lock.cpp:50
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptativo"
 
 #: src/rotation-lock.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptativo (quente)"
 
 #: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
 msgid "Rotation Lock"
@@ -87,7 +86,7 @@ msgstr "Bloqueio da rotação"
 
 #: src/rotation-lock.cpp:473
 msgid "Brightness"
-msgstr ""
+msgstr "Brilho"
 
 #: src/rotation-lock.cpp:498
 msgid "Color temperature profiles"
