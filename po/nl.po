@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-09 08:06+0100\n"
-"PO-Revision-Date: 2018-05-08 12:53+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"PO-Revision-Date: 2023-03-16 20:40+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/nl/>\n"
 "Language: nl\n"
@@ -17,68 +17,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
-#, fuzzy
 msgid "Lock rotation"
-msgstr "Draaiing"
+msgstr "Draaien vergrendelen"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
-msgstr ""
+msgstr "Vergrendel automatisch draaien van het scherm."
 
 #: data/org.ayatana.indicator.display.gschema.xml:3
-#, fuzzy
 msgid "Orientation lock"
-msgstr "Draaivergrendeling"
+msgstr "Oriëntatie vergrendelen"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr ""
+msgstr "Stel de oriëntatie van het scherm in op een bepaalde waarde."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:487
 msgid "Color temperature"
-msgstr ""
+msgstr "Kleurtemperatuur"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Stel de kleurtemperatuur van het scherm in. Hoe lager de waarde, des te "
+"hoger de intensiteit van de rode gloed."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7
 msgid "Color temperature profile"
-msgstr ""
+msgstr "Kleurtemperatuurprofiel"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "Het huidige kleurtemperatuurprofiel van de indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Schermhelderheid"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Stel de huidige helderheid van het scherm in."
 
 #: src/rotation-lock.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Handmatig"
 
 #: src/rotation-lock.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Aanpasbaar (kouder)"
 
 #: src/rotation-lock.cpp:50
 msgid "Adaptive"
-msgstr ""
+msgstr "Aanpasbaar"
 
 #: src/rotation-lock.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Aanpasbaar (warmer)"
 
 #: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
 msgid "Rotation Lock"
@@ -86,15 +86,15 @@ msgstr "Draaivergrendeling"
 
 #: src/rotation-lock.cpp:473
 msgid "Brightness"
-msgstr ""
+msgstr "Helderheid"
 
 #: src/rotation-lock.cpp:498
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "Kleurtemperatuurprofielen"
 
 #: src/rotation-lock.cpp:525
 msgid "Display settings…"
-msgstr ""
+msgstr "Scherminstellingen…"
 
 #: src/rotation-lock.cpp:538
 msgid "Rotation"
@@ -102,16 +102,16 @@ msgstr "Draaiing"
 
 #: src/rotation-lock.cpp:549
 msgid "Display"
-msgstr ""
+msgstr "Scherm"
 
 #: src/rotation-lock.cpp:550
 msgid "Display settings and features"
-msgstr ""
+msgstr "Scherminstellingen en -functies"
 
 #: src/usb-snap.cpp:107
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
-msgstr "De RSA-vingerafdruk van de computer is: %s"
+msgstr "De RSA-vingerafdruk van de computer is %s"
 
 #: src/usb-snap.cpp:112
 msgid "Allow"
@@ -123,4 +123,4 @@ msgstr "Weigeren"
 
 #: src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr "USB-foutopsporing toestaan?"
+msgstr "Wil je usb-foutopsporing toestaan?"
