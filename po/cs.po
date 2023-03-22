@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-09 08:06+0100\n"
-"PO-Revision-Date: 2023-02-25 08:25+0000\n"
+"PO-Revision-Date: 2023-03-23 17:39+0000\n"
 "Last-Translator: Tomáš Marný <tomik.marny@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -49,21 +49,20 @@ msgstr ""
 "intenzita efektu zarudnutí aplikovaného na displej."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7
-#, fuzzy
 msgid "Color temperature profile"
-msgstr "Profily barevné teploty"
+msgstr "Profil barevné teploty"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "Aktuální profil teploty barev používaný indikátorem."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Jas obrazovky"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Uloží aktuální hodnotu jasu obrazovky."
 
 #: src/rotation-lock.cpp:48
 msgid "Manual"
@@ -71,15 +70,15 @@ msgstr "Manuál"
 
 #: src/rotation-lock.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptivní (chladnější)"
 
 #: src/rotation-lock.cpp:50
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptivní"
 
 #: src/rotation-lock.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptivní (teplejší)"
 
 #: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
 msgid "Rotation Lock"
@@ -87,7 +86,7 @@ msgstr "Zámek otáčení"
 
 #: src/rotation-lock.cpp:473
 msgid "Brightness"
-msgstr ""
+msgstr "Jas"
 
 #: src/rotation-lock.cpp:498
 msgid "Color temperature profiles"
