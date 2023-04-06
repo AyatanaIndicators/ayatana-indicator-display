@@ -8,93 +8,93 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-09 08:07+0100\n"
-"PO-Revision-Date: 2019-04-18 15:03+0000\n"
-"Last-Translator: Rui Mendes <xz9@protonmail.com>\n"
-"Language-Team: Portuguese <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/pt/>\n"
+"PO-Revision-Date: 2023-04-07 16:47+0000\n"
+"Last-Translator: ssantos <ssantos@web.de>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
-#, fuzzy
 msgid "Lock rotation"
-msgstr "Rotação"
+msgstr "Bloquear a rotação"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
-msgstr ""
+msgstr "Bloqueie a rotação automática da tela."
 
 #: data/org.ayatana.indicator.display.gschema.xml:3
-#, fuzzy
 msgid "Orientation lock"
-msgstr "Bloquear rotação"
+msgstr "Bloqueio da orientação"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr ""
+msgstr "Faz o bloqueio da orientação para um valor específico."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5
 #: src/rotation-lock.cpp:487
 msgid "Color temperature"
-msgstr ""
+msgstr "Temperatura da cor"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Define a temperatura da cor da tela. Quanto menor o valor, maior a "
+"intensidade do efeito de vermelhidão aplicado à tela."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7
 msgid "Color temperature profile"
-msgstr ""
+msgstr "Perfis da temperatura da cor"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "O perfil atual da temperatura da cor usada pelo indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Brilho do ecrã"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Armazena o valor do brilho atual do seu ecrã."
 
 #: src/rotation-lock.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/rotation-lock.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptativo (frio)"
 
 #: src/rotation-lock.cpp:50
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptativo"
 
 #: src/rotation-lock.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptativo (quente)"
 
 #: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
 msgid "Rotation Lock"
-msgstr "Bloquear rotação"
+msgstr "Bloqueio da rotação"
 
 #: src/rotation-lock.cpp:473
 msgid "Brightness"
-msgstr ""
+msgstr "Brilho"
 
 #: src/rotation-lock.cpp:498
 msgid "Color temperature profiles"
-msgstr ""
+msgstr "Perfis de temperatura da cor"
 
 #: src/rotation-lock.cpp:525
 msgid "Display settings…"
-msgstr ""
+msgstr "Definições da tela…"
 
 #: src/rotation-lock.cpp:538
 msgid "Rotation"
@@ -102,11 +102,11 @@ msgstr "Rotação"
 
 #: src/rotation-lock.cpp:549
 msgid "Display"
-msgstr ""
+msgstr "Exibição"
 
 #: src/rotation-lock.cpp:550
 msgid "Display settings and features"
-msgstr ""
+msgstr "Exibe as configurações e os recursos"
 
 #: src/usb-snap.cpp:107
 #, c-format
@@ -123,4 +123,4 @@ msgstr "Não permitir"
 
 #: src/usb-snap.cpp:126
 msgid "Allow USB Debugging?"
-msgstr "Permitir depuração por USB?"
+msgstr "Quer permitir a depuração através do USB?"
