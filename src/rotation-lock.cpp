@@ -472,7 +472,7 @@ private:
         g_menu_append_item (section, menu_item);
 
         GMenu *pMenuProfiles = g_menu_new ();
-        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profiles"), G_MENU_MODEL (pMenuProfiles));
+        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profile"), G_MENU_MODEL (pMenuProfiles));
         guint nProfile = 0;
 
         while (m_lTempProfiles[nProfile].sName != NULL)
