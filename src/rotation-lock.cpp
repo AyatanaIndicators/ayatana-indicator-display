@@ -130,14 +130,7 @@ public:
             gclue_simple_new ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, NULL, onGeoClueLoaded, this);
         }
 
-        GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-
-        if (nProfile != 0)
-        {
-            this->nCallback = g_timeout_add_seconds (60, updateColorTemp, this);
-        }
-
+        this->nCallback = g_timeout_add_seconds (60, updateColorTemp, this);
         updateColorTemp (this);
     }
 #endif
@@ -145,6 +138,11 @@ public:
 
   ~Impl()
   {
+    if (nCallback)
+    {
+        g_source_remove (nCallback);
+    }
+
     g_signal_handlers_disconnect_by_data(m_settings, this);
     g_clear_object(&m_action_group);
     g_clear_object(&m_settings);
@@ -169,16 +167,14 @@ private:
     static gboolean updateColorTemp (gpointer pData)
     {
         RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
-        guint nTemperature = 6500;
-        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-        GVariant *pBrightness = g_settings_get_value (pImpl->m_settings, "brightness");
-        gdouble fBrightness = g_variant_get_double (pBrightness);
+        guint nProfile = 0;
+        g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
+        gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
+        guint nTemperature = 0;
 
         if (nProfile == 0)
         {
-            GVariant *pTemperature = g_settings_get_value (pImpl->m_settings, "color-temp");
-            nTemperature = g_variant_get_uint16 (pTemperature);
+            g_settings_get (pImpl->m_settings, "color-temp", "q", &nTemperature);
 
             g_debug("%i", nTemperature);
         }
@@ -203,21 +199,26 @@ private:
             g_debug("%f, %f, %i", fShifting, fElevation, nTemperature);
         }
 
-        GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
-        GVariant *pTemperature = g_variant_new_double (nTemperature);
-        g_action_change_state (pAction, pTemperature);
-
-        GError *pError = NULL;
-        gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
-        gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
-
-        if (!bSuccess)
+        if (pImpl->fLastBrightness != fBrightness || pImpl->nLasColorTemp != nTemperature)
         {
-            g_error ("The call to '%s' failed: %s", sCommand, pError->message);
-            g_error_free (pError);
-        }
+            GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
+            GVariant *pTemperature = g_variant_new_double (nTemperature);
+            g_action_change_state (pAction, pTemperature);
 
-        g_free (sCommand);
+            GError *pError = NULL;
+            gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
+            gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
+
+            if (!bSuccess)
+            {
+                g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+                g_error_free (pError);
+            }
+
+            pImpl->fLastBrightness = fBrightness;
+            pImpl->nLasColorTemp = nTemperature;
+            g_free (sCommand);
+        }
 
         return G_SOURCE_CONTINUE;
     }
@@ -248,30 +249,6 @@ private:
         g_settings_set_value (pSettings, "color-temp-profile", pProfile);
 
         updateColorTemp (pData);
-    }
-
-    static void onBrightnessSettings (GSettings *pSettings, const gchar *sKey, gpointer pData)
-    {
-        updateColorTemp (pData);
-    }
-
-    static void onColorTempProfile (GSettings *pSettings, const gchar *sKey, gpointer pData)
-    {
-        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
-        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-
-        if (nProfile == 0 && pImpl->nCallback != 0)
-        {
-            g_source_remove (pImpl->nCallback);
-            pImpl->nCallback = 0;
-        }
-        else if (nProfile != 0 && pImpl->nCallback == 0)
-        {
-            pImpl->nCallback = g_timeout_add_seconds (60, updateColorTemp, pImpl);
-        }
-
-        updateColorTemp (pImpl);
     }
 
     static gboolean settingsIntToActionStateString (GValue *pValue, GVariant *pVariant, gpointer pData)
@@ -380,7 +357,7 @@ private:
         g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
         g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
         g_object_unref(G_OBJECT(action));
-        g_signal_connect (m_settings, "changed::color-temp-profile", G_CALLBACK (onColorTempProfile), this);
+        g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColorTemp), this);
 
         pVariantType = g_variant_type_new("d");
         action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (0));
@@ -388,7 +365,7 @@ private:
         g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
         g_object_unref (G_OBJECT (action));
-        g_signal_connect (m_settings, "changed::brightness", G_CALLBACK (onBrightnessSettings), this);
+        g_signal_connect_swapped (m_settings, "changed::brightness", G_CALLBACK (updateColorTemp), this);
     }
 #endif
 
@@ -568,6 +545,8 @@ private:
   gdouble fLongitude = -0.0076589;
   gboolean bAutoSliderUpdate = FALSE;
   guint nCallback = 0;
+  gdouble fLastBrightness = 0.0;
+  guint nLasColorTemp = 0;
 #endif
 };
 
