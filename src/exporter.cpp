@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2022 Robert Tari
+ * Copyright 2022-2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -188,7 +188,6 @@ private:
     static_cast<Impl*>(gthis)->emit_name_lost(name);
   }
 
-  const std::string m_bus_name;
   core::Signal<std::string> m_name_lost;
   std::shared_ptr<Indicator> m_indicator;
   std::set<guint> m_exported_menu_ids;
