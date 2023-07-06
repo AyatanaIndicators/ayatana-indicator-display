@@ -37,5 +37,25 @@
       <summary>Screen brightness</summary>
       <description>Stores the current brightness value of your screen.</description>
     </key>
+    <key name="light-theme" type="s">
+      <default>'current'</default>
+      <summary>The name of the light theme</summary>
+      <description>This is the theme the indicator will set when "Light" is selected.</description>
+    </key>
+    <key name="dark-theme" type="s">
+      <default>'current'</default>
+      <summary>The name of the dark theme</summary>
+      <description>This is the theme the indicator will set when "Dark" is selected.</description>
+    </key>
+    <key type="s" name="theme-profile">
+      <choices>
+        <choice value='light'/>
+        <choice value='dark'/>
+        <choice value='adaptive'/>
+      </choices>
+      <default>'light'</default>
+      <summary>Theme profile</summary>
+      <description>The current theme temperature profile being used by the indicator.</description>
+    </key>
   </schema>
 </schemalist>
