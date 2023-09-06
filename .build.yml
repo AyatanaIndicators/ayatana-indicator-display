@@ -15,8 +15,9 @@ requires:
     - glib2
     - systemd
     - geoclue
-#    - libayatana-common
-#    - xsct
+    - gnome-desktop
+#    - libayatana-common (AUR)
+#    - xsct  (AUR)
 
   debian:
     # Useful URL: https://salsa.debian.org/debian-ayatana-team/ayatana-indicator-display
@@ -47,6 +48,7 @@ requires:
     - gcovr
     - systemd
     - libgeoclue-2-dev
+    - gsettings-desktop-schemas
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -79,6 +81,7 @@ requires:
     - systemd
     - gsettings-ubuntu-schemas
     - libgeoclue-2-dev
+    - gsettings-desktop-schemas
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -111,6 +114,7 @@ requires:
     - systemd
     - gsettings-ubuntu-schemas
     - libgeoclue-2-dev
+    - gsettings-desktop-schemas
 # For xsct
     - libx11-dev
     - libxrandr-dev

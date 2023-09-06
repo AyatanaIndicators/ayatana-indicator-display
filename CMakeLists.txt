@@ -1,5 +1,5 @@
-project(ayatana-indicator-display LANGUAGES C CXX)
 cmake_minimum_required(VERSION 3.13)
+project(ayatana-indicator-display VERSION 22.9.4 LANGUAGES C CXX)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     SET(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
@@ -10,7 +10,6 @@ endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 ##
 include(GNUInstallDirs)
 
-set(PROJECT_VERSION "22.9.4")
 set(PACKAGE ${CMAKE_PROJECT_NAME})
 set(SERVICE_LIB ${PACKAGE})
 set(SERVICE_EXEC "${PACKAGE}-service")

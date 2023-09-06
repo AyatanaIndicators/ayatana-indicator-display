@@ -60,6 +60,8 @@ public:
   Impl()
   {
     GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
+    const gchar *sTest = g_getenv ("TEST_NAME");
+    this->bTest = (sTest != NULL && g_str_equal (sTest, "rotation-lock-test"));
 
     if (pSource != NULL)
     {
@@ -92,6 +94,56 @@ public:
                 g_error("No schema could be found");
             }
 
+            const gchar *sSchema = NULL;
+
+            if (this->bTest)
+            {
+                sSchema = "org.ayatana.indicator.display";
+            }
+            else
+            {
+                if (ayatana_common_utils_is_mate ())
+                {
+                    sSchema = "org.mate.interface";
+                }
+                else
+                {
+                    sSchema = "org.gnome.desktop.interface";
+                }
+            }
+
+            pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+
+            if (pSchema != NULL)
+            {
+                g_settings_schema_unref (pSchema);
+                pThemeSettings = g_settings_new (sSchema);
+            }
+            else
+            {
+                g_error("No %s schema could be found", sSchema);
+            }
+
+            if (this->bTest)
+            {
+                sSchema = "org.ayatana.indicator.display";
+            }
+            else
+            {
+                sSchema = "org.gnome.desktop.interface";
+            }
+
+            pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+
+            if (pSchema != NULL)
+            {
+                g_settings_schema_unref (pSchema);
+                pColorSchemeSettings = g_settings_new (sSchema);
+            }
+            else
+            {
+                g_error("No %s schema could be found", sSchema);
+            }
         }
     }
 
@@ -123,31 +175,41 @@ public:
 #ifdef COLOR_TEMP_ENABLED
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
-        const gchar *sTest = g_getenv ("TEST_NAME");
-
-        if (sTest == NULL || !g_str_equal (sTest, "rotation-lock-test"))
+        if (!this->bTest)
         {
             gclue_simple_new ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, NULL, onGeoClueLoaded, this);
+            this->nCallback = g_timeout_add_seconds (60, updateColor, this);
+            updateColor (this);
         }
-
-        GVariant *pProfile = g_settings_get_value (this->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-
-        if (nProfile != 0)
-        {
-            this->nCallback = g_timeout_add_seconds (60, updateColorTemp, this);
-        }
-
-        updateColorTemp (this);
     }
 #endif
   }
 
   ~Impl()
   {
+    if (nCallback)
+    {
+        g_source_remove (nCallback);
+    }
+
     g_signal_handlers_disconnect_by_data(m_settings, this);
     g_clear_object(&m_action_group);
     g_clear_object(&m_settings);
+
+    if (sLastTheme)
+    {
+        g_free (sLastTheme);
+    }
+
+    if (pThemeSettings)
+    {
+        g_clear_object (&pThemeSettings);
+    }
+
+    if (pColorSchemeSettings)
+    {
+        g_clear_object (&pColorSchemeSettings);
+    }
   }
 
   GSimpleActionGroup* action_group() const
@@ -166,26 +228,26 @@ public:
 private:
 
 #ifdef COLOR_TEMP_ENABLED
-    static gboolean updateColorTemp (gpointer pData)
+    static gboolean updateColor (gpointer pData)
     {
         RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
-        guint nTemperature = 6500;
-        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-        GVariant *pBrightness = g_settings_get_value (pImpl->m_settings, "brightness");
-        gdouble fBrightness = g_variant_get_double (pBrightness);
+        guint nProfile = 0;
+        g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
+        gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
+        gchar *sThemeProfile = g_settings_get_string (pImpl->m_settings, "theme-profile");
+        gboolean bThemeAdaptive = g_str_equal (sThemeProfile, "adaptive");
+        guint nTemperature = 0;
+        const gchar *sColorScheme = NULL;
+        gchar *sTheme = NULL;
+        gint64 nNow = g_get_real_time ();
+        gdouble fElevation = solar_elevation((gdouble) nNow / 1000000.0, pImpl->fLatitude, pImpl->fLongitude);
 
         if (nProfile == 0)
         {
-            GVariant *pTemperature = g_settings_get_value (pImpl->m_settings, "color-temp");
-            nTemperature = g_variant_get_uint16 (pTemperature);
-
-            g_debug("%i", nTemperature);
+            g_settings_get (pImpl->m_settings, "color-temp", "q", &nTemperature);
         }
         else
         {
-            gint64 nNow = g_get_real_time ();
-            gdouble fElevation = solar_elevation((gdouble) nNow / 1000000.0, pImpl->fLatitude, pImpl->fLongitude);
             gdouble fShifting = 0.0;
 
             if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
@@ -199,25 +261,97 @@ private:
 
             nTemperature = m_lTempProfiles[nProfile].nTempHigh - (m_lTempProfiles[nProfile].nTempHigh - m_lTempProfiles[nProfile].nTempLow) * fShifting;
             pImpl->bAutoSliderUpdate = TRUE;
-
-            g_debug("%f, %f, %i", fShifting, fElevation, nTemperature);
         }
 
-        GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
-        GVariant *pTemperature = g_variant_new_double (nTemperature);
-        g_action_change_state (pAction, pTemperature);
-
-        GError *pError = NULL;
-        gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
-        gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
-
-        if (!bSuccess)
+        if (!bThemeAdaptive)
         {
-            g_error ("The call to '%s' failed: %s", sCommand, pError->message);
-            g_error_free (pError);
+            gchar *sThemeKey = g_strdup_printf ("%s-theme", sThemeProfile);
+            sTheme = g_settings_get_string (pImpl->m_settings, sThemeKey);
+            g_free (sThemeKey);
+
+            gboolean bLightTheme = g_str_equal (sThemeProfile, "light");
+
+            if (bLightTheme)
+            {
+                sColorScheme = "prefer-light";
+            }
+            else
+            {
+                sColorScheme = "prefer-dark";
+            }
+        }
+        else
+        {
+            if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
+            {
+                sColorScheme = "prefer-dark";
+                sTheme = g_settings_get_string (pImpl->m_settings, "dark-theme");
+            }
+            else
+            {
+                sColorScheme = "prefer-light";
+                sTheme = g_settings_get_string (pImpl->m_settings, "light-theme");
+            }
         }
 
-        g_free (sCommand);
+        if (pImpl->fLastBrightness != fBrightness || pImpl->nLasColorTemp != nTemperature)
+        {
+            g_debug ("Calling xsct with %u %f", nTemperature, fBrightness);
+
+            GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
+            GVariant *pTemperature = g_variant_new_double (nTemperature);
+            g_action_change_state (pAction, pTemperature);
+
+            GError *pError = NULL;
+            gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
+            gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
+
+            if (!bSuccess)
+            {
+                g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+                g_error_free (pError);
+            }
+
+            pImpl->fLastBrightness = fBrightness;
+            pImpl->nLasColorTemp = nTemperature;
+            g_free (sCommand);
+        }
+
+        gboolean bSameColorScheme = g_str_equal (sColorScheme, pImpl->sLastColorScheme);
+
+        if (!bSameColorScheme)
+        {
+            g_debug ("Changing color scheme to %s", sColorScheme);
+
+            g_settings_set_string (pImpl->pColorSchemeSettings, "color-scheme", sColorScheme);
+            pImpl->sLastColorScheme = sColorScheme;
+        }
+
+        gboolean bSameTheme = FALSE;
+
+        if (pImpl->sLastTheme)
+        {
+            bSameTheme = g_str_equal (pImpl->sLastTheme, sTheme);
+        }
+
+        gboolean bCurrentTheme = g_str_equal ("current", sTheme);
+
+        if (!bSameTheme && !bCurrentTheme)
+        {
+            g_debug ("Changing theme to %s", sTheme);
+
+            g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+
+            if (pImpl->sLastTheme)
+            {
+                g_free (pImpl->sLastTheme);
+            }
+
+            pImpl->sLastTheme = g_strdup (sTheme);
+        }
+
+        g_free (sTheme);
+        g_free (sThemeProfile);
 
         return G_SOURCE_CONTINUE;
     }
@@ -239,7 +373,7 @@ private:
             pImpl->fLongitude = gclue_location_get_longitude (pLocation);
         }
 
-        updateColorTemp (pImpl);
+        updateColor (pImpl);
     }
 
     static void onColorTempSettings (GSettings *pSettings, const gchar *sKey, gpointer pData)
@@ -247,31 +381,7 @@ private:
         GVariant *pProfile = g_variant_new_uint16 (0);
         g_settings_set_value (pSettings, "color-temp-profile", pProfile);
 
-        updateColorTemp (pData);
-    }
-
-    static void onBrightnessSettings (GSettings *pSettings, const gchar *sKey, gpointer pData)
-    {
-        updateColorTemp (pData);
-    }
-
-    static void onColorTempProfile (GSettings *pSettings, const gchar *sKey, gpointer pData)
-    {
-        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
-        GVariant *pProfile = g_settings_get_value (pImpl->m_settings, "color-temp-profile");
-        guint nProfile = g_variant_get_uint16 (pProfile);
-
-        if (nProfile == 0 && pImpl->nCallback != 0)
-        {
-            g_source_remove (pImpl->nCallback);
-            pImpl->nCallback = 0;
-        }
-        else if (nProfile != 0 && pImpl->nCallback == 0)
-        {
-            pImpl->nCallback = g_timeout_add_seconds (60, updateColorTemp, pImpl);
-        }
-
-        updateColorTemp (pImpl);
+        updateColor (pData);
     }
 
     static gboolean settingsIntToActionStateString (GValue *pValue, GVariant *pVariant, gpointer pData)
@@ -380,7 +490,7 @@ private:
         g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
         g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
         g_object_unref(G_OBJECT(action));
-        g_signal_connect (m_settings, "changed::color-temp-profile", G_CALLBACK (onColorTempProfile), this);
+        g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColor), this);
 
         pVariantType = g_variant_type_new("d");
         action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (0));
@@ -388,7 +498,17 @@ private:
         g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
         g_object_unref (G_OBJECT (action));
-        g_signal_connect (m_settings, "changed::brightness", G_CALLBACK (onBrightnessSettings), this);
+        g_signal_connect_swapped (m_settings, "changed::brightness", G_CALLBACK (updateColor), this);
+
+        pVariantType = g_variant_type_new ("s");
+        action = g_simple_action_new_stateful ("theme", pVariantType, g_variant_new_string ("light"));
+        g_variant_type_free (pVariantType);
+        g_settings_bind_with_mapping (this->m_settings, "theme-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
+        g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
+        g_object_unref(G_OBJECT(action));
+        g_signal_connect_swapped (m_settings, "changed::theme-profile", G_CALLBACK (updateColor), this);
+        g_signal_connect_swapped (m_settings, "changed::light-theme", G_CALLBACK (updateColor), this);
+        g_signal_connect_swapped (m_settings, "changed::dark-theme", G_CALLBACK (updateColor), this);
     }
 #endif
 
@@ -495,7 +615,7 @@ private:
         g_menu_append_item (section, menu_item);
 
         GMenu *pMenuProfiles = g_menu_new ();
-        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profiles"), G_MENU_MODEL (pMenuProfiles));
+        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profile"), G_MENU_MODEL (pMenuProfiles));
         guint nProfile = 0;
 
         while (m_lTempProfiles[nProfile].sName != NULL)
@@ -520,6 +640,24 @@ private:
         g_variant_unref (pIconMaxSerialised);
         g_object_unref (section);
         g_object_unref (menu_item);
+
+        section = g_menu_new ();
+        pMenuProfiles = g_menu_new ();
+        pItemProfiles = g_menu_item_new_submenu (_("Theme profile"), G_MENU_MODEL (pMenuProfiles));
+        GMenuItem *pItemProfile = g_menu_item_new (_("Light"), "indicator.theme::light");
+        g_menu_append_item (pMenuProfiles, pItemProfile);
+        g_object_unref (pItemProfile);
+        pItemProfile = g_menu_item_new (_("Dark"), "indicator.theme::dark");
+        g_menu_append_item (pMenuProfiles, pItemProfile);
+        g_object_unref (pItemProfile);
+        pItemProfile = g_menu_item_new (_("Adaptive"), "indicator.theme::adaptive");
+        g_menu_append_item (pMenuProfiles, pItemProfile);
+        g_object_unref (pItemProfile);
+        g_menu_append_item (section, pItemProfiles);
+        g_object_unref (pItemProfiles);
+        g_object_unref (pMenuProfiles);
+        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+        g_object_unref (section);
 #endif
         section = g_menu_new ();
         menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
@@ -568,6 +706,13 @@ private:
   gdouble fLongitude = -0.0076589;
   gboolean bAutoSliderUpdate = FALSE;
   guint nCallback = 0;
+  gdouble fLastBrightness = 0.0;
+  guint nLasColorTemp = 0;
+  gchar *sLastTheme = NULL;
+  const gchar *sLastColorScheme = "default";
+  GSettings *pThemeSettings = NULL;
+  GSettings *pColorSchemeSettings = NULL;
+  gboolean bTest;
 #endif
 };
 
