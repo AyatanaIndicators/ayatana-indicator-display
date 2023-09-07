@@ -57,5 +57,17 @@
       <summary>Theme profile</summary>
       <description>The current theme temperature profile being used by the indicator.</description>
     </key>
+    <key name="latitude" type="d">
+      <range min="-90.0" max="90.0"/>
+      <default>51.4825766</default>
+      <summary>Current geographic latitude</summary>
+      <description>Stores the last recorded geographic latitude of the device.</description>
+    </key>
+    <key name="longitude" type="d">
+      <range min="-180.0" max="180.0"/>
+      <default>-0.0076589</default>
+      <summary>Current geographic longitude</summary>
+      <description>Stores the last recorded geographic longitude of the device.</description>
+    </key>
   </schema>
 </schemalist>
