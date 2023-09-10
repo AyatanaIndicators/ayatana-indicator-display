@@ -177,6 +177,8 @@ public:
     {
         if (!this->bTest)
         {
+            this->fLatitude = g_settings_get_double (this->m_settings, "latitude");
+            this->fLongitude = g_settings_get_double (this->m_settings, "longitude");
             gclue_simple_new ("ayatana-indicator-display", GCLUE_ACCURACY_LEVEL_CITY, NULL, onGeoClueLoaded, this);
             this->nCallback = g_timeout_add_seconds (60, updateColor, this);
             updateColor (this);
@@ -371,6 +373,8 @@ private:
             GClueLocation *pLocation = gclue_simple_get_location (pSimple);
             pImpl->fLatitude = gclue_location_get_latitude (pLocation);
             pImpl->fLongitude = gclue_location_get_longitude (pLocation);
+            g_settings_set_double (pImpl->m_settings, "latitude", pImpl->fLatitude);
+            g_settings_set_double (pImpl->m_settings, "longitude", pImpl->fLongitude);
         }
 
         updateColor (pImpl);
@@ -702,8 +706,8 @@ private:
   std::shared_ptr<SimpleProfile> m_desktop;
   std::shared_ptr<GIcon> m_icon;
 #ifdef COLOR_TEMP_ENABLED
-  gdouble fLatitude = 51.4825766;
-  gdouble fLongitude = -0.0076589;
+  gdouble fLatitude = 0.0;
+  gdouble fLongitude = 0.0;
   gboolean bAutoSliderUpdate = FALSE;
   guint nCallback = 0;
   gdouble fLastBrightness = 0.0;
