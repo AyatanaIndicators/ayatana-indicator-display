@@ -1,6 +1,6 @@
 /*
  * Copyright 2016 Canonical Ltd.
- * Copyright 2022 Robert Tari
+ * Copyright 2022-2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -132,10 +132,7 @@ TEST_F(UsbManagerFixture, Allow)
 
         QVariantMap hints;
         ASSERT_TRUE(qDBusArgumentToMap(args.at(6), hints));
-        ASSERT_EQ(3, hints.size());
-        ASSERT_TRUE(hints.contains("x-lomiri-private-affirmative-tint"));
-        ASSERT_TRUE(hints.contains("x-lomiri-non-shaped-icon"));
-        ASSERT_TRUE(hints.contains("x-lomiri-snap-decisions"));
+        ASSERT_EQ(0, hints.size());
     }
     notificationsSpy.clear();
 
