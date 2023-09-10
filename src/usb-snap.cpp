@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Canonical Ltd.
+ * Copyright 2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #include <src/dbus-names.h>
@@ -115,9 +117,6 @@ private:
 
         GVariantBuilder hints_builder;
         g_variant_builder_init(&hints_builder, G_VARIANT_TYPE_VARDICT);
-        g_variant_builder_add(&hints_builder, "{sv}", "x-lomiri-non-shaped-icon", g_variant_new_string("true"));
-        g_variant_builder_add(&hints_builder, "{sv}", "x-lomiri-snap-decisions", g_variant_new_string("true"));
-        g_variant_builder_add(&hints_builder, "{sv}", "x-lomiri-private-affirmative-tint", g_variant_new_string("true"));
 
         auto args = g_variant_new("(susssasa{sv}i)",
                                   "",
