@@ -1,5 +1,6 @@
 /*
  * Copyright 2014-2016 Canonical Ltd.
+ * Copyright 2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,6 +16,7 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
 #pragma once
@@ -50,7 +52,7 @@ class Profile
 {
 public:
   virtual std::string name() const =0;
-  virtual const core::Property<Header>& header() const =0;
+  virtual core::Property<Header>& header() =0;
   virtual std::shared_ptr<GMenuModel> menu_model() const =0;
   virtual ~Profile();
 
@@ -66,8 +68,7 @@ public:
   virtual ~SimpleProfile();
 
   std::string name() const override {return m_name;}
-  core::Property<Header>& header() {return m_header;}
-  const core::Property<Header>& header() const override {return m_header;}
+  core::Property<Header>& header() override {return m_header;}
   std::shared_ptr<GMenuModel> menu_model() const override {return m_menu;}
 
 protected:
@@ -86,4 +87,3 @@ public:
   virtual GSimpleActionGroup* action_group() const =0;
   virtual std::vector<std::shared_ptr<Profile>> profiles() const =0;
 };
-
