@@ -51,7 +51,7 @@ install (FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.desktop" DESTI
 set (AYATANA_INDICATOR_DIR "${CMAKE_INSTALL_FULL_DATAROOTDIR}/ayatana/indicators")
 message (STATUS "${AYATANA_INDICATOR_DIR} is the Ayatana Indicator install dir")
 
-set (AYATANA_INDICATOR_NAME "org.ayatana.indicator.rotation_lock")
+set (AYATANA_INDICATOR_NAME "org.ayatana.indicator.display")
 set (AYATANA_INDICATOR_FILE "${CMAKE_CURRENT_SOURCE_DIR}/${AYATANA_INDICATOR_NAME}")
 
 install (FILES "${AYATANA_INDICATOR_FILE}"

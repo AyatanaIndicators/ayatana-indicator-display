@@ -1,0 +1,13 @@
+[Indicator Service]
+Name=ayatana-indicator-display
+ObjectPath=/org/ayatana/indicator/display
+Position=90
+
+[phone]
+ObjectPath=/org/ayatana/indicator/display/phone
+
+[phone_greeter]
+ObjectPath=/org/ayatana/indicator/display/phone
+
+[desktop]
+ObjectPath=/org/ayatana/indicator/display/desktop
