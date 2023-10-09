@@ -19,7 +19,7 @@
 
 #include <tests/utils/test-dbus-fixture.h>
 
-#include <src/rotation-lock.h>
+#include <src/service.h>
 
 class RotationLockFixture: public TestDBusFixture
 {
@@ -45,9 +45,9 @@ protected:
 
 TEST_F(RotationLockFixture, CheckIndicator)
 {
-  RotationLockIndicator indicator;
+  DisplayIndicator indicator;
 
-  ASSERT_STREQ("rotation_lock", indicator.name());
+  ASSERT_STREQ("display", indicator.name());
   auto actions = indicator.action_group();
   ASSERT_TRUE(actions != nullptr);
   ASSERT_TRUE(g_action_group_has_action(G_ACTION_GROUP(actions), "rotation-lock"));

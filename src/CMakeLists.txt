@@ -7,7 +7,7 @@ add_compile_options(
 set (SERVICE_LIB_SOURCES
      exporter.cpp
      indicator.cpp
-     rotation-lock.cpp
+     service.cpp
 )
 
 if (ENABLE_LOMIRI_FEATURES)
