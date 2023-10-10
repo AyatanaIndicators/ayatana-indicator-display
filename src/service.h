@@ -1,5 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
+ * Copyright 2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -15,20 +16,21 @@
  *
  * Authors:
  *   Charles Kerr <charles.kerr@canonical.com>
+ *   Robert Tari <robert@tari.in>
  */
 
-#ifndef INDICATOR_DISPLAY_ROTATION_LOCK_H
-#define INDICATOR_DISPLAY_ROTATION_LOCK_H
+#ifndef INDICATOR_DISPLAY_SERVICE_H
+#define INDICATOR_DISPLAY_SERVICE_H
 
 #include <src/indicator.h>
 
 #include <memory> // std::unique_ptr
 
-class RotationLockIndicator: public Indicator
+class DisplayIndicator: public Indicator
 {
 public:
-  RotationLockIndicator();
-  ~RotationLockIndicator();
+  DisplayIndicator();
+  ~DisplayIndicator();
 
   const char* name() const override;
   GSimpleActionGroup* action_group() const override;

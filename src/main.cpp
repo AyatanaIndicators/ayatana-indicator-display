@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2022 Robert Tari
+ * Copyright 2022-2023 Robert Tari
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 3, as published
@@ -20,7 +20,7 @@
  */
 
 #include <src/exporter.h>
-#include <src/rotation-lock.h>
+#include <src/service.h>
 
 #ifdef LOMIRI_FEATURES_ENABLED
 #include <src/greeter.h>
@@ -57,11 +57,9 @@ main(int /*argc*/, char** /*argv*/)
       g_main_loop_quit(loop);
     };
 
-    // build all our indicators.
-    // Right now we've only got one -- rotation lock -- but hey, we can dream.
     std::vector<std::shared_ptr<Indicator>> indicators;
     std::vector<std::shared_ptr<Exporter>> exporters;
-    indicators.push_back(std::make_shared<RotationLockIndicator>());
+    indicators.push_back(std::make_shared<DisplayIndicator>());
     for (auto& indicator : indicators) {
       auto exporter = std::make_shared<Exporter>(indicator);
       exporter->name_lost().connect(on_name_lost);

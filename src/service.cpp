@@ -19,7 +19,7 @@
  *   Robert Tari <robert@tari.in>
  */
 
-#include <src/rotation-lock.h>
+#include <src/service.h>
 #include <glib/gi18n.h>
 
 #ifdef COLOR_TEMP_ENABLED
@@ -53,7 +53,7 @@ TempProfile m_lTempProfiles[] =
 };
 #endif
 
-class RotationLockIndicator::Impl
+class DisplayIndicator::Impl
 {
 public:
 
@@ -150,14 +150,14 @@ public:
     m_action_group = create_action_group();
 
     // build the icon
-    const char *rotation_lock_icon_name {"orientation-lock"};
+    const char *icon_name {"orientation-lock"};
 
     if (!ayatana_common_utils_is_lomiri())
     {
-        rotation_lock_icon_name = "display-panel";
+        icon_name = "display-panel";
     }
 
-    auto icon = g_themed_icon_new_with_default_fallbacks(rotation_lock_icon_name);
+    auto icon = g_themed_icon_new_with_default_fallbacks(icon_name);
     auto icon_deleter = [](GIcon* o){g_object_unref(G_OBJECT(o));};
     m_icon.reset(icon, icon_deleter);
 
@@ -232,7 +232,7 @@ private:
 #ifdef COLOR_TEMP_ENABLED
     static gboolean updateColor (gpointer pData)
     {
-        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
         guint nProfile = 0;
         g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
         gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
@@ -360,7 +360,7 @@ private:
 
     static void onGeoClueLoaded (GObject *pObject, GAsyncResult *pResult, gpointer pData)
     {
-        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
         GError *pError = NULL;
         GClueSimple *pSimple = gclue_simple_new_finish (pResult, &pError);
 
@@ -416,7 +416,7 @@ private:
     {
         g_simple_action_set_state (pAction, pVariant);
 
-        RotationLockIndicator::Impl *pImpl = (RotationLockIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
 
         if (pImpl->bAutoSliderUpdate)
         {
@@ -724,31 +724,31 @@ private:
 ****
 ***/
 
-RotationLockIndicator::RotationLockIndicator():
+DisplayIndicator::DisplayIndicator():
     impl(new Impl())
 {
 }
 
-RotationLockIndicator::~RotationLockIndicator()
+DisplayIndicator::~DisplayIndicator()
 {
 }
 
 std::vector<std::shared_ptr<Profile>>
-RotationLockIndicator::profiles() const
+DisplayIndicator::profiles() const
 {
   return impl->profiles();
 }
 
 GSimpleActionGroup*
-RotationLockIndicator::action_group() const
+DisplayIndicator::action_group() const
 {
   return impl->action_group();
 }
 
 const char*
-RotationLockIndicator::name() const
+DisplayIndicator::name() const
 {
-  return "rotation_lock";
+  return "display";
 }
 
 /***

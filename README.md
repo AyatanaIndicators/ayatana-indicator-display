@@ -35,8 +35,8 @@ https://ayatana-indicators.org
 ## The Display Ayatana System Indicator
 
 The -display Ayatana System Indicator is the display menu indicator for
-Lomiri (Currently rotation-lock only, but we are planning to add further
-functionality for desktops, e.g. MATE, XFCE, LXDE). Its behavior and features will be listed at
+MATE and Lomiri (optionally for others, e.g. XFCE, LXDE). Its behavior
+and features will be listed at
 https://wiki.ayatana-indicators.org/AyatanaIndicatorDisplay
 
 ## License and Copyright
