@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 08:06+0100\n"
+"POT-Creation-Date: 2023-10-10 23:56+0200\n"
 "PO-Revision-Date: 2023-03-10 18:42+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/"
-"ayatana-indicators/display-applet/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/ayatana-"
+"indicators/display-applet/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,8 +35,7 @@ msgstr "Bloqueo de la orientación"
 msgid "Locks orientation to a specific value."
 msgstr "Fija la orientación a un valor específico."
 
-#: data/org.ayatana.indicator.display.gschema.xml:5
-#: src/rotation-lock.cpp:487
+#: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
 msgstr "Temperatura del color"
 
@@ -48,7 +47,7 @@ msgstr ""
 "Ajusta la temperatura del color de la pantalla. Cuanto menor sea el valor, "
 "mayor será la intensidad del efecto de enrojecimiento aplicado a la pantalla."
 
-#: data/org.ayatana.indicator.display.gschema.xml:7
+#: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
 msgstr "Perfil de la temperatura del color"
 
@@ -64,63 +63,112 @@ msgstr "Brillo de la pantalla"
 msgid "Stores the current brightness value of your screen."
 msgstr "Almacena el valor de brillo actual de su pantalla."
 
-#: src/rotation-lock.cpp:48
+#: data/org.ayatana.indicator.display.gschema.xml:11
+msgid "The name of the light theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:12
+msgid "This is the theme the indicator will set when \"Light\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:13
+msgid "The name of the dark theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:14
+msgid "This is the theme the indicator will set when \"Dark\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:15
+#: src/service.cpp:650
+msgid "Theme profile"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:16
+#, fuzzy
+msgid "The current theme temperature profile being used by the indicator."
+msgstr "El perfil de temperatura de color actual que utiliza el indicador."
+
+#: data/org.ayatana.indicator.display.gschema.xml:17
+msgid "Current geographic latitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:18
+msgid "Stores the last recorded geographic latitude of the device."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:19
+msgid "Current geographic longitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:20
+msgid "Stores the last recorded geographic longitude of the device."
+msgstr ""
+
+#: src/service.cpp:48
 msgid "Manual"
 msgstr "Manual"
 
-#: src/rotation-lock.cpp:49
+#: src/service.cpp:49
 msgid "Adaptive (Colder)"
 msgstr "Adaptativo (más frío)"
 
-#: src/rotation-lock.cpp:50
+#: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
 msgstr "Adaptativo"
 
-#: src/rotation-lock.cpp:51
+#: src/service.cpp:51
 msgid "Adaptive (Warmer)"
 msgstr "Adaptativo (más cálido)"
 
-#: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
+#: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
 msgstr "Bloqueo de giro"
 
-#: src/rotation-lock.cpp:473
+#: src/service.cpp:597
 msgid "Brightness"
 msgstr "Brillo"
 
-#: src/rotation-lock.cpp:498
-msgid "Color temperature profiles"
-msgstr "Perfiles de temperatura del color"
+#: src/service.cpp:651
+msgid "Light"
+msgstr ""
 
-#: src/rotation-lock.cpp:525
+#: src/service.cpp:654
+msgid "Dark"
+msgstr ""
+
+#: src/service.cpp:667
 msgid "Display settings…"
 msgstr "Ajustes de la pantalla…"
 
-#: src/rotation-lock.cpp:538
+#: src/service.cpp:680
 msgid "Rotation"
 msgstr "Giro"
 
-#: src/rotation-lock.cpp:549
+#: src/service.cpp:691
 msgid "Display"
 msgstr "Pantalla"
 
-#: src/rotation-lock.cpp:550
+#: src/service.cpp:692
 msgid "Display settings and features"
 msgstr "Ajustes y funciones de la pantalla"
 
-#: src/usb-snap.cpp:107
+#: src/usb-snap.cpp:109
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
 msgstr "La huella digital de la clave RSA del equipo es: %s"
 
-#: src/usb-snap.cpp:112
+#: src/usb-snap.cpp:114
 msgid "Allow"
 msgstr "Permitir"
 
-#: src/usb-snap.cpp:114
+#: src/usb-snap.cpp:116
 msgid "Don't Allow"
 msgstr "No permitir"
 
-#: src/usb-snap.cpp:126
+#: src/usb-snap.cpp:125
 msgid "Allow USB Debugging?"
 msgstr "¿Quiere permitir la depuración a través de USB?"
+
+#~ msgid "Color temperature profiles"
+#~ msgstr "Perfiles de temperatura del color"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 08:06+0100\n"
+"POT-Creation-Date: 2023-10-10 23:56+0200\n"
 "PO-Revision-Date: 2023-03-23 17:39+0000\n"
 "Last-Translator: Tomáš Marný <tomik.marny@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
@@ -35,8 +35,7 @@ msgstr "Zámek orientace obrazovky"
 msgid "Locks orientation to a specific value."
 msgstr "Uzamkne orientaci obrazovky na určitou hodnotu."
 
-#: data/org.ayatana.indicator.display.gschema.xml:5
-#: src/rotation-lock.cpp:487
+#: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
 msgstr "Barevná teplota"
 
@@ -48,7 +47,7 @@ msgstr ""
 "Nastaví teplotu barev obrazovky. Čím nižší je hodnota, tím vyšší je "
 "intenzita efektu zarudnutí aplikovaného na displej."
 
-#: data/org.ayatana.indicator.display.gschema.xml:7
+#: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
 msgstr "Profil barevné teploty"
 
@@ -64,63 +63,112 @@ msgstr "Jas obrazovky"
 msgid "Stores the current brightness value of your screen."
 msgstr "Uloží aktuální hodnotu jasu obrazovky."
 
-#: src/rotation-lock.cpp:48
+#: data/org.ayatana.indicator.display.gschema.xml:11
+msgid "The name of the light theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:12
+msgid "This is the theme the indicator will set when \"Light\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:13
+msgid "The name of the dark theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:14
+msgid "This is the theme the indicator will set when \"Dark\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:15
+#: src/service.cpp:650
+msgid "Theme profile"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:16
+#, fuzzy
+msgid "The current theme temperature profile being used by the indicator."
+msgstr "Aktuální profil teploty barev používaný indikátorem."
+
+#: data/org.ayatana.indicator.display.gschema.xml:17
+msgid "Current geographic latitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:18
+msgid "Stores the last recorded geographic latitude of the device."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:19
+msgid "Current geographic longitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:20
+msgid "Stores the last recorded geographic longitude of the device."
+msgstr ""
+
+#: src/service.cpp:48
 msgid "Manual"
 msgstr "Manuál"
 
-#: src/rotation-lock.cpp:49
+#: src/service.cpp:49
 msgid "Adaptive (Colder)"
 msgstr "Adaptivní (chladnější)"
 
-#: src/rotation-lock.cpp:50
+#: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
 msgstr "Adaptivní"
 
-#: src/rotation-lock.cpp:51
+#: src/service.cpp:51
 msgid "Adaptive (Warmer)"
 msgstr "Adaptivní (teplejší)"
 
-#: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
+#: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
 msgstr "Zámek otáčení"
 
-#: src/rotation-lock.cpp:473
+#: src/service.cpp:597
 msgid "Brightness"
 msgstr "Jas"
 
-#: src/rotation-lock.cpp:498
-msgid "Color temperature profiles"
-msgstr "Profily barevné teploty"
+#: src/service.cpp:651
+msgid "Light"
+msgstr ""
 
-#: src/rotation-lock.cpp:525
+#: src/service.cpp:654
+msgid "Dark"
+msgstr ""
+
+#: src/service.cpp:667
 msgid "Display settings…"
 msgstr "Nastavení obrazovky…"
 
-#: src/rotation-lock.cpp:538
+#: src/service.cpp:680
 msgid "Rotation"
 msgstr "Otáčení"
 
-#: src/rotation-lock.cpp:549
+#: src/service.cpp:691
 msgid "Display"
 msgstr "Obrazovka"
 
-#: src/rotation-lock.cpp:550
+#: src/service.cpp:692
 msgid "Display settings and features"
 msgstr "Nastavení a funkce obrazovky"
 
-#: src/usb-snap.cpp:107
+#: src/usb-snap.cpp:109
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
 msgstr "Otisk RSA klíče počítače je: %s"
 
-#: src/usb-snap.cpp:112
+#: src/usb-snap.cpp:114
 msgid "Allow"
 msgstr "Umožnit"
 
-#: src/usb-snap.cpp:114
+#: src/usb-snap.cpp:116
 msgid "Don't Allow"
 msgstr "Neumožnit"
 
-#: src/usb-snap.cpp:126
+#: src/usb-snap.cpp:125
 msgid "Allow USB Debugging?"
 msgstr "Umožnit ladění přes USB?"
+
+#~ msgid "Color temperature profiles"
+#~ msgstr "Profily barevné teploty"

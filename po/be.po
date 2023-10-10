@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 08:06+0100\n"
+"POT-Creation-Date: 2023-10-10 23:56+0200\n"
 "PO-Revision-Date: 2017-12-18 21:59+0000\n"
 "Last-Translator: Viktar Vauchkevich <victorenator@gmail.com>\n"
 "Language-Team: Belarusian <https://hosted.weblate.org/projects/ayatana-"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.18\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
@@ -38,8 +38,7 @@ msgstr "Блок павароту"
 msgid "Locks orientation to a specific value."
 msgstr ""
 
-#: data/org.ayatana.indicator.display.gschema.xml:5
-#: src/rotation-lock.cpp:487
+#: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
 msgstr ""
 
@@ -49,7 +48,7 @@ msgid ""
 "the intensity of the redness effect applied to the display."
 msgstr ""
 
-#: data/org.ayatana.indicator.display.gschema.xml:7
+#: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
 msgstr ""
 
@@ -65,63 +64,108 @@ msgstr ""
 msgid "Stores the current brightness value of your screen."
 msgstr ""
 
-#: src/rotation-lock.cpp:48
+#: data/org.ayatana.indicator.display.gschema.xml:11
+msgid "The name of the light theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:12
+msgid "This is the theme the indicator will set when \"Light\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:13
+msgid "The name of the dark theme"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:14
+msgid "This is the theme the indicator will set when \"Dark\" is selected."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:15
+#: src/service.cpp:650
+msgid "Theme profile"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:16
+msgid "The current theme temperature profile being used by the indicator."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:17
+msgid "Current geographic latitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:18
+msgid "Stores the last recorded geographic latitude of the device."
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:19
+msgid "Current geographic longitude"
+msgstr ""
+
+#: data/org.ayatana.indicator.display.gschema.xml:20
+msgid "Stores the last recorded geographic longitude of the device."
+msgstr ""
+
+#: src/service.cpp:48
 msgid "Manual"
 msgstr ""
 
-#: src/rotation-lock.cpp:49
+#: src/service.cpp:49
 msgid "Adaptive (Colder)"
 msgstr ""
 
-#: src/rotation-lock.cpp:50
+#: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
 msgstr ""
 
-#: src/rotation-lock.cpp:51
+#: src/service.cpp:51
 msgid "Adaptive (Warmer)"
 msgstr ""
 
-#: src/rotation-lock.cpp:420 src/rotation-lock.cpp:457
+#: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
 msgstr "Блок павароту"
 
-#: src/rotation-lock.cpp:473
+#: src/service.cpp:597
 msgid "Brightness"
 msgstr ""
 
-#: src/rotation-lock.cpp:498
-msgid "Color temperature profiles"
+#: src/service.cpp:651
+msgid "Light"
 msgstr ""
 
-#: src/rotation-lock.cpp:525
+#: src/service.cpp:654
+msgid "Dark"
+msgstr ""
+
+#: src/service.cpp:667
 msgid "Display settings…"
 msgstr ""
 
-#: src/rotation-lock.cpp:538
+#: src/service.cpp:680
 msgid "Rotation"
 msgstr "Паварот"
 
-#: src/rotation-lock.cpp:549
+#: src/service.cpp:691
 msgid "Display"
 msgstr ""
 
-#: src/rotation-lock.cpp:550
+#: src/service.cpp:692
 msgid "Display settings and features"
 msgstr ""
 
-#: src/usb-snap.cpp:107
+#: src/usb-snap.cpp:109
 #, c-format
 msgid "The computer's RSA key fingerprint is: %s"
 msgstr "Адбітак RSA-ключа кампутара: %s"
 
-#: src/usb-snap.cpp:112
+#: src/usb-snap.cpp:114
 msgid "Allow"
 msgstr "Дазволіць"
 
-#: src/usb-snap.cpp:114
+#: src/usb-snap.cpp:116
 msgid "Don't Allow"
 msgstr "Не дазваляць"
 
-#: src/usb-snap.cpp:126
+#: src/usb-snap.cpp:125
 msgid "Allow USB Debugging?"
 msgstr "Дазволіць USB-адладку?"
