@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 23:56+0200\n"
-"PO-Revision-Date: 2023-03-10 18:42+0000\n"
+"PO-Revision-Date: 2023-10-12 21:40+0000\n"
 "Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -65,45 +65,44 @@ msgstr "Armazena o valor do brilho atual da sua tela."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "O nome do tema claro"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Este é o indicador do tema quando \"Claro\" for selecionado."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "O nome do tema escuro"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Este é o indicador do tema quando \"Escuro\" for selecionado."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Perfil do tema"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme temperature profile being used by the indicator."
-msgstr "O perfil atual da temperatura da cor usada pelo indicador."
+msgstr "A temperatura do tema do perfil atual sendo usado pelo indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Latitude geográfica atual"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Armazena a última latitude geográfica registrada do dispositivo."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Longitude geográfica atual"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Armazena a última longitude geográfica registrada do dispositivo."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -131,11 +130,11 @@ msgstr "Brilho"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Claro"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Escuro"
 
 #: src/service.cpp:667
 msgid "Display settings…"
