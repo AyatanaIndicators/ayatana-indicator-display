@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 23:56+0200\n"
-"PO-Revision-Date: 2023-03-16 20:40+0000\n"
+"PO-Revision-Date: 2023-10-12 21:40+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -65,45 +65,48 @@ msgstr "Stel de huidige helderheid van het scherm in."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Da naam van het lichte thema"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
 msgstr ""
+"Dit thema wordt ingesteld door de indicator als er voor het lichte thema "
+"gekozen wordt."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "De naam van het donkere thema"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
 msgstr ""
+"Dit thema wordt ingesteld door de indicator als er voor het donkere thema "
+"gekozen wordt."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Themaprofiel"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme temperature profile being used by the indicator."
-msgstr "Het huidige kleurtemperatuurprofiel van de indicator."
+msgstr "Het huidige thematemperatuurprofiel van de indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Huidige breedtegraad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Onthoudt de huidige breedtegraad van het apparaat."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Huidige lengtegraad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Onthoudt de huidige lengtegraad van het apparaat."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -131,11 +134,11 @@ msgstr "Helderheid"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Licht"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Donker"
 
 #: src/service.cpp:667
 msgid "Display settings…"
