@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-10 23:56+0200\n"
+"POT-Creation-Date: 2023-10-12 23:46+0200\n"
 "PO-Revision-Date: 2023-10-12 21:40+0000\n"
 "Last-Translator: Wellington Terumi Uemura <wellingtonuemura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -85,7 +85,8 @@ msgid "Theme profile"
 msgstr "Perfil do tema"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-msgid "The current theme temperature profile being used by the indicator."
+#, fuzzy
+msgid "The current theme profile being used by the indicator."
 msgstr "A temperatura do tema do perfil atual sendo usado pelo indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
