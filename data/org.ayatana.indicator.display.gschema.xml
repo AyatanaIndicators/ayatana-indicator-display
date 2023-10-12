@@ -55,7 +55,7 @@
       </choices>
       <default>'light'</default>
       <summary>Theme profile</summary>
-      <description>The current theme temperature profile being used by the indicator.</description>
+      <description>The current theme profile being used by the indicator.</description>
     </key>
     <key name="latitude" type="d">
       <range min="-90.0" max="90.0"/>
