@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 23:56+0200\n"
-"PO-Revision-Date: 2023-10-12 21:40+0000\n"
+"PO-Revision-Date: 2023-10-12 21:44+0000\n"
 "Last-Translator: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/de/>\n"
@@ -89,25 +89,26 @@ msgid "Theme profile"
 msgstr "Theme-Profil"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme temperature profile being used by the indicator."
-msgstr "Das Farbtemperaturprofil, das aktuell vom Indicator verwendet wird."
+msgstr "Das Theme-Profil, das aktuell vom Indicator verwendet wird."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Aktueller geografische Breitengrad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
 msgstr ""
+"Speichert den zuletzt für dieses Gerät bekannten geografische Breitengrad."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Aktueller geografischer Längengrad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
 msgstr ""
+"Speichert den für dieses Gerät zuletzt bekannten geografischen Längengrad."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -135,11 +136,11 @@ msgstr "Helligkeit"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Hell"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Dunkel"
 
 #: src/service.cpp:667
 msgid "Display settings…"
