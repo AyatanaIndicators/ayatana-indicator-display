@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 23:56+0200\n"
-"PO-Revision-Date: 2023-06-15 15:49+0000\n"
-"Last-Translator: Sergii Horichenko <m@sgg.im>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/uk/>\n"
+"PO-Revision-Date: 2023-10-12 21:40+0000\n"
+"Last-Translator: Serhii Horichenko <m@sgg.im>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -66,45 +66,44 @@ msgstr "Зберігає значення поточної яскравості 
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Назва світлої теми"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Це тема для індикатору, коли буде обрана світла тема."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Назва темної теми"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Це тема для індикатору, коли буде обрана темна тема."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Профіль теми"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme temperature profile being used by the indicator."
-msgstr "Поточний профіль температури кольору використовується індикатором."
+msgstr "Поточний температурний профіль теми, який використовується індикатором."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Поточна географічна широта"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Зберігає останню записану географічну широту пристрою."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Поточна географічна довгота"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Зберігає останню записану географічну довготу пристрою."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -132,11 +131,11 @@ msgstr "Яскравість"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Світла"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Темна"
 
 #: src/service.cpp:667
 msgid "Display settings…"
