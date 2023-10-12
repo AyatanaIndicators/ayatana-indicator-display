@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 23:56+0200\n"
-"PO-Revision-Date: 2023-09-12 19:52+0000\n"
+"PO-Revision-Date: 2023-10-12 21:40+0000\n"
 "Last-Translator: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/de/>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -65,24 +65,28 @@ msgstr "Speichert die aktuelle Helligkeit Ihres Bildschirms."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Name des hellen Themes"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
 msgstr ""
+"Dies ist das Theme, dass der Indikator aktivieren wird, wenn 'Hell' "
+"ausgewählt ist."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Der Name des dunklen Themes"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
 msgstr ""
+"Dies ist das Theme, dass der Indikator aktivieren wird, wenn \"Dunkel\" "
+"ausgewählt wird."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Theme-Profil"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 #, fuzzy
