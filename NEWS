@@ -1,3 +1,15 @@
+Overview of changes in ayatana-indicator-display 23.10.0
+
+  - src/rotation-lock.cpp: Add brightness action, slider and handlers.
+  - src/rotation-lock.cpp: Add theme profiles.
+  - src/rotation-lock.cpp: Save last geographic location and use that
+    at startup.
+  - Remove orphan notify-osd remnants.
+  - Rename Indicator Service.
+  - Rename indicator class and service source files.
+  - Update documentation.
+  - Update translations.
+
 Overview of changes in ayatana-indicator-display 22.9.4
 
   - Implement adaptive colour temperature profiles.

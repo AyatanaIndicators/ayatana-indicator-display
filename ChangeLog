@@ -1,6 +1,191 @@
+2023-10-12 Mike Gabriel
+
+        * release 23.10.0 (HEAD -> main, tag: 23.10.0)
+        * Translated using Weblate (German) (9292109)
+        * po/: Update translation files. (75993e2)
+        * Translated using Weblate (German) (ae467df)
+        * data/org.ayatana.indicator.display.gschema.xml: Fix phrase in
+          description tag of 'theme-profile' gsetting. (2e55a78)
+
+2023-10-12 Serhii Horichenko
+
+        * Translated using Weblate (Ukrainian) (832667e)
+        * Translated using Weblate (Russian) (555d05e)
+
+2023-10-11 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (b75808b)
+
+2023-10-11 Heimen Stoffels
+
+        * Translated using Weblate (Dutch) (cb407eb)
+
+2023-10-12 Mike Gabriel
+
+        * Translated using Weblate (German) (96d9b83)
+
+2023-10-10 Mike Gabriel
+
+        * po/: Update translation files. (440dbcd)
+        * Merge branch 'tari01-pr/rename-to-display' (a6635f0)
+
+2023-10-09 Robert Tari
+
+        * Update documentation (15d318f)
+        * src/indicator.h: Fix multiple definitions of header property
+          (bb479fd)
+        * tests/CMakeLists.txt: Suppress useless override buggy cppcheck
+          warning (f8ee1db)
+        * Rename indicator class and service source files (132a445)
+        * Rename Indicator Service (abcbf6b)
+
+2023-09-11 Mike Gabriel
+
+        * Translated using Weblate (German) (0713c69)
+
+2023-09-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/notification-cleanup' (a87dce3)
+
+2023-09-10 Robert Tari
+
+        * Remove orphan notify-osd remnants (acdf166)
+
+2023-09-10 Mike Gabriel
+
+        * Merge branch 'tari01-pr/store-geolocation' (ef13b22)
+
+2023-09-07 Robert Tari
+
+        * src/rotation-lock.cpp: Save last geographic location and use that
+          at startup (533a38d)
+        * data/org.ayatana.indicator.display.gschema.xml: Create keys for
+          longitude and latitude (81de701)
+
+2023-09-06 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-dark-mode' (a41ed61)
+
+2023-07-06 Robert Tari
+
+        * .build.yml: Add missing dependency (37b1663)
+        * CMakeLists.txt: Minor CMake warning fixes (7827339)
+        * src/exporter.cpp: Drop unused variable (5945143)
+        * src/rotation-lock.cpp: Add theme profiles (24556f2)
+        * data/org.ayatana.indicator.display.gschema.xml: Add theme
+          manipulation keys (08134f7)
+
+2023-07-05 Robert Tari
+
+        * src/rotation-lock.cpp: Use singular profile in menu label (d2e5eb6)
+        * src/rotation-lock.cpp: Simplify code and keep updater callback
+          running (5346a0c)
+
+2023-09-06 Luna Jernberg
+
+        * Translated using Weblate (Swedish) (61c22b5)
+
+2023-08-20 Sabri Ünal
+
+        * Translated using Weblate (Turkish) (2c63641)
+
+2023-07-01 spnux
+
+        * Translated using Weblate (French) (4e11c1e)
+
+2023-06-27 Sylke Vicious
+
+        * Translated using Weblate (Italian) (360ee7f)
+
+2023-06-22 Joan CiberSheep
+
+        * Translated using Weblate (Catalan) (e9e0575)
+
+2023-06-14 Sergii Horichenko
+
+        * Translated using Weblate (Ukrainian) (90676be)
+        * Translated using Weblate (Russian) (00fa16f)
+
+2023-05-20 Milo Ivir
+
+        * Translated using Weblate (Croatian) (f70ef34)
+
+2023-04-07 Boyuan Yang
+
+        * Translated using Weblate (Chinese (Simplified)) (5dfabd1)
+
+2023-04-06 ssantos
+
+        * Translated using Weblate (Portuguese) (72b3d09)
+
+2023-03-29 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (09633ff)
+
+2023-03-22 Tomáš Marný
+
+        * Translated using Weblate (Czech) (c0da3a2)
+
+2023-03-19 Mike Gabriel
+
+        * Translated using Weblate (German) (5e181f9)
+
+2023-03-15 Heimen Stoffels
+
+        * Translated using Weblate (Dutch) (3c149cd)
+
+2023-03-09 Oğuz Ersen
+
+        * Translated using Weblate (Turkish) (656bd5f)
+
+2023-03-09 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (beca410)
+
+2023-03-09 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (714c418)
+
+2023-03-09 gallegonovato
+
+        * Translated using Weblate (Spanish) (891ac0b)
+
+2023-03-09 Mike Gabriel
+
+        * po/: Update translation files. (8e3599e)
+        * Merge branch 'tari01-pr/add-brightness' (1fc6d8e)
+
+2023-03-08 Robert Tari
+
+        * debian/control: Require xsct 1.9 or higher (bd6769f)
+        * src/rotation-lock.cpp: Add brightness action, slider and handlers
+          (6b17e30)
+        * data/org.ayatana.indicator.display.gschema.xml: Store current
+          brightness (13d89c6)
+        * Add brightness icons (ea15f0a)
+        * src/rotation-lock.cpp: Replace gclue_simple_new_with_thresholds
+          functions (8868575)
+
+2023-03-03 gallegonovato
+
+        * Translated using Weblate (Spanish) (ef9cf41)
+
+2023-02-24 Tomáš Marný
+
+        * Translated using Weblate (Czech) (045b7af)
+
+2023-02-21 Sergii Horichenko
+
+        * Translated using Weblate (Ukrainian) (1422fd2)
+        * Translated using Weblate (Russian) (e2ac910)
+
+2023-02-10 Luna Jernberg
+
+        * Translated using Weblate (Swedish) (0f4e97a)
+
 2023-02-04 Mike Gabriel
 
-        * release 22.9.4 (HEAD -> main, tag: 22.9.4)
+        * release 22.9.4 (7b78fec) (tag: 22.9.4)
 
 2023-01-12 Robert Tari
 
