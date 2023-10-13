@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2023-10-12 21:40+0000\n"
+"PO-Revision-Date: 2023-10-16 04:19+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/nl/>\n"
@@ -89,9 +89,8 @@ msgid "Theme profile"
 msgstr "Themaprofiel"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme profile being used by the indicator."
-msgstr "Het huidige thematemperatuurprofiel van de indicator."
+msgstr "Het huidige themaprofiel van de indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
