@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2023-03-30 18:37+0000\n"
+"PO-Revision-Date: 2023-10-16 04:19+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/oc/>\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/oc/>\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -65,45 +65,44 @@ msgstr "Garda la valor de la luminositat actuala de l’ecran."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Lo nom del tèma clar"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Aquò es l’indicador de tèma quand « Clar » es seleccionat."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Nom del tèma escur"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Aquò es l’indicador de tèma quand « Escur » es seleccionat."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Perfil de tèma"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme profile being used by the indicator."
-msgstr "La temperatura de color actualament utilizada per l’indicator."
+msgstr "Lo perfil tematic actualament utilizada per l’indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Latitud geografica actuala"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Garda la darrièra latitud geografic enregistrada del periferic."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Longitud geografica actuala"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Garda la darrièra longitud geografic enregistrada del periferic."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -123,7 +122,7 @@ msgstr "Adaptativa (mai caud)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
-msgstr "Verrolhar la rotacion"
+msgstr "Verrolhatge de la rotacion"
 
 #: src/service.cpp:597
 msgid "Brightness"
@@ -131,11 +130,11 @@ msgstr "Luminositat"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Clar"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Escur"
 
 #: src/service.cpp:667
 msgid "Display settings…"
