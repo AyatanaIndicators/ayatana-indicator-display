@@ -66,11 +66,7 @@ find_package(PkgConfig REQUIRED)
 
 # glib...
 set(GLIB_MINIMUM 2.36)
-set (SERVICE_DEPS libayatana-common>=0.9.3 gio-unix-2.0>=${GLIB_MINIMUM} glib-2.0>=${GLIB_MINIMUM})
-
-if (ENABLE_TESTS)
-    list (APPEND SERVICE_DEPS properties-cpp>=0.0.1)
-endif ()
+set (SERVICE_DEPS libayatana-common>=0.9.3 gio-unix-2.0>=${GLIB_MINIMUM} glib-2.0>=${GLIB_MINIMUM} properties-cpp>=0.0.1)
 
 if (ENABLE_LOMIRI_FEATURES)
     find_package(Qt5Core REQUIRED)
