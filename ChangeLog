@@ -1,6 +1,56 @@
+2023-11-06 Mike Gabriel
+
+        * release 23.10.1 (HEAD -> main, tag: 23.10.1)
+
+2023-11-02 Mike Gabriel
+
+        * Merge branch 'tari01-pr/no-properties-cpp-dependency-condition'
+          (5db00b3)
+
+2023-11-01 Robert Tari
+
+        * CMakeLists.txt: Remove condition from properties-cpp dependency
+          (524d36e)
+
+2023-10-20 Jozef Mlich
+
+        * Translated using Weblate (Czech) (92ef663)
+
+2023-10-13 Serhii Horichenko
+
+        * Translated using Weblate (Ukrainian) (28603c2)
+
+2023-10-14 Oğuz Ersen
+
+        * Translated using Weblate (Turkish) (5f5d567)
+
+2023-10-13 Serhii Horichenko
+
+        * Translated using Weblate (Russian) (a4b715f)
+
+2023-10-13 Wellington Terumi Uemura
+
+        * Translated using Weblate (Portuguese (Brazil)) (f5e0cd7)
+
+2023-10-14 Quentin PAGÈS
+
+        * Translated using Weblate (Occitan) (b0a29f8)
+
+2023-10-13 Heimen Stoffels
+
+        * Translated using Weblate (Dutch) (a37ac66)
+
+2023-10-14 Yaron Shahrabani
+
+        * Translated using Weblate (Hebrew) (d7219d9)
+
+2023-10-14 gallegonovato
+
+        * Translated using Weblate (Spanish) (4c9f39b)
+
 2023-10-12 Mike Gabriel
 
-        * release 23.10.0 (HEAD -> main, tag: 23.10.0)
+        * release 23.10.0 (e793fd2) (tag: 23.10.0)
         * Translated using Weblate (German) (9292109)
         * po/: Update translation files. (75993e2)
         * Translated using Weblate (German) (ae467df)
