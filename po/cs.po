@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2023-10-21 10:04+0000\n"
+"PO-Revision-Date: 2023-11-07 18:37+0000\n"
 "Last-Translator: Jozef Mlich <jmlich83@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -69,45 +69,44 @@ msgstr "Jméno světlého tématu"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Toto je téma vzhledu, které bude nastaveno pokud vyberete \"Světlý\"."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Jméno tmavého tématu"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Toto je téma vzhledu, které bude nastaveno pokud vyberete \"Tmavý\"."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Profil tématu"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme profile being used by the indicator."
-msgstr "Aktuální profil teploty barev používaný indikátorem."
+msgstr "Aktuální profil tématu používaný indikátorem."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Současná zeměpisná šířka"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Uloží poslední zaznamenanou zeměpisnou šířku zařízení."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Současná zeměpisná délka"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Uloží poslední zaznamenanou zeměpisnou délku zařízení."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr "Manuál"
+msgstr "Ručně"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
@@ -131,11 +130,11 @@ msgstr "Jas"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Světlý"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Tmavý"
 
 #: src/service.cpp:667
 msgid "Display settings…"
