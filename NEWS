@@ -1,3 +1,8 @@
+Overview of changes in ayatana-indicator-display 23.10.2
+
+  - src/service.cpp: Fix string array translation
+  - Translation updates.
+
 Overview of changes in ayatana-indicator-display 23.10.1
 
   - CMakeLists.txt: Remove condition from properties-cpp dependency
