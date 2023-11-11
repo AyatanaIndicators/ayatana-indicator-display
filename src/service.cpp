@@ -40,15 +40,15 @@ typedef struct
 {
    guint nTempLow;
    guint nTempHigh;
-   gchar *sName;
+   const gchar *sName;
 } TempProfile;
 
 TempProfile m_lTempProfiles[] =
 {
-    {0, 0, _("Manual")},
-    {4500, 6500, _("Adaptive (Colder)")},
-    {3627, 4913, _("Adaptive")},
-    {3058, 4913, _("Adaptive (Warmer)")},
+    {0, 0, N_("Manual")},
+    {4500, 6500, N_("Adaptive (Colder)")},
+    {3627, 4913, N_("Adaptive")},
+    {3058, 4913, N_("Adaptive (Warmer)")},
     {0, 0, NULL}
 };
 #endif
@@ -625,7 +625,8 @@ private:
         while (m_lTempProfiles[nProfile].sName != NULL)
         {
             gchar *sAction = g_strdup_printf ("indicator.profile::%u", nProfile);
-            GMenuItem *pItemProfile = g_menu_item_new (m_lTempProfiles[nProfile].sName, sAction);
+            gchar *sName = gettext (m_lTempProfiles[nProfile].sName);
+            GMenuItem *pItemProfile = g_menu_item_new (sName, sAction);
             g_free(sAction);
             g_menu_append_item (pMenuProfiles, pItemProfile);
             g_object_unref (pItemProfile);
