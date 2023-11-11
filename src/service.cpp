@@ -137,8 +137,17 @@ public:
 
             if (pSchema != NULL)
             {
+                gboolean bColorScheme = g_settings_schema_has_key (pSchema, "color-scheme");
                 g_settings_schema_unref (pSchema);
-                pColorSchemeSettings = g_settings_new (sSchema);
+
+                if (bColorScheme)
+                {
+                    pColorSchemeSettings = g_settings_new (sSchema);
+                }
+                else
+                {
+                    g_warning ("org.gnome.desktop.interface::color-scheme not found. Native theme profile changes will not be triggered.");
+                }
             }
             else
             {
@@ -321,7 +330,7 @@ private:
 
         gboolean bSameColorScheme = g_str_equal (sColorScheme, pImpl->sLastColorScheme);
 
-        if (!bSameColorScheme)
+        if (pImpl->pColorSchemeSettings && !bSameColorScheme)
         {
             g_debug ("Changing color scheme to %s", sColorScheme);
 
