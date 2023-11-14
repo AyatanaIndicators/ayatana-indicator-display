@@ -1,3 +1,8 @@
+Overview of changes in ayatana-indicator-display 23.10.3
+
+  - src/service.cpp: Hangdle missing
+    org.gnome.desktop.interface::color-scheme
+
 Overview of changes in ayatana-indicator-display 23.10.2
 
   - src/service.cpp: Fix string array translation

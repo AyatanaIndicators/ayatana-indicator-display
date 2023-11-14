@@ -1,6 +1,16 @@
+2023-11-14 Mike Gabriel
+
+        * release 23.10.3 (HEAD -> main, tag: 23.10.3)
+        * Merge branch 'tari01-pr/missing-color-scheme' (cc07718)
+
+2023-11-11 Robert Tari
+
+        * src/service.cpp: Handle missing
+          org.gnome.desktop.interface::color-scheme (256b833)
+
 2023-11-11 Mike Gabriel
 
-        * release 23.10.2 (HEAD -> main, tag: 23.10.2)
+        * release 23.10.2 (d389b92) (tag: 23.10.2)
         * Merge branch 'tari01-pr/fix-translation' (a2f03b4)
 
 2023-11-11 Robert Tari
