@@ -59,6 +59,8 @@ public:
 
   Impl()
   {
+    const char *sUser = g_get_user_name();
+    this->bGreeter = g_str_equal (sUser, "lightdm");
     GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
     const gchar *sTest = g_getenv ("TEST_NAME");
     this->bTest = (sTest != NULL && g_str_equal (sTest, "rotation-lock-test"));
@@ -94,64 +96,67 @@ public:
                 g_error("No schema could be found");
             }
 
-            const gchar *sSchema = NULL;
+            if (!this->bGreeter)
+            {
+                const gchar *sSchema = NULL;
 
-            if (this->bTest)
-            {
-                sSchema = "org.ayatana.indicator.display";
-            }
-            else
-            {
-                if (ayatana_common_utils_is_mate ())
+                if (this->bTest)
                 {
-                    sSchema = "org.mate.interface";
+                    sSchema = "org.ayatana.indicator.display";
+                }
+                else
+                {
+                    if (ayatana_common_utils_is_mate ())
+                    {
+                        sSchema = "org.mate.interface";
+                    }
+                    else
+                    {
+                        sSchema = "org.gnome.desktop.interface";
+                    }
+                }
+
+                pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+
+                if (pSchema != NULL)
+                {
+                    g_settings_schema_unref (pSchema);
+                    pThemeSettings = g_settings_new (sSchema);
+                }
+                else
+                {
+                    g_error("No %s schema could be found", sSchema);
+                }
+
+                if (this->bTest)
+                {
+                    sSchema = "org.ayatana.indicator.display";
                 }
                 else
                 {
                     sSchema = "org.gnome.desktop.interface";
                 }
-            }
 
-            pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+                pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
 
-            if (pSchema != NULL)
-            {
-                g_settings_schema_unref (pSchema);
-                pThemeSettings = g_settings_new (sSchema);
-            }
-            else
-            {
-                g_error("No %s schema could be found", sSchema);
-            }
-
-            if (this->bTest)
-            {
-                sSchema = "org.ayatana.indicator.display";
-            }
-            else
-            {
-                sSchema = "org.gnome.desktop.interface";
-            }
-
-            pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
-
-            if (pSchema != NULL)
-            {
-                gboolean bColorScheme = g_settings_schema_has_key (pSchema, "color-scheme");
-                g_settings_schema_unref (pSchema);
-
-                if (bColorScheme)
+                if (pSchema != NULL)
                 {
-                    pColorSchemeSettings = g_settings_new (sSchema);
+                    gboolean bColorScheme = g_settings_schema_has_key (pSchema, "color-scheme");
+                    g_settings_schema_unref (pSchema);
+
+                    if (bColorScheme)
+                    {
+                        pColorSchemeSettings = g_settings_new (sSchema);
+                    }
+                    else
+                    {
+                        g_warning ("org.gnome.desktop.interface::color-scheme not found. Native theme profile changes will not be triggered.");
+                    }
                 }
                 else
                 {
-                    g_warning ("org.gnome.desktop.interface::color-scheme not found. Native theme profile changes will not be triggered.");
+                    g_error("No %s schema could be found", sSchema);
                 }
-            }
-            else
-            {
-                g_error("No %s schema could be found", sSchema);
             }
         }
     }
@@ -245,8 +250,15 @@ private:
         guint nProfile = 0;
         g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
         gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
-        gchar *sThemeProfile = g_settings_get_string (pImpl->m_settings, "theme-profile");
-        gboolean bThemeAdaptive = g_str_equal (sThemeProfile, "adaptive");
+        gchar *sThemeProfile = NULL;
+        gboolean bThemeAdaptive = FALSE;
+
+        if (!pImpl->bGreeter)
+        {
+            sThemeProfile = g_settings_get_string (pImpl->m_settings, "theme-profile");
+            bThemeAdaptive = g_str_equal (sThemeProfile, "adaptive");
+        }
+
         guint nTemperature = 0;
         const gchar *sColorScheme = NULL;
         gchar *sTheme = NULL;
@@ -274,34 +286,37 @@ private:
             pImpl->bAutoSliderUpdate = TRUE;
         }
 
-        if (!bThemeAdaptive)
+        if (!pImpl->bGreeter)
         {
-            gchar *sThemeKey = g_strdup_printf ("%s-theme", sThemeProfile);
-            sTheme = g_settings_get_string (pImpl->m_settings, sThemeKey);
-            g_free (sThemeKey);
-
-            gboolean bLightTheme = g_str_equal (sThemeProfile, "light");
-
-            if (bLightTheme)
+            if (!bThemeAdaptive)
             {
-                sColorScheme = "prefer-light";
+                gchar *sThemeKey = g_strdup_printf ("%s-theme", sThemeProfile);
+                sTheme = g_settings_get_string (pImpl->m_settings, sThemeKey);
+                g_free (sThemeKey);
+
+                gboolean bLightTheme = g_str_equal (sThemeProfile, "light");
+
+                if (bLightTheme)
+                {
+                    sColorScheme = "prefer-light";
+                }
+                else
+                {
+                    sColorScheme = "prefer-dark";
+                }
             }
             else
             {
-                sColorScheme = "prefer-dark";
-            }
-        }
-        else
-        {
-            if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
-            {
-                sColorScheme = "prefer-dark";
-                sTheme = g_settings_get_string (pImpl->m_settings, "dark-theme");
-            }
-            else
-            {
-                sColorScheme = "prefer-light";
-                sTheme = g_settings_get_string (pImpl->m_settings, "light-theme");
+                if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
+                {
+                    sColorScheme = "prefer-dark";
+                    sTheme = g_settings_get_string (pImpl->m_settings, "dark-theme");
+                }
+                else
+                {
+                    sColorScheme = "prefer-light";
+                    sTheme = g_settings_get_string (pImpl->m_settings, "light-theme");
+                }
             }
         }
 
@@ -328,41 +343,44 @@ private:
             g_free (sCommand);
         }
 
-        gboolean bSameColorScheme = g_str_equal (sColorScheme, pImpl->sLastColorScheme);
-
-        if (pImpl->pColorSchemeSettings && !bSameColorScheme)
+        if (!pImpl->bGreeter)
         {
-            g_debug ("Changing color scheme to %s", sColorScheme);
+            gboolean bSameColorScheme = g_str_equal (sColorScheme, pImpl->sLastColorScheme);
 
-            g_settings_set_string (pImpl->pColorSchemeSettings, "color-scheme", sColorScheme);
-            pImpl->sLastColorScheme = sColorScheme;
-        }
+            if (pImpl->pColorSchemeSettings && !bSameColorScheme)
+            {
+                g_debug ("Changing color scheme to %s", sColorScheme);
 
-        gboolean bSameTheme = FALSE;
+                g_settings_set_string (pImpl->pColorSchemeSettings, "color-scheme", sColorScheme);
+                pImpl->sLastColorScheme = sColorScheme;
+            }
 
-        if (pImpl->sLastTheme)
-        {
-            bSameTheme = g_str_equal (pImpl->sLastTheme, sTheme);
-        }
-
-        gboolean bCurrentTheme = g_str_equal ("current", sTheme);
-
-        if (!bSameTheme && !bCurrentTheme)
-        {
-            g_debug ("Changing theme to %s", sTheme);
-
-            g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+            gboolean bSameTheme = FALSE;
 
             if (pImpl->sLastTheme)
             {
-                g_free (pImpl->sLastTheme);
+                bSameTheme = g_str_equal (pImpl->sLastTheme, sTheme);
             }
 
-            pImpl->sLastTheme = g_strdup (sTheme);
-        }
+            gboolean bCurrentTheme = g_str_equal ("current", sTheme);
 
-        g_free (sTheme);
-        g_free (sThemeProfile);
+            if (!bSameTheme && !bCurrentTheme)
+            {
+                g_debug ("Changing theme to %s", sTheme);
+
+                g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+
+                if (pImpl->sLastTheme)
+                {
+                    g_free (pImpl->sLastTheme);
+                }
+
+                pImpl->sLastTheme = g_strdup (sTheme);
+            }
+
+            g_free (sTheme);
+            g_free (sThemeProfile);
+        }
 
         return G_SOURCE_CONTINUE;
     }
@@ -513,22 +531,28 @@ private:
         g_object_unref (G_OBJECT (action));
         g_signal_connect_swapped (m_settings, "changed::brightness", G_CALLBACK (updateColor), this);
 
-        pVariantType = g_variant_type_new ("s");
-        action = g_simple_action_new_stateful ("theme", pVariantType, g_variant_new_string ("light"));
-        g_variant_type_free (pVariantType);
-        g_settings_bind_with_mapping (this->m_settings, "theme-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
-        g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
-        g_object_unref(G_OBJECT(action));
-        g_signal_connect_swapped (m_settings, "changed::theme-profile", G_CALLBACK (updateColor), this);
-        g_signal_connect_swapped (m_settings, "changed::light-theme", G_CALLBACK (updateColor), this);
-        g_signal_connect_swapped (m_settings, "changed::dark-theme", G_CALLBACK (updateColor), this);
+        if (!this->bGreeter)
+        {
+            pVariantType = g_variant_type_new ("s");
+            action = g_simple_action_new_stateful ("theme", pVariantType, g_variant_new_string ("light"));
+            g_variant_type_free (pVariantType);
+            g_settings_bind_with_mapping (this->m_settings, "theme-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
+            g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
+            g_object_unref(G_OBJECT(action));
+            g_signal_connect_swapped (m_settings, "changed::theme-profile", G_CALLBACK (updateColor), this);
+            g_signal_connect_swapped (m_settings, "changed::light-theme", G_CALLBACK (updateColor), this);
+            g_signal_connect_swapped (m_settings, "changed::dark-theme", G_CALLBACK (updateColor), this);
+        }
     }
 #endif
 
-    action = g_simple_action_new ("settings", NULL);
-    g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
-    g_signal_connect (action, "activate", G_CALLBACK (onSettings), this);
-    g_object_unref (G_OBJECT (action));
+    if (!this->bGreeter)
+    {
+        action = g_simple_action_new ("settings", NULL);
+        g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+        g_signal_connect (action, "activate", G_CALLBACK (onSettings), this);
+        g_object_unref (G_OBJECT (action));
+    }
 
     return group;
   }
@@ -655,30 +679,37 @@ private:
         g_object_unref (section);
         g_object_unref (menu_item);
 
-        section = g_menu_new ();
-        pMenuProfiles = g_menu_new ();
-        pItemProfiles = g_menu_item_new_submenu (_("Theme profile"), G_MENU_MODEL (pMenuProfiles));
-        GMenuItem *pItemProfile = g_menu_item_new (_("Light"), "indicator.theme::light");
-        g_menu_append_item (pMenuProfiles, pItemProfile);
-        g_object_unref (pItemProfile);
-        pItemProfile = g_menu_item_new (_("Dark"), "indicator.theme::dark");
-        g_menu_append_item (pMenuProfiles, pItemProfile);
-        g_object_unref (pItemProfile);
-        pItemProfile = g_menu_item_new (_("Adaptive"), "indicator.theme::adaptive");
-        g_menu_append_item (pMenuProfiles, pItemProfile);
-        g_object_unref (pItemProfile);
-        g_menu_append_item (section, pItemProfiles);
-        g_object_unref (pItemProfiles);
-        g_object_unref (pMenuProfiles);
-        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
-        g_object_unref (section);
+        if (!this->bGreeter)
+        {
+            section = g_menu_new ();
+            pMenuProfiles = g_menu_new ();
+            pItemProfiles = g_menu_item_new_submenu (_("Theme profile"), G_MENU_MODEL (pMenuProfiles));
+            GMenuItem *pItemProfile = g_menu_item_new (_("Light"), "indicator.theme::light");
+            g_menu_append_item (pMenuProfiles, pItemProfile);
+            g_object_unref (pItemProfile);
+            pItemProfile = g_menu_item_new (_("Dark"), "indicator.theme::dark");
+            g_menu_append_item (pMenuProfiles, pItemProfile);
+            g_object_unref (pItemProfile);
+            pItemProfile = g_menu_item_new (_("Adaptive"), "indicator.theme::adaptive");
+            g_menu_append_item (pMenuProfiles, pItemProfile);
+            g_object_unref (pItemProfile);
+            g_menu_append_item (section, pItemProfiles);
+            g_object_unref (pItemProfiles);
+            g_object_unref (pMenuProfiles);
+            g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+            g_object_unref (section);
+        }
 #endif
-        section = g_menu_new ();
-        menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
-        g_menu_append_item (section, menu_item);
-        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
-        g_object_unref (section);
-        g_object_unref (menu_item);
+        // cppcheck fails on !this->bGreeter
+        if (this->bGreeter == FALSE)
+        {
+            section = g_menu_new ();
+            menu_item = g_menu_item_new (_("Display settings…"), "indicator.settings");
+            g_menu_append_item (section, menu_item);
+            g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+            g_object_unref (section);
+            g_object_unref (menu_item);
+        }
     }
 
     return G_MENU_MODEL(menu);
@@ -727,6 +758,7 @@ private:
   GSettings *pThemeSettings = NULL;
   GSettings *pColorSchemeSettings = NULL;
   gboolean bTest;
+  gboolean bGreeter;
 #endif
 };
 

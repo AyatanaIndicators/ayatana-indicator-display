@@ -11,3 +11,6 @@ ObjectPath=/org/ayatana/indicator/display/phone
 
 [desktop]
 ObjectPath=/org/ayatana/indicator/display/desktop
+
+[desktop_greeter]
+ObjectPath=/org/ayatana/indicator/display/desktop
