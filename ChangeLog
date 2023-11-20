@@ -1,6 +1,18 @@
+2023-11-20 Mike Gabriel
+
+        * release 23.10.4 (HEAD -> main, tag: 23.10.4)
+        * Merge branch 'tari01-pr/greeter-mode' (566c9d8)
+
+2023-11-20 Robert Tari
+
+        * src/service.cpp: Hide theme profiles and settings in the greeter
+          (327d016)
+        * data/org.ayatana.indicator.display: Add desktop greeter section
+          (6c15134)
+
 2023-11-14 Mike Gabriel
 
-        * release 23.10.3 (HEAD -> main, tag: 23.10.3)
+        * release 23.10.3 (0f8eb5c) (tag: 23.10.3)
         * Merge branch 'tari01-pr/missing-color-scheme' (cc07718)
 
 2023-11-11 Robert Tari
