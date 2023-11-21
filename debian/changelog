@@ -1,3 +1,10 @@
+ayatana-indicator-display (23.10.5-0) unstable; urgency=medium
+
+  * Upstream-provided Debian package for ayatana-indicator-display.
+    See upstream ChangeLog for recent changes.
+
+ -- Mike Gabriel <mike.gabriel@das-netzwerkteam.de>  Tue, 21 Nov 2023 22:09:07 +0100
+
 ayatana-indicator-display (23.10.4-0) unstable; urgency=medium
 
   * Upstream-provided Debian package for ayatana-indicator-display.

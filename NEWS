@@ -1,3 +1,8 @@
+Overview of changes in ayatana-indicator-display 23.10.5
+
+  - src/service.cpp: Also switch metacity, icon and cursor themes when
+    changing theme
+
 Overview of changes in ayatana-indicator-display 23.10.4
 
   - data/org.ayatana.indicator.display: Add desktop greeter section.

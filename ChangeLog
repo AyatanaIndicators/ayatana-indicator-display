@@ -1,6 +1,16 @@
+2023-11-21 Mike Gabriel
+
+        * release 23.10.5 (HEAD -> main, tag: 23.10.5)
+        * Merge branch 'tari01-pr/metacity-icon-cursor' (4657aab)
+
+2023-11-21 Robert Tari
+
+        * src/service.cpp: Also switch metacity, icon and cursor themes when
+          changing theme (08ede85)
+
 2023-11-20 Mike Gabriel
 
-        * release 23.10.4 (HEAD -> main, tag: 23.10.4)
+        * release 23.10.4 (7ef3aaf) (tag: 23.10.4)
         * Merge branch 'tari01-pr/greeter-mode' (566c9d8)
 
 2023-11-20 Robert Tari
