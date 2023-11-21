@@ -99,20 +99,28 @@ public:
             if (!this->bGreeter)
             {
                 const gchar *sSchema = NULL;
+                const gchar *sCursorSchema = NULL;
+                const gchar *sMetacitySchema = NULL;
 
                 if (this->bTest)
                 {
                     sSchema = "org.ayatana.indicator.display";
+                    sCursorSchema = "org.ayatana.indicator.display";
+                    sMetacitySchema = "org.ayatana.indicator.display";
                 }
                 else
                 {
                     if (ayatana_common_utils_is_mate ())
                     {
                         sSchema = "org.mate.interface";
+                        sCursorSchema = "org.mate.peripherals-mouse";
+                        sMetacitySchema = "org.mate.Marco.general";
                     }
                     else
                     {
                         sSchema = "org.gnome.desktop.interface";
+                        sCursorSchema = "org.gnome.desktop.interface";
+                        sMetacitySchema = "org.gnome.desktop.wm.preferences";
                     }
                 }
 
@@ -126,6 +134,30 @@ public:
                 else
                 {
                     g_error("No %s schema could be found", sSchema);
+                }
+
+                pSchema = g_settings_schema_source_lookup (pSource, sCursorSchema, FALSE);
+
+                if (pSchema != NULL)
+                {
+                    g_settings_schema_unref (pSchema);
+                    pCursorSettings = g_settings_new (sCursorSchema);
+                }
+                else
+                {
+                    g_error("No %s schema could be found", sCursorSchema);
+                }
+
+                pSchema = g_settings_schema_source_lookup (pSource, sMetacitySchema, FALSE);
+
+                if (pSchema != NULL)
+                {
+                    g_settings_schema_unref (pSchema);
+                    pMetacitySettings = g_settings_new (sMetacitySchema);
+                }
+                else
+                {
+                    g_error("No %s schema could be found", sMetacitySchema);
                 }
 
                 if (this->bTest)
@@ -220,6 +252,16 @@ public:
     if (pThemeSettings)
     {
         g_clear_object (&pThemeSettings);
+    }
+
+    if (pCursorSettings)
+    {
+        g_clear_object (&pCursorSettings);
+    }
+
+    if (pMetacitySettings)
+    {
+        g_clear_object (&pMetacitySettings);
     }
 
     if (pColorSchemeSettings)
@@ -369,6 +411,139 @@ private:
                 g_debug ("Changing theme to %s", sTheme);
 
                 g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+                gchar *sThemePath = g_strdup_printf ("/usr/share/themes/%s/index.theme", sTheme);
+                gboolean bThemePath = g_file_test (sThemePath, G_FILE_TEST_EXISTS);
+
+                if (bThemePath)
+                {
+                    gchar *sFile = NULL;
+                    GError *pError = NULL;
+                    g_file_get_contents (sThemePath, &sFile, NULL, &pError);
+
+                    if (!pError)
+                    {
+                        #if GLIB_CHECK_VERSION(2, 73, 0)
+                            GRegex *pRegex = g_regex_new ("IconTheme *= *(.*)", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, &pError);
+                        #else
+                            GRegex *pRegex = g_regex_new ("IconTheme *= *(.*)", (GRegexCompileFlags) 0, (GRegexMatchFlags) 0, &pError);
+                        #endif
+
+                        if (!pError)
+                        {
+                            GMatchInfo *pMatchInfo = NULL;
+
+                            #if GLIB_CHECK_VERSION(2, 73, 0)
+                                gboolean bMatch = g_regex_match (pRegex, sFile, G_REGEX_MATCH_DEFAULT, &pMatchInfo);
+                            #else
+                                gboolean bMatch = g_regex_match (pRegex, sFile, (GRegexMatchFlags) 0, &pMatchInfo);
+                            #endif
+
+                            if (bMatch)
+                            {
+                                gchar *sIconTheme = g_match_info_fetch (pMatchInfo, 1);
+                                g_settings_set_string (pImpl->pThemeSettings, "icon-theme", sIconTheme);
+                                g_free (sIconTheme);
+                            }
+                            else
+                            {
+                                g_warning ("/usr/share/themes/%s/index.theme does not define an IconTheme", sTheme);
+                            }
+
+                            g_match_info_free (pMatchInfo);
+                            g_regex_unref (pRegex);
+                        }
+                        else
+                        {
+                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_error_free (pError);
+                        }
+
+                        #if GLIB_CHECK_VERSION(2, 73, 0)
+                            pRegex = g_regex_new ("MetacityTheme *= *(.*)", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, &pError);
+                        #else
+                            pRegex = g_regex_new ("MetacityTheme *= *(.*)", (GRegexCompileFlags) 0, (GRegexMatchFlags) 0, &pError);
+                        #endif
+
+                        if (!pError)
+                        {
+                            GMatchInfo *pMatchInfo = NULL;
+
+                            #if GLIB_CHECK_VERSION(2, 73, 0)
+                                gboolean bMatch = g_regex_match (pRegex, sFile, G_REGEX_MATCH_DEFAULT, &pMatchInfo);
+                            #else
+                                gboolean bMatch = g_regex_match (pRegex, sFile, (GRegexMatchFlags) 0, &pMatchInfo);
+                            #endif
+
+                            if (bMatch)
+                            {
+                                gchar *sMetacityTheme = g_match_info_fetch (pMatchInfo, 1);
+                                g_settings_set_string (pImpl->pMetacitySettings, "theme", sMetacityTheme);
+                                g_free (sMetacityTheme);
+                            }
+                            else
+                            {
+                                g_warning ("/usr/share/themes/%s/index.theme does not define a MetacityTheme", sTheme);
+                            }
+
+                            g_match_info_free (pMatchInfo);
+                            g_regex_unref (pRegex);
+                        }
+                        else
+                        {
+                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_error_free (pError);
+                        }
+
+                        #if GLIB_CHECK_VERSION(2, 73, 0)
+                            pRegex = g_regex_new ("CursorTheme *= *(.*)", G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, &pError);
+                        #else
+                            pRegex = g_regex_new ("CursorTheme *= *(.*)", (GRegexCompileFlags) 0, (GRegexMatchFlags) 0, &pError);
+                        #endif
+
+                        if (!pError)
+                        {
+                            GMatchInfo *pMatchInfo = NULL;
+
+                            #if GLIB_CHECK_VERSION(2, 73, 0)
+                                gboolean bMatch = g_regex_match (pRegex, sFile, G_REGEX_MATCH_DEFAULT, &pMatchInfo);
+                            #else
+                                gboolean bMatch = g_regex_match (pRegex, sFile, (GRegexMatchFlags) 0, &pMatchInfo);
+                            #endif
+
+                            if (bMatch)
+                            {
+                                gchar *sCursorTheme = g_match_info_fetch (pMatchInfo, 1);
+                                g_settings_set_string (pImpl->pCursorSettings, "cursor-theme", sTheme);
+                                g_free (sCursorTheme);
+                            }
+                            else
+                            {
+                                g_warning ("/usr/share/themes/%s/index.theme does not define a CursorTheme", sTheme);
+                            }
+
+                            g_match_info_free (pMatchInfo);
+                            g_regex_unref (pRegex);
+                        }
+                        else
+                        {
+                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_error_free (pError);
+                        }
+
+                        g_free (sFile);
+                    }
+                    else
+                    {
+                        g_error ("PANIC: Failed to get index.theme contents: %s", pError->message);
+                        g_error_free (pError);
+                    }
+                }
+                else
+                {
+                    g_warning ("/usr/share/themes/%s/index.theme does not exist", sTheme);
+                }
+
+                g_free (sThemePath);
 
                 if (pImpl->sLastTheme)
                 {
@@ -756,6 +931,8 @@ private:
   gchar *sLastTheme = NULL;
   const gchar *sLastColorScheme = "default";
   GSettings *pThemeSettings = NULL;
+  GSettings *pCursorSettings = NULL;
+  GSettings *pMetacitySettings = NULL;
   GSettings *pColorSchemeSettings = NULL;
   gboolean bTest;
   gboolean bGreeter;
