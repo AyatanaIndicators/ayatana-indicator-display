@@ -59,11 +59,13 @@ public:
 
   Impl()
   {
-    const char *sUser = g_get_user_name();
-    this->bGreeter = g_str_equal (sUser, "lightdm");
-    GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
+#ifdef COLOR_TEMP_ENABLED
     const gchar *sTest = g_getenv ("TEST_NAME");
     this->bTest = (sTest != NULL && g_str_equal (sTest, "rotation-lock-test"));
+#endif
+    const char *sUserName = g_get_user_name();
+    this->bGreeter = g_str_equal (sUserName, "lightdm");
+    GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
 
     if (pSource != NULL)
     {
@@ -95,6 +97,8 @@ public:
             {
                 g_error("No schema could be found");
             }
+
+#ifdef COLOR_TEMP_ENABLED
 
             if (!this->bGreeter)
             {
@@ -190,6 +194,7 @@ public:
                     g_error("No %s schema could be found", sSchema);
                 }
             }
+#endif
         }
     }
 
@@ -235,14 +240,11 @@ public:
 
   ~Impl()
   {
+#ifdef COLOR_TEMP_ENABLED
     if (nCallback)
     {
         g_source_remove (nCallback);
     }
-
-    g_signal_handlers_disconnect_by_data(m_settings, this);
-    g_clear_object(&m_action_group);
-    g_clear_object(&m_settings);
 
     if (sLastTheme)
     {
@@ -268,6 +270,11 @@ public:
     {
         g_clear_object (&pColorSchemeSettings);
     }
+#endif
+
+    g_signal_handlers_disconnect_by_data(m_settings, this);
+    g_clear_object(&m_action_group);
+    g_clear_object(&m_settings);
   }
 
   GSimpleActionGroup* action_group() const
@@ -683,7 +690,9 @@ private:
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
         pVariantType = g_variant_type_new ("d");
-        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (0));
+        guint nTemperature = 0;
+        g_settings_get (this->m_settings, "color-temp", "q", &nTemperature);
+        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (nTemperature));
         g_variant_type_free (pVariantType);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
         g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTempSettings), this);
@@ -691,7 +700,11 @@ private:
         g_object_unref(G_OBJECT (action));
 
         pVariantType = g_variant_type_new ("s");
-        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string ("0"));
+        guint nProfile = 0;
+        g_settings_get (this->m_settings, "color-temp-profile", "q", &nProfile);
+        gchar *sProfile = g_strdup_printf ("%i", nProfile);
+        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string (sProfile));
+        g_free (sProfile);
         g_variant_type_free (pVariantType);
         g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
         g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
@@ -699,7 +712,8 @@ private:
         g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColor), this);
 
         pVariantType = g_variant_type_new("d");
-        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (0));
+        gdouble fBrightness = g_settings_get_double (this->m_settings, "brightness");
+        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (fBrightness));
         g_variant_type_free(pVariantType);
         g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
@@ -921,6 +935,7 @@ private:
   std::shared_ptr<SimpleProfile> m_phone;
   std::shared_ptr<SimpleProfile> m_desktop;
   std::shared_ptr<GIcon> m_icon;
+  gboolean bGreeter;
 #ifdef COLOR_TEMP_ENABLED
   gdouble fLatitude = 0.0;
   gdouble fLongitude = 0.0;
@@ -935,7 +950,6 @@ private:
   GSettings *pMetacitySettings = NULL;
   GSettings *pColorSchemeSettings = NULL;
   gboolean bTest;
-  gboolean bGreeter;
 #endif
 };
 
