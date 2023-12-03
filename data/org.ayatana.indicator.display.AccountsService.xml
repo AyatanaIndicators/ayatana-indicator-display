@@ -1,0 +1,17 @@
+<node>
+    <interface name="org.ayatana.indicator.display.AccountsService">
+        <annotation name="org.freedesktop.Accounts.VendorExtension" value="true"/>
+        <annotation name="org.freedesktop.Accounts.Authentication.ChangeOwn" value="org.ayatana.indicator.display.AccountsService.ModifyOwnUser"/>
+        <annotation name="org.freedesktop.Accounts.Authentication.ReadAny" value="org.ayatana.indicator.display.AccountsService.ModifyAnyUser"/>
+        <annotation name="org.freedesktop.Accounts.Authentication.ChangeAny" value="org.ayatana.indicator.display.AccountsService.ModifyAnyUser"/>
+        <property name="brightness" type="d" access="readwrite">
+            <annotation name="org.freedesktop.Accounts.DefaultValue" value="1.0"/>
+        </property>
+        <property name="color-temp" type="q" access="readwrite">
+            <annotation name="org.freedesktop.Accounts.DefaultValue" value="4913"/>
+        </property>
+        <property name="color-temp-profile" type="q" access="readwrite">
+            <annotation name="org.freedesktop.Accounts.DefaultValue" value="2"/>
+        </property>
+    </interface>
+</node>

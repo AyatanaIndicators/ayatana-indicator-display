@@ -64,3 +64,22 @@ install (FILES "${AYATANA_INDICATOR_FILE}"
 # ayatana-indicator-display-brightness-high
 
 install (DIRECTORY "icons/" DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/status" FILES_MATCHING PATTERN "*.svg")
+
+if (ENABLE_COLOR_TEMP)
+
+    # org.ayatana.indicator.display.AccountsService.xml
+
+    install (FILES org.ayatana.indicator.display.AccountsService.xml DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/dbus-1/interfaces")
+    install (DIRECTORY DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/accountsservice/interfaces/")
+    install (CODE "message(STATUS \"Symlinking: \$ENV{DESTDIR}${CMAKE_INSTALL_FULL_DATADIR}/accountsservice/interfaces/org.ayatana.indicator.display.AccountsService.xml\")")
+    install (CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ../../dbus-1/interfaces/org.ayatana.indicator.display.AccountsService.xml \$ENV{DESTDIR}${CMAKE_INSTALL_FULL_DATADIR}/accountsservice/interfaces/org.ayatana.indicator.display.AccountsService.xml)")
+
+    # org.ayatana.indicator.display.AccountsService.policy
+
+    install (FILES org.ayatana.indicator.display.AccountsService.policy DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/polkit-1/actions")
+
+    # 50-org.ayatana.indicator.display.AccountsService.rules
+
+    install (FILES 50-org.ayatana.indicator.display.AccountsService.rules DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/polkit-1/rules.d")
+
+endif ()
