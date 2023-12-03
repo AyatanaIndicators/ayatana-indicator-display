@@ -12,6 +12,7 @@ Build-Depends: cmake,
                libgudev-1.0-dev,
                libproperties-cpp-dev,
                libgeoclue-2-dev,
+               libaccountsservice-dev,
 # for coverage reports
                gcovr,
                lcov,
