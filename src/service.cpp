@@ -23,7 +23,7 @@
 #include <glib/gi18n.h>
 
 #ifdef COLOR_TEMP_ENABLED
-#include <geoclue.h>
+    #include <geoclue.h>
 #endif
 
 extern "C"
