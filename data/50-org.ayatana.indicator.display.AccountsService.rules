@@ -1,0 +1,7 @@
+// Allow LightDM to set AccountsService fields
+polkit.addRule (function (action, subject) {
+    if (action.id == "org.ayatana.indicator.display.AccountsService.ModifyAnyUser" && subject.user == "lightdm")
+    {
+        return polkit.Result.YES;
+    }
+});

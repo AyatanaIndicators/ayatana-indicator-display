@@ -75,7 +75,7 @@ if (ENABLE_LOMIRI_FEATURES)
 endif ()
 
 if (ENABLE_COLOR_TEMP)
-    list (APPEND SERVICE_DEPS libgeoclue-2.0)
+    list (APPEND SERVICE_DEPS libgeoclue-2.0 accountsservice)
     add_definitions (-DCOLOR_TEMP_ENABLED)
 endif ()
 

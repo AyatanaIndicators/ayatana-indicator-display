@@ -16,6 +16,7 @@ requires:
     - systemd
     - geoclue
     - gnome-desktop
+    - accountsservice
 #    - libayatana-common (AUR)
 #    - xsct  (AUR)
 
@@ -49,6 +50,7 @@ requires:
     - systemd
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
+    - libaccountsservice-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -82,6 +84,7 @@ requires:
     - gsettings-ubuntu-schemas
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
+    - libaccountsservice-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev
@@ -115,6 +118,7 @@ requires:
     - gsettings-ubuntu-schemas
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
+    - libaccountsservice-dev
 # For xsct
     - libx11-dev
     - libxrandr-dev

@@ -23,7 +23,7 @@
 #include <glib/gi18n.h>
 
 #ifdef COLOR_TEMP_ENABLED
-#include <geoclue.h>
+    #include <geoclue.h>
 #endif
 
 extern "C"
@@ -31,26 +31,31 @@ extern "C"
     #include <ayatana/common/utils.h>
 
     #ifdef COLOR_TEMP_ENABLED
-    #include "solar.h"
+        #include <act/act.h>
+        #include <pwd.h>
+        #include "solar.h"
     #endif
 }
 
 #ifdef COLOR_TEMP_ENABLED
-typedef struct
-{
-   guint nTempLow;
-   guint nTempHigh;
-   const gchar *sName;
-} TempProfile;
+    #define GREETER_BUS_NAME "org.ayatana.greeter"
+    #define GREETER_BUS_PATH "/org/ayatana/greeter"
 
-TempProfile m_lTempProfiles[] =
-{
-    {0, 0, N_("Manual")},
-    {4500, 6500, N_("Adaptive (Colder)")},
-    {3627, 4913, N_("Adaptive")},
-    {3058, 4913, N_("Adaptive (Warmer)")},
-    {0, 0, NULL}
-};
+    typedef struct
+    {
+       guint nTempLow;
+       guint nTempHigh;
+       const gchar *sName;
+    } TempProfile;
+
+    TempProfile m_lTempProfiles[] =
+    {
+        {0, 0, N_("Manual")},
+        {4500, 6500, N_("Adaptive (Colder)")},
+        {3627, 4913, N_("Adaptive")},
+        {3058, 4913, N_("Adaptive (Warmer)")},
+        {0, 0, NULL}
+    };
 #endif
 
 class DisplayIndicator::Impl
@@ -59,11 +64,13 @@ public:
 
   Impl()
   {
-    const char *sUser = g_get_user_name();
-    this->bGreeter = g_str_equal (sUser, "lightdm");
-    GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
+#ifdef COLOR_TEMP_ENABLED
     const gchar *sTest = g_getenv ("TEST_NAME");
     this->bTest = (sTest != NULL && g_str_equal (sTest, "rotation-lock-test"));
+#endif
+    const char *sUserName = g_get_user_name();
+    this->bGreeter = g_str_equal (sUserName, "lightdm");
+    GSettingsSchemaSource *pSource = g_settings_schema_source_get_default();
 
     if (pSource != NULL)
     {
@@ -95,6 +102,9 @@ public:
             {
                 g_error("No schema could be found");
             }
+
+#ifdef COLOR_TEMP_ENABLED
+            this->pAccountsServiceConnection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
 
             if (!this->bGreeter)
             {
@@ -190,9 +200,23 @@ public:
                     g_error("No %s schema could be found", sSchema);
                 }
             }
+            else
+            {
+                this->pConnection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
+                this->nGreeterSubscription = g_dbus_connection_signal_subscribe (this->pConnection, NULL, GREETER_BUS_NAME, "UserChanged", GREETER_BUS_PATH, NULL, G_DBUS_SIGNAL_FLAGS_NONE, onUserChanged, this, NULL);
+                loadManager (this);
+            }
+#endif
         }
     }
 
+#ifdef COLOR_TEMP_ENABLED
+    if (!this->bGreeter)
+    {
+        gint nUid = geteuid ();
+        getAccountsService (this, nUid);
+    }
+#endif
     m_action_group = create_action_group();
 
     // build the icon
@@ -235,14 +259,26 @@ public:
 
   ~Impl()
   {
+#ifdef COLOR_TEMP_ENABLED
+    if (this->nGreeterSubscription)
+    {
+        g_dbus_connection_signal_unsubscribe (this->pConnection, this->nGreeterSubscription);
+    }
+
+    if (this->lUsers)
+    {
+        g_slist_free (this->lUsers);
+    }
+
+    if (this->pConnection)
+    {
+        g_object_unref (this->pConnection);
+    }
+
     if (nCallback)
     {
         g_source_remove (nCallback);
     }
-
-    g_signal_handlers_disconnect_by_data(m_settings, this);
-    g_clear_object(&m_action_group);
-    g_clear_object(&m_settings);
 
     if (sLastTheme)
     {
@@ -268,6 +304,16 @@ public:
     {
         g_clear_object (&pColorSchemeSettings);
     }
+
+    if (this->pAccountsServiceConnection)
+    {
+        g_object_unref (this->pAccountsServiceConnection);
+    }
+#endif
+
+    g_signal_handlers_disconnect_by_data(m_settings, this);
+    g_clear_object(&m_action_group);
+    g_clear_object(&m_settings);
   }
 
   GSimpleActionGroup* action_group() const
@@ -286,9 +332,130 @@ public:
 private:
 
 #ifdef COLOR_TEMP_ENABLED
+    static void onUserChanged (GDBusConnection *pConnection, const gchar *sSender, const gchar *sPath, const gchar *sInterface, const gchar *sSignal, GVariant *pParameters, gpointer pUserData)
+    {
+        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pUserData;
+        g_variant_get (pParameters, "(s)", &pImpl->sUser);
+        loadManager (pImpl);
+    }
+
+    static void getAccountsService (DisplayIndicator::Impl *pImpl, gint nUid)
+    {
+        pImpl->bReadingAccountsService = TRUE;
+        gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
+        GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
+        g_free (sPath);
+
+        if (pProxy)
+        {
+            const gchar *lProperties[] = {"brightness", "color-temp", "color-temp-profile"};
+
+            for (gint nIndex = 0; nIndex < 3; nIndex++)
+            {
+                GVariant *pParams = g_variant_new ("(ss)", "org.ayatana.indicator.display.AccountsService", lProperties[nIndex]);
+                GVariant *pValue = g_dbus_proxy_call_sync (pProxy, "Get", pParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL);
+
+                if (pValue)
+                {
+                    GVariant *pChild0 = g_variant_get_child_value (pValue, 0);
+                    g_variant_unref (pValue);
+                    GVariant *pChild1 = g_variant_get_child_value (pChild0, 0);
+                    g_variant_unref (pChild0);
+                    g_settings_set_value (pImpl->m_settings, lProperties[nIndex], pChild1);
+                    g_variant_unref (pChild1);
+                }
+            }
+        }
+
+        pImpl->bReadingAccountsService = FALSE;
+    }
+
+    static void onUserLoaded (DisplayIndicator::Impl *pImpl, ActUser *pUser)
+    {
+        g_signal_handlers_disconnect_by_func (G_OBJECT (pUser), (gpointer) G_CALLBACK (onUserLoaded), pImpl);
+
+        if (!pImpl->sUser)
+        {
+            GError *pError = NULL;
+            GVariant *pGreeterUser = g_dbus_connection_call_sync (pImpl->pConnection, GREETER_BUS_NAME, GREETER_BUS_PATH, GREETER_BUS_NAME, "GetUser", NULL, G_VARIANT_TYPE ("(s)"), G_DBUS_CALL_FLAGS_NONE, -1, NULL, &pError);
+
+            if (pError)
+            {
+                g_debug ("Failed calling GetUser, the greeter may not be ready yet: %s", pError->message);
+                g_error_free (pError);
+
+                return;
+            }
+
+            g_variant_get (pGreeterUser, "(s)", &pImpl->sUser);
+        }
+
+        gboolean bPrefix = g_str_has_prefix (pImpl->sUser, "*");
+
+        if (!bPrefix)
+        {
+            const gchar *sUserName = act_user_get_user_name (pUser);
+            gboolean bSame = g_str_equal (pImpl->sUser, sUserName);
+
+            if (bSame)
+            {
+                gint nUid = act_user_get_uid (pUser);
+                getAccountsService (pImpl, nUid);
+                updateColor (pImpl);
+            }
+        }
+    }
+
+    static void onManagerLoaded (DisplayIndicator::Impl *pImpl)
+    {
+        ActUserManager *pManager = act_user_manager_get_default ();
+
+        if (!pImpl->lUsers)
+        {
+            pImpl->lUsers = act_user_manager_list_users (pManager);
+        }
+
+        for (GSList *lUser = pImpl->lUsers; lUser; lUser = lUser->next)
+        {
+            ActUser *pUser = static_cast<ActUser*>(lUser->data);
+            gboolean bLoaded = act_user_is_loaded (pUser);
+
+            if (bLoaded)
+            {
+                onUserLoaded (pImpl, pUser);
+            }
+            else
+            {
+                g_signal_connect_swapped (pUser, "notify::is-loaded", G_CALLBACK (onUserLoaded), pImpl);
+            }
+        }
+    }
+
+    static void loadManager (DisplayIndicator::Impl *pImpl)
+    {
+        ActUserManager *pManager = act_user_manager_get_default ();
+        gboolean bLoaded = FALSE;
+        g_object_get (pManager, "is-loaded", &bLoaded, NULL);
+
+        if (bLoaded)
+        {
+            onManagerLoaded (pImpl);
+        }
+        else
+        {
+            g_signal_connect_swapped (pManager, "notify::is-loaded", G_CALLBACK (onManagerLoaded), pImpl);
+        }
+    }
+
     static gboolean updateColor (gpointer pData)
     {
         DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
+
+        if (pImpl->bReadingAccountsService)
+        {
+            return G_SOURCE_CONTINUE;
+        }
+
         guint nProfile = 0;
         g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
         gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
@@ -383,6 +550,37 @@ private:
             pImpl->fLastBrightness = fBrightness;
             pImpl->nLasColorTemp = nTemperature;
             g_free (sCommand);
+            gint nUid = 0;
+
+            if (!pImpl->bGreeter)
+            {
+                nUid = geteuid ();
+            }
+            else if (pImpl->sUser)
+            {
+                const struct passwd *pPasswd = getpwnam (pImpl->sUser);
+
+                if (pPasswd)
+                {
+                    nUid = pPasswd->pw_uid;
+                }
+            }
+
+            if (nUid)
+            {
+                gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
+                GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
+                g_free (sPath);
+                GVariant *pBrightnessValue = g_variant_new ("d", pImpl->fLastBrightness);
+                GVariant *pBrightnessParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "brightness", pBrightnessValue);
+                g_dbus_proxy_call (pProxy, "Set", pBrightnessParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                GVariant *pColorTempValue = g_variant_new ("q", pImpl->nLasColorTemp);
+                GVariant *pColorTempParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp", pColorTempValue);
+                g_dbus_proxy_call (pProxy, "Set", pColorTempParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                GVariant *pProfileValue = g_variant_new ("q", nProfile);
+                GVariant *pProfileParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp-profile", pProfileValue);
+                g_dbus_proxy_call (pProxy, "Set", pProfileParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+            }
         }
 
         if (!pImpl->bGreeter)
@@ -683,7 +881,9 @@ private:
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
         pVariantType = g_variant_type_new ("d");
-        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (0));
+        guint nTemperature = 0;
+        g_settings_get (this->m_settings, "color-temp", "q", &nTemperature);
+        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (nTemperature));
         g_variant_type_free (pVariantType);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
         g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTempSettings), this);
@@ -691,7 +891,11 @@ private:
         g_object_unref(G_OBJECT (action));
 
         pVariantType = g_variant_type_new ("s");
-        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string ("0"));
+        guint nProfile = 0;
+        g_settings_get (this->m_settings, "color-temp-profile", "q", &nProfile);
+        gchar *sProfile = g_strdup_printf ("%i", nProfile);
+        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string (sProfile));
+        g_free (sProfile);
         g_variant_type_free (pVariantType);
         g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
         g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
@@ -699,7 +903,8 @@ private:
         g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColor), this);
 
         pVariantType = g_variant_type_new("d");
-        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (0));
+        gdouble fBrightness = g_settings_get_double (this->m_settings, "brightness");
+        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (fBrightness));
         g_variant_type_free(pVariantType);
         g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
         g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
@@ -921,6 +1126,7 @@ private:
   std::shared_ptr<SimpleProfile> m_phone;
   std::shared_ptr<SimpleProfile> m_desktop;
   std::shared_ptr<GIcon> m_icon;
+  gboolean bGreeter;
 #ifdef COLOR_TEMP_ENABLED
   gdouble fLatitude = 0.0;
   gdouble fLongitude = 0.0;
@@ -935,7 +1141,12 @@ private:
   GSettings *pMetacitySettings = NULL;
   GSettings *pColorSchemeSettings = NULL;
   gboolean bTest;
-  gboolean bGreeter;
+  guint nGreeterSubscription;
+  GDBusConnection *pConnection;
+  gchar *sUser = NULL;
+  GSList *lUsers = NULL;
+  gboolean bReadingAccountsService = FALSE;
+  GDBusConnection *pAccountsServiceConnection = NULL;
 #endif
 };
 
