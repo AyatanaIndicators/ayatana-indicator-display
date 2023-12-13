@@ -10,17 +10,6 @@ set (SERVICE_LIB_SOURCES
      service.cpp
 )
 
-if (ENABLE_LOMIRI_FEATURES)
-    list (APPEND
-          SERVICE_LIB_SOURCES
-          greeter.cpp
-          adbd-client.cpp
-          usb-manager.cpp
-          usb-monitor.cpp
-          usb-snap.cpp
-    )
-endif ()
-
 if (ENABLE_COLOR_TEMP)
     list (APPEND
           SERVICE_LIB_SOURCES
@@ -29,10 +18,6 @@ if (ENABLE_COLOR_TEMP)
 endif ()
 
 add_library (${SERVICE_LIB} STATIC ${SERVICE_LIB_SOURCES})
-
-if (ENABLE_LOMIRI_FEATURES)
-    target_link_libraries(${SERVICE_LIB} Qt5::Core)
-endif ()
 
 add_executable(
     ${SERVICE_EXEC}

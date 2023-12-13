@@ -66,37 +66,6 @@ main(int /*argc*/, char** /*argv*/)
       exporters.push_back(exporter);
     }
 
-#ifdef LOMIRI_FEATURES_ENABLED
-
-    gboolean bHasSocket = FALSE;
-
-    if (ayatana_common_utils_is_lomiri())
-    {
-        struct stat cStat;
-
-        if (stat("/dev/socket/adbd", &cStat) == 0)
-        {
-            if (S_ISSOCK(cStat.st_mode))
-            {
-                // We need the ADBD handler running,
-                // even though it doesn't have an indicator component yet
-                static constexpr char const * ADB_SOCKET_PATH {"/dev/socket/adbd"};
-                static constexpr char const * PUBLIC_KEYS_FILENAME {"/data/misc/adb/adb_keys"};
-                auto usb_monitor = std::make_shared<GUDevUsbMonitor>();
-                auto greeter = std::make_shared<Greeter>();
-                UsbManager usb_manager {ADB_SOCKET_PATH, PUBLIC_KEYS_FILENAME, usb_monitor, greeter};
-                bHasSocket = TRUE;
-            }
-        }
-    }
-
-    if (bHasSocket == FALSE)
-    {
-        g_message("No /dev/socket/adbd socket found, skipping UsbManager");
-    }
-
-#endif
-
     // let's go!
     g_main_loop_run(loop);
 

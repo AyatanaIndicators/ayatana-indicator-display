@@ -60,20 +60,7 @@ function(add_test_by_name name)
   set_property(TEST ${TEST_NAME} APPEND PROPERTY ENVIRONMENT "TEST_NAME=${TEST_NAME}")
   target_link_libraries(${TEST_NAME} ${SERVICE_LINK_LIBRARIES} ${TEST_LINK_LIBRARIES} ${THREAD_LINK_LIBRARIES})
 endfunction()
-add_test_by_name(adbd-client-test)
 add_test_by_name(rotation-lock-test)
-
-function(add_qt_test_by_name name)
-  set(TEST_NAME ${name})
-  set(COVERAGE_TEST_TARGETS ${COVERAGE_TEST_TARGETS} ${TEST_NAME} PARENT_SCOPE)
-  add_executable (${TEST_NAME} ${TEST_NAME}.cpp)
-  target_link_options(${TEST_NAME} PRIVATE -no-pie)
-  add_test(${TEST_NAME} ${TEST_NAME})
-  set_property(TEST ${TEST_NAME} APPEND PROPERTY ENVIRONMENT ${CTEST_ENVIRONMENT})
-  target_link_libraries(${TEST_NAME} ${SERVICE_LINK_LIBRARIES} ${QT_LINK_LIBRARIES} ${TEST_LINK_LIBRARIES} ${THREAD_LINK_LIBRARIES})
-endfunction()
-add_qt_test_by_name(greeter-test)
-add_qt_test_by_name(usb-snap-test)
 
 set(COVERAGE_TEST_TARGETS
   ${COVERAGE_TEST_TARGETS}
