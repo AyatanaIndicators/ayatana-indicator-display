@@ -33,20 +33,10 @@ set(SERVICE_LINK_LIBRARIES
     ${SERVICE_LIB}
     ${SERVICE_DEPS_LIBRARIES}
 )
-set(QT_LINK_LIBRARIES
-    test-utils
-    Qt5::Core
-    Qt5::Test
-    Qt5::DBus
-)
 set(TEST_LINK_LIBRARIES
     ${TEST_DEPS_LIBRARIES}
     ${GTEST_LIBRARIES}
     ${GMOCK_LIBRARIES}
-)
-
-add_definitions(
-  -DGREETER_TEMPLATE="${CMAKE_SOURCE_DIR}/tests/utils/mock-greeter.py"
 )
 
 function(add_test_by_name name)

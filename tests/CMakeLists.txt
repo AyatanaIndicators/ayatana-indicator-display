@@ -32,7 +32,6 @@ add_test(cppcheck cppcheck --enable=all -USCHEMA_DIR --error-exitcode=2 --inline
 
 if (ENABLE_LOMIRI_FEATURES)
     add_subdirectory (unit)
-    add_subdirectory (utils)
 endif ()
 
 set(COVERAGE_TEST_TARGETS
