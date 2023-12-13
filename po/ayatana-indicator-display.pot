@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-12 23:45+0200\n"
+"POT-Creation-Date: 2023-12-14 04:19+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,8 @@ msgstr ""
 msgid "Locks orientation to a specific value."
 msgstr ""
 
-#: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
+#: data/org.ayatana.indicator.display.gschema.xml:5
+#: src/service.cpp:1024
 msgid "Color temperature"
 msgstr ""
 
@@ -43,7 +44,8 @@ msgid ""
 "the intensity of the redness effect applied to the display."
 msgstr ""
 
-#: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
+#: data/org.ayatana.indicator.display.gschema.xml:7
+#: src/service.cpp:1035
 msgid "Color temperature profile"
 msgstr ""
 
@@ -76,7 +78,7 @@ msgid "This is the theme the indicator will set when \"Dark\" is selected."
 msgstr ""
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
-#: src/service.cpp:650
+#: src/service.cpp:1066
 msgid "Theme profile"
 msgstr ""
 
@@ -100,67 +102,50 @@ msgstr ""
 msgid "Stores the last recorded geographic longitude of the device."
 msgstr ""
 
-#: src/service.cpp:48
+#: src/service.cpp:53
 msgid "Manual"
 msgstr ""
 
-#: src/service.cpp:49
+#: src/service.cpp:54
 msgid "Adaptive (Colder)"
 msgstr ""
 
-#: src/service.cpp:50 src/service.cpp:657
+#: src/service.cpp:55 src/service.cpp:1073
 msgid "Adaptive"
 msgstr ""
 
-#: src/service.cpp:51
+#: src/service.cpp:56
 msgid "Adaptive (Warmer)"
 msgstr ""
 
-#: src/service.cpp:544 src/service.cpp:581
+#: src/service.cpp:957 src/service.cpp:994
 msgid "Rotation Lock"
 msgstr ""
 
-#: src/service.cpp:597
+#: src/service.cpp:1010
 msgid "Brightness"
 msgstr ""
 
-#: src/service.cpp:651
+#: src/service.cpp:1067
 msgid "Light"
 msgstr ""
 
-#: src/service.cpp:654
+#: src/service.cpp:1070
 msgid "Dark"
 msgstr ""
 
-#: src/service.cpp:667
+#: src/service.cpp:1087
 msgid "Display settings…"
 msgstr ""
 
-#: src/service.cpp:680
+#: src/service.cpp:1101
 msgid "Rotation"
 msgstr ""
 
-#: src/service.cpp:691
+#: src/service.cpp:1112
 msgid "Display"
 msgstr ""
 
-#: src/service.cpp:692
+#: src/service.cpp:1113
 msgid "Display settings and features"
-msgstr ""
-
-#: src/usb-snap.cpp:109
-#, c-format
-msgid "The computer's RSA key fingerprint is: %s"
-msgstr ""
-
-#: src/usb-snap.cpp:114
-msgid "Allow"
-msgstr ""
-
-#: src/usb-snap.cpp:116
-msgid "Don't Allow"
-msgstr ""
-
-#: src/usb-snap.cpp:125
-msgid "Allow USB Debugging?"
 msgstr ""
