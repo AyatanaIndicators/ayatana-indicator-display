@@ -1,6 +1,39 @@
+2023-12-26 Mike Gabriel
+
+        * release 24.1.0 (HEAD -> main, tag: 24.1.0)
+
+2023-12-14 Ratchanan Srirattanamet
+
+        * po: update .pot file (0539978)
+        * debian/control: remove uneeded dependency (7b5f818)
+        * Remove ENABLE_LOMIRI_FEATURES CMake flag (b7db65f)
+        * tests: remove no longer needed parts (fce2bb7)
+        * Remove USB manager and corresponding tests (32f4db8)
+
+2023-12-05 Mike Gabriel
+
+        * Merge branch 'tari01-pr/add-accountsservice' (3c0c848)
+
+2023-12-03 Robert Tari
+
+        * INSTALL.md: Update build dependencies (8fec9b6)
+        * debian/control: Add libaccountsservice-dev dependency (86d64f3)
+        * .build.yml: Add accountsservice dependency (405c7fd)
+        * CMakeLists.txt: Add accountsservice dependency (0638d3d)
+        * src/service.cpp: Add AccountsService support (92416fe)
+
+2023-12-04 Robert Tari
+
+        * Whitespace fix (aef2ed6)
+
+2023-12-03 Robert Tari
+
+        * src/service.cpp: Fix build with ENABLE_COLOR_TEMP off (50448a8)
+        * data/*: Add AccountsService files (83fad63)
+
 2023-11-21 Mike Gabriel
 
-        * release 23.10.5 (HEAD -> main, tag: 23.10.5)
+        * release 23.10.5 (72490e5) (tag: 23.10.5)
         * Merge branch 'tari01-pr/metacity-icon-cursor' (4657aab)
 
 2023-11-21 Robert Tari

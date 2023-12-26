@@ -1,3 +1,11 @@
+Overview of changes in ayatana-indicator-display 24.1.0
+
+  - src/service.cpp: Fix build with ENABLE_COLOR_TEMP off.
+  - Add AccountsService support.
+  - Remove USB manager and corresponding tests
+  - Remove ENABLE_LOMIRI_FEATURES CMake flag.
+  - Update translations.
+
 Overview of changes in ayatana-indicator-display 23.10.5
 
   - src/service.cpp: Also switch metacity, icon and cursor themes when
