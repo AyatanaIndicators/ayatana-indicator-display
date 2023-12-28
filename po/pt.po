@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2023-11-09 14:36+0000\n"
+"PO-Revision-Date: 2023-12-29 11:09+0000\n"
 "Last-Translator: Ivo Xavier <ivofernandes12@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/pt/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -130,11 +130,11 @@ msgstr "Brilho"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Claro"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Escuro"
 
 #: src/service.cpp:667
 msgid "Display settings…"
