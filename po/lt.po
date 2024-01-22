@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2022-10-18 19:01+0000\n"
-"Last-Translator: Gediminas Murauskas <muziejusinfo@gmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/lt/>\n"
+"PO-Revision-Date: 2024-01-23 21:01+0000\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -39,86 +39,92 @@ msgstr "Užrakina orientaciją tam tikra verte."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
-msgstr ""
+msgstr "Spalvos temperatūra"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Nustato jūsų ekrano spalvos temperatūrą. Kuo žemesnė reikšmė, tuo didesnis "
+"raudonumo efekto intensyvumas bus taikomas ekranui."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "Spalvos temperatūros profilis"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "Šiuo metu indikatoriaus naudojamas spalvos temperatūros profilis."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Ekrano ryškumas"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Saugo dabartinę ekrano ryškumo reikšmę."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Šviesaus apipavidalinimo pavadinimas"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
 msgstr ""
+"Tai yra apipavidalinimas, kurį indikatorius nustatys, kai bus pasirinktas "
+"„Šviesus“."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Tamsaus apipavidalinimo pavadinimas"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
 msgstr ""
+"Tai yra apipavidalinimas, kurį indikatorius nustatys, kai bus pasirinktas "
+"„Tamsus“."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Apipavidalinimo profilis"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "Šiuo metu indikatoriaus naudojamas apipavidalinimo profilis."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Dabartinė geografinė platuma"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Saugo paskutinę įrašytą įrenginio geografinę platumą."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Dabartinė geografinė ilguma"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Saugo paskutinę įrašytą įrenginio geografinę ilgumą."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Rankinis"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptyvus (šaltesnis)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptyvus"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptyvus (šiltesnis)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
@@ -126,15 +132,15 @@ msgstr "Pasukimo užraktas"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "Ryškumas"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Šviesus"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Tamsus"
 
 #: src/service.cpp:667
 msgid "Display settings…"
