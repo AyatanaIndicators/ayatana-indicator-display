@@ -1141,8 +1141,8 @@ private:
   GSettings *pMetacitySettings = NULL;
   GSettings *pColorSchemeSettings = NULL;
   gboolean bTest;
-  guint nGreeterSubscription;
-  GDBusConnection *pConnection;
+  guint nGreeterSubscription = 0;
+  GDBusConnection *pConnection = NULL;
   gchar *sUser = NULL;
   GSList *lUsers = NULL;
   gboolean bReadingAccountsService = FALSE;
