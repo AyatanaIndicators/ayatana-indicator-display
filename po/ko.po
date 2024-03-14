@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2022-09-30 18:16+0000\n"
+"PO-Revision-Date: 2024-03-15 15:02+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
-"Language-Team: Korean <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/ko/>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -37,70 +37,71 @@ msgstr "방향을 특정 값으로 잠급니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
-msgstr ""
+msgstr "색온도"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
-msgstr ""
+msgstr "화면의 색온도를 지정합니다. 값이 낮을수록 디스플레이에 적용되는 적색 효과의 "
+"강도가 높아집니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "색온도 프로필"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "표시도구에 사용되는 현재 색온도 프로필입니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "화면 밝기"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "화면의 현재 밝기 값을 저장합니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "라이트 테마의 이름"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "\"라이트\"를 선택하면 표시도구가 지정하는 테마입니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "다크 테마의 이름"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "\"다크\"를 선택하면 표시도구가 지정하는 테마입니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "테마 프로필"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "표시도구가 사용하고 있는 현재 테마 프로필입니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "현재 지리적 위도"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "장치의 마지막으로 기록된 지리적 위도를 저장합니다."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "현재 지리적 경도"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "장치의 마지막으로 기록된 지리적 경도를 저장합니다."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -124,20 +125,19 @@ msgstr "회전 잠금"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "밝기"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "라이트"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "다크"
 
 #: src/service.cpp:667
-#, fuzzy
 msgid "Display settings…"
-msgstr "디스플레이 설정 및 기능"
+msgstr "디스플레이 설정…"
 
 #: src/service.cpp:680
 msgid "Rotation"
