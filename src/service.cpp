@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2023 Robert Tari
+ * Copyright 2023-2024 Robert Tari
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1014,7 +1014,8 @@ private:
         g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
         g_menu_item_set_attribute (menu_item, "min-value", "d", 0.5);
         g_menu_item_set_attribute (menu_item, "max-value", "d", 1.0);
-        g_menu_item_set_attribute (menu_item, "step", "d", 0.005);
+        g_menu_item_set_attribute (menu_item, "step", "d", 0.01);
+        g_menu_item_set_attribute (menu_item, "digits", "y", 2);
         g_menu_append_item (section, menu_item);
 
         pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
@@ -1029,6 +1030,7 @@ private:
         g_menu_item_set_attribute (menu_item, "min-value", "d", 3000.0);
         g_menu_item_set_attribute (menu_item, "max-value", "d", 6500.0);
         g_menu_item_set_attribute (menu_item, "step", "d", 100.0);
+        g_menu_item_set_attribute (menu_item, "digits", "y", 0);
         g_menu_append_item (section, menu_item);
 
         GMenu *pMenuProfiles = g_menu_new ();
