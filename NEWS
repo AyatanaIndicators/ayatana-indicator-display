@@ -1,3 +1,9 @@
+Overview of changes in ayatana-indicator-display 24.4.0
+
+  - Fix access of unitialized variables in DisplayIndicator destructor.
+  - src/service.cpp: Fix slider step and precision
+  - Translation updates.
+
 Overview of changes in ayatana-indicator-display 24.1.1
 
   - Add data/50-org.ayatana.indicator.display.AccountsService.pkla to

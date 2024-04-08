@@ -1,6 +1,32 @@
+2024-04-08 Mike Gabriel
+
+        * release 24.4.0 (HEAD -> main, tag: 24.4.0)
+        * Merge branch 'tari01-pr/slider-step' (3ec03467)
+
+2024-04-05 Robert Tari
+
+        * src/service.cpp: Fix slider step and precision (60760e48)
+
+2024-03-22 Steve
+
+        * Translated using Weblate (French) (7b200131)
+
+2024-03-14 이정희
+
+        * Translated using Weblate (Korean) (e235cda0)
+
+2024-03-04 Mike Gabriel
+
+        * Merge branch 'gber-personal/gber/fix-uninitialized-mem' (7eae679a)
+
+2024-03-04 Guido Berhoerster
+
+        * Fix access of unitialized variables in DisplayIndicator destructor
+          (21967eef)
+
 2024-02-24 Mike Gabriel
 
-        * release 24.1.1 (HEAD -> main, tag: 24.1.1)
+        * release 24.1.1 (1e797106) (tag: 24.1.1)
         * Merge branch 'tari01-pr/add-pkla' (2d236192)
 
 2024-02-23 Robert Tari
