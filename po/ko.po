@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2024-03-15 15:02+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"PO-Revision-Date: 2024-04-13 05:18+0000\n"
+"Last-Translator: ID J <tabby4442@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/ko/>\n"
 "Language: ko\n"
@@ -105,19 +105,19 @@ msgstr "장치의 마지막으로 기록된 지리적 경도를 저장합니다.
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "설명서"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "어댑티브 (더 차갑게)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "어댑티브"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "어댑티브 (더 따뜻하게)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
