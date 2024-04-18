@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2023-04-08 19:50+0000\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"PO-Revision-Date: 2024-04-18 07:54+0000\n"
+"Last-Translator: 复予 <clonewith@qq.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -33,7 +33,7 @@ msgstr "方向锁定"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr ""
+msgstr "将方向锁定为特定值。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
@@ -43,64 +43,64 @@ msgstr "色温"
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
-msgstr ""
+msgstr "设置屏幕色温。数值越低，应用到显示器的红色效果越强。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "色温配置"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "指示器当前使用的色温档案。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "屏幕亮度"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "存储屏幕当前的亮度值。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "浅色主题名称"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "选择“浅色”时，指示器设置的主题。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "深色主题名称"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "选择“深色”时，指示器设置的主题。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "主题配置"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "指示器当前使用的主题配置。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "当前地理纬度"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "存储设备上次记录的地理纬度。"
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "当前地理经度"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "存储设备上次记录的地理经度。"
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -108,15 +108,15 @@ msgstr "手动"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "自适应（冷色）"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "自适应"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "自适应（暖色）"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
@@ -124,19 +124,19 @@ msgstr "旋转锁定"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "亮度"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "浅色"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "深色"
 
 #: src/service.cpp:667
 msgid "Display settings…"
-msgstr ""
+msgstr "显示设置…"
 
 #: src/service.cpp:680
 msgid "Rotation"
@@ -148,7 +148,7 @@ msgstr "显示"
 
 #: src/service.cpp:692
 msgid "Display settings and features"
-msgstr ""
+msgstr "显示设置与功能"
 
 #: src/usb-snap.cpp:109
 #, c-format
