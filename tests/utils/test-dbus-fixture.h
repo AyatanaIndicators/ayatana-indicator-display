@@ -30,7 +30,7 @@ class TestDBusFixture: public GlibFixture
   public:
 
     explicit TestDBusFixture() {};
-    virtual ~TestDBusFixture() =default;
+    virtual ~TestDBusFixture() override =default;
 
     explicit TestDBusFixture(const std::vector<std::string>& service_dirs_in): service_dirs(service_dirs_in) {}
 
