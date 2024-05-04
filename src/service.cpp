@@ -334,7 +334,7 @@ private:
 #ifdef COLOR_TEMP_ENABLED
     static void onUserChanged (GDBusConnection *pConnection, const gchar *sSender, const gchar *sPath, const gchar *sInterface, const gchar *sSignal, GVariant *pParameters, gpointer pUserData)
     {
-        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pUserData;
+        DisplayIndicator::Impl *pImpl = static_cast<DisplayIndicator::Impl*>(pUserData);
         g_variant_get (pParameters, "(s)", &pImpl->sUser);
         loadManager (pImpl);
     }
@@ -449,7 +449,7 @@ private:
 
     static gboolean updateColor (gpointer pData)
     {
-        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = static_cast<DisplayIndicator::Impl*>(pData);
 
         if (pImpl->bReadingAccountsService)
         {
@@ -760,7 +760,7 @@ private:
 
     static void onGeoClueLoaded (GObject *pObject, GAsyncResult *pResult, gpointer pData)
     {
-        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = static_cast<DisplayIndicator::Impl*>(pData);
         GError *pError = NULL;
         GClueSimple *pSimple = gclue_simple_new_finish (pResult, &pError);
 
@@ -816,7 +816,7 @@ private:
     {
         g_simple_action_set_state (pAction, pVariant);
 
-        DisplayIndicator::Impl *pImpl = (DisplayIndicator::Impl*) pData;
+        DisplayIndicator::Impl *pImpl = static_cast<DisplayIndicator::Impl*>(pData);
 
         if (pImpl->bAutoSliderUpdate)
         {
