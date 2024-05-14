@@ -48,6 +48,20 @@ main(int /*argc*/, char** /*argv*/)
 
     // boilerplate i18n
     setlocale(LC_ALL, "");
+
+    // Initialize LC_NUMERIC with 'POSIX'. This assures that float number
+    // conversions (from float to string via e.g. g_strdup_sprintf()) always
+    // use a dot in decimal numbers.
+    //
+    // This resolves blackening of the screen if users with e.g. de_DE.UTF-8
+    // use the brightness slider and hand over a komma-decimal to the xsct
+    // executable (which only understands dot-decimals).
+    //
+    // As we don't use numbers / number conversions anywhere else in the
+    // display indicator, this global setting of LC_NUMERIC seems to be the
+    // easiest approach.
+    setlocale(LC_NUMERIC, "POSIX");
+
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     textdomain(GETTEXT_PACKAGE);
 
