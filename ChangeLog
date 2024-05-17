@@ -1,6 +1,40 @@
+2024-05-17 Mike Gabriel
+
+        * release 24.4.1 (HEAD -> main, tag: 24.4.1)
+
+2024-05-17 Robert Tari
+
+        * Merge branch 'sunweaver-pr/cppcheck-2.14' (4b25c3a1)
+
+2024-05-04 Mike Gabriel
+
+        * cppcheck: Run with --check-level=exhaustive. (bfb74193)
+        * cppcheck: Replace C-style casts by C++-style static_cast<> casts.
+          (9b3eb0bc)
+        * cppcheck: Suppress constParameterCallback. (8c4b2d9c)
+        * cppcheck: Fix missingOverride complaints. (f1dde7a9)
+
+2024-05-15 Robert Tari
+
+        * Merge branch
+          'sunweaver-pr/xsct-brightness-slider-blackscreen-with-de-locale'
+          (9a605aa2)
+
+2024-05-14 Mike Gabriel
+
+        * src/main.cpp: Initialize LC_NUMERIC with 'POSIX'. (89ca869f)
+
+2024-04-18 复予
+
+        * Translated using Weblate (Chinese (Simplified)) (cd7ad7e2)
+
+2024-04-13 ID J
+
+        * Translated using Weblate (Korean) (79894112)
+
 2024-04-08 Mike Gabriel
 
-        * release 24.4.0 (HEAD -> main, tag: 24.4.0)
+        * release 24.4.0 (fb208451) (tag: 24.4.0)
         * Merge branch 'tari01-pr/slider-step' (3ec03467)
 
 2024-04-05 Robert Tari

@@ -1,3 +1,12 @@
+Overview of changes in ayatana-indicator-display 24.4.1
+
+  - src/main.cpp: Initialize LC_NUMERIC with 'POSIX'.
+  - cppcheck: Fix missingOverride complaints.
+  - cppcheck: Suppress constParameterCallback.
+  - cppcheck: Replace C-style casts by C++-style static_cast<> casts.
+  - cppcheck: Run with --check-level=exhaustive.
+  - Translation updates.
+
 Overview of changes in ayatana-indicator-display 24.4.0
 
   - Fix access of unitialized variables in DisplayIndicator destructor.
