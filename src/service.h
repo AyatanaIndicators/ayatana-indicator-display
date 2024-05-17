@@ -30,7 +30,7 @@ class DisplayIndicator: public Indicator
 {
 public:
   DisplayIndicator();
-  ~DisplayIndicator();
+  ~DisplayIndicator() override;
 
   const char* name() const override;
   GSimpleActionGroup* action_group() const override;

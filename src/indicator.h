@@ -65,7 +65,7 @@ class SimpleProfile: public Profile
 {
 public:
   SimpleProfile(const char* name, const std::shared_ptr<GMenuModel>& menu): m_name(name), m_menu(menu) {}
-  virtual ~SimpleProfile();
+  virtual ~SimpleProfile() override;
 
   std::string name() const override {return m_name;}
   core::Property<Header>& header() override {return m_header;}

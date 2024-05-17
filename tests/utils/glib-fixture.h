@@ -35,7 +35,7 @@ class GlibFixture : public ::testing::Test
 {
   public:
 
-    virtual ~GlibFixture() =default;
+    virtual ~GlibFixture() override =default;
 
   protected:
 
