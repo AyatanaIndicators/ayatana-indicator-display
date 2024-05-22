@@ -76,7 +76,7 @@ public:
     {
         if (ayatana_common_utils_is_lomiri()) {
 
-            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "com.lomiri.touch.system", FALSE);
+            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "com.lomiri.touch.system", TRUE);
 
             if (pSchema != NULL)
             {
@@ -91,7 +91,7 @@ public:
         }
         else {
 
-            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "org.ayatana.indicator.display", FALSE);
+            GSettingsSchema *pSchema = g_settings_schema_source_lookup(pSource, "org.ayatana.indicator.display", TRUE);
 
             if (pSchema != NULL)
             {
@@ -134,7 +134,7 @@ public:
                     }
                 }
 
-                pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+                pSchema = g_settings_schema_source_lookup (pSource, sSchema, TRUE);
 
                 if (pSchema != NULL)
                 {
@@ -146,7 +146,7 @@ public:
                     g_error("No %s schema could be found", sSchema);
                 }
 
-                pSchema = g_settings_schema_source_lookup (pSource, sCursorSchema, FALSE);
+                pSchema = g_settings_schema_source_lookup (pSource, sCursorSchema, TRUE);
 
                 if (pSchema != NULL)
                 {
@@ -158,7 +158,7 @@ public:
                     g_error("No %s schema could be found", sCursorSchema);
                 }
 
-                pSchema = g_settings_schema_source_lookup (pSource, sMetacitySchema, FALSE);
+                pSchema = g_settings_schema_source_lookup (pSource, sMetacitySchema, TRUE);
 
                 if (pSchema != NULL)
                 {
@@ -179,7 +179,7 @@ public:
                     sSchema = "org.gnome.desktop.interface";
                 }
 
-                pSchema = g_settings_schema_source_lookup (pSource, sSchema, FALSE);
+                pSchema = g_settings_schema_source_lookup (pSource, sSchema, TRUE);
 
                 if (pSchema != NULL)
                 {
