@@ -1,6 +1,27 @@
+2024-05-22 Mike Gabriel
+
+        * release 24.5.0 (HEAD -> main, tag: 24.5.0)
+
+2024-05-22 Robert Tari
+
+        * Merge branch 'sunweaver-pr/lomiri-indicators-target' (b982756f)
+
+2024-05-21 Mike Gabriel
+
+        * data/ayatana-indicator-display.service.in: Become part of
+          lomiri-indicators.target. (3699389a)
+
+2024-05-22 Mike Gabriel
+
+        * Merge branch 'OPNA2608-fix/recursive-schema-lookup' (ffec0d45)
+
+2024-05-20 OPNA2608
+
+        * src/service.cpp: Look up schemas recursively (50b2197c)
+
 2024-05-17 Mike Gabriel
 
-        * release 24.4.1 (HEAD -> main, tag: 24.4.1)
+        * release 24.4.1 (4d95bad3) (tag: 24.4.1)
 
 2024-05-17 Robert Tari
 

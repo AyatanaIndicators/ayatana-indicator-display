@@ -1,3 +1,9 @@
+Overview of changes in ayatana-indicator-display 24.5.0
+
+  - src/service.cpp: Look up schemas recursively
+  - data/ayatana-indicator-display.service.in: Become part of
+    lomiri-indicators.target.
+
 Overview of changes in ayatana-indicator-display 24.4.1
 
   - src/main.cpp: Initialize LC_NUMERIC with 'POSIX'.
