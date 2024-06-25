@@ -24,6 +24,13 @@
 
 #ifdef COLOR_TEMP_ENABLED
     #include <geoclue.h>
+
+    #ifdef RDA_ENABLED
+        #include <rda/rda.h>
+    #endif
+
+    #include <X11/Xlib.h>
+    #include <X11/extensions/Xrandr.h>
 #endif
 
 extern "C"
@@ -67,6 +74,76 @@ public:
 #ifdef COLOR_TEMP_ENABLED
     const gchar *sTest = g_getenv ("TEST_NAME");
     this->bTest = (sTest != NULL && g_str_equal (sTest, "rotation-lock-test"));
+
+    if (!this->bTest)
+    {
+        Display *pDisplay = XOpenDisplay (NULL);
+
+        if (!pDisplay)
+        {
+            g_error ("Panic: Failed to open X display");
+
+            return;
+        }
+
+        guint nScreen = DefaultScreen (pDisplay);
+        Window pWindow = RootWindow (pDisplay, nScreen);
+        XRRScreenResources *pResources = XRRGetScreenResources (pDisplay, pWindow);
+
+        if (!pResources)
+        {
+            g_error ("Panic: Failed to get screen resources");
+            XCloseDisplay (pDisplay);
+
+            return;
+        }
+
+        RROutput nOutputPrimary = XRRGetOutputPrimary (pDisplay, pWindow);
+        XRROutputInfo *pOutputInfo = XRRGetOutputInfo (pDisplay, pResources, nOutputPrimary);
+        GRegex *pRegex = NULL;
+        GError *pError = NULL;
+
+        #if GLIB_CHECK_VERSION(2, 73, 0)
+            pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, G_REGEX_MATCH_DEFAULT, &pError);
+        #else
+            pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, (GRegexMatchFlags) 0, &pError);
+        #endif
+
+        if (!pError)
+        {
+            #if GLIB_CHECK_VERSION(2, 73, 0)
+                gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, G_REGEX_MATCH_DEFAULT, NULL);
+            #else
+                gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, (GRegexMatchFlags) 0, NULL);
+            #endif
+
+            if (bMatch)
+            {
+                this->bVirtualX = TRUE;
+            }
+
+            g_regex_unref (pRegex);
+        }
+        else
+        {
+            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+            g_error_free (pError);
+            XRRFreeOutputInfo (pOutputInfo);
+            XRRFreeScreenResources (pResources);
+            XCloseDisplay (pDisplay);
+
+            return;
+        }
+
+        XRRFreeOutputInfo (pOutputInfo);
+        XRRFreeScreenResources (pResources);
+        XCloseDisplay (pDisplay);
+
+        #ifdef RDA_ENABLED
+            gboolean bRemote = rda_session_is_remote ();
+            this->bVirtualX = this->bVirtualX || bRemote;
+        #endif
+    }
 #endif
     const char *sUserName = g_get_user_name();
     this->bGreeter = g_str_equal (sUserName, "lightdm");
@@ -240,7 +317,13 @@ public:
     // build the desktop profile
     std::shared_ptr<GMenuModel> desktop_menu (create_desktop_menu(), menu_model_deleter);
     m_desktop = std::make_shared<SimpleProfile>("desktop", desktop_menu);
-    update_desktop_header();
+    gboolean bVisible = !this->bGreeter;
+
+    #ifdef COLOR_TEMP_ENABLED
+        bVisible = bVisible || !this->bVirtualX;
+    #endif
+
+    update_desktop_header(bVisible);
 
 #ifdef COLOR_TEMP_ENABLED
     if (ayatana_common_utils_is_lomiri() == FALSE)
@@ -341,33 +424,36 @@ private:
 
     static void getAccountsService (DisplayIndicator::Impl *pImpl, gint nUid)
     {
-        pImpl->bReadingAccountsService = TRUE;
-        gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
-        GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
-        g_free (sPath);
-
-        if (pProxy)
+        if (!pImpl->bVirtualX)
         {
-            const gchar *lProperties[] = {"brightness", "color-temp", "color-temp-profile"};
+            pImpl->bReadingAccountsService = TRUE;
+            gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
+            GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
+            g_free (sPath);
 
-            for (gint nIndex = 0; nIndex < 3; nIndex++)
+            if (pProxy)
             {
-                GVariant *pParams = g_variant_new ("(ss)", "org.ayatana.indicator.display.AccountsService", lProperties[nIndex]);
-                GVariant *pValue = g_dbus_proxy_call_sync (pProxy, "Get", pParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL);
+                const gchar *lProperties[] = {"brightness", "color-temp", "color-temp-profile"};
 
-                if (pValue)
+                for (gint nIndex = 0; nIndex < 3; nIndex++)
                 {
-                    GVariant *pChild0 = g_variant_get_child_value (pValue, 0);
-                    g_variant_unref (pValue);
-                    GVariant *pChild1 = g_variant_get_child_value (pChild0, 0);
-                    g_variant_unref (pChild0);
-                    g_settings_set_value (pImpl->m_settings, lProperties[nIndex], pChild1);
-                    g_variant_unref (pChild1);
+                    GVariant *pParams = g_variant_new ("(ss)", "org.ayatana.indicator.display.AccountsService", lProperties[nIndex]);
+                    GVariant *pValue = g_dbus_proxy_call_sync (pProxy, "Get", pParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL);
+
+                    if (pValue)
+                    {
+                        GVariant *pChild0 = g_variant_get_child_value (pValue, 0);
+                        g_variant_unref (pValue);
+                        GVariant *pChild1 = g_variant_get_child_value (pChild0, 0);
+                        g_variant_unref (pChild0);
+                        g_settings_set_value (pImpl->m_settings, lProperties[nIndex], pChild1);
+                        g_variant_unref (pChild1);
+                    }
                 }
             }
-        }
 
-        pImpl->bReadingAccountsService = FALSE;
+            pImpl->bReadingAccountsService = FALSE;
+        }
     }
 
     static void onUserLoaded (DisplayIndicator::Impl *pImpl, ActUser *pUser)
@@ -457,8 +543,14 @@ private:
         }
 
         guint nProfile = 0;
-        g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
-        gdouble fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
+        gdouble fBrightness = 0.0;
+
+        if (!pImpl->bVirtualX)
+        {
+            g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
+            fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
+        }
+
         gchar *sThemeProfile = NULL;
         gboolean bThemeAdaptive = FALSE;
 
@@ -474,25 +566,28 @@ private:
         gint64 nNow = g_get_real_time ();
         gdouble fElevation = solar_elevation((gdouble) nNow / 1000000.0, pImpl->fLatitude, pImpl->fLongitude);
 
-        if (nProfile == 0)
+        if (!pImpl->bVirtualX)
         {
-            g_settings_get (pImpl->m_settings, "color-temp", "q", &nTemperature);
-        }
-        else
-        {
-            gdouble fShifting = 0.0;
-
-            if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
+            if (nProfile == 0)
             {
-                fShifting = 1.0;
+                g_settings_get (pImpl->m_settings, "color-temp", "q", &nTemperature);
             }
-            else if (fElevation < 3.0)
+            else
             {
-                fShifting = 1.0 - ((SOLAR_CIVIL_TWILIGHT_ELEV - fElevation) / (SOLAR_CIVIL_TWILIGHT_ELEV - 3.0));
-            }
+                gdouble fShifting = 0.0;
 
-            nTemperature = m_lTempProfiles[nProfile].nTempHigh - (m_lTempProfiles[nProfile].nTempHigh - m_lTempProfiles[nProfile].nTempLow) * fShifting;
-            pImpl->bAutoSliderUpdate = TRUE;
+                if (fElevation < SOLAR_CIVIL_TWILIGHT_ELEV)
+                {
+                    fShifting = 1.0;
+                }
+                else if (fElevation < 3.0)
+                {
+                    fShifting = 1.0 - ((SOLAR_CIVIL_TWILIGHT_ELEV - fElevation) / (SOLAR_CIVIL_TWILIGHT_ELEV - 3.0));
+                }
+
+                nTemperature = m_lTempProfiles[nProfile].nTempHigh - (m_lTempProfiles[nProfile].nTempHigh - m_lTempProfiles[nProfile].nTempLow) * fShifting;
+                pImpl->bAutoSliderUpdate = TRUE;
+            }
         }
 
         if (!pImpl->bGreeter)
@@ -529,57 +624,60 @@ private:
             }
         }
 
-        if (pImpl->fLastBrightness != fBrightness || pImpl->nLasColorTemp != nTemperature)
+        if (!pImpl->bVirtualX)
         {
-            g_debug ("Calling xsct with %u %f", nTemperature, fBrightness);
-
-            GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
-            GVariant *pTemperature = g_variant_new_double (nTemperature);
-            g_action_change_state (pAction, pTemperature);
-
-            GError *pError = NULL;
-            gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
-            gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
-
-            if (!bSuccess)
+            if (pImpl->fLastBrightness != fBrightness || pImpl->nLasColorTemp != nTemperature)
             {
-                g_error ("The call to '%s' failed: %s", sCommand, pError->message);
-                g_error_free (pError);
-            }
+                g_debug ("Calling xsct with %u %f", nTemperature, fBrightness);
 
-            pImpl->fLastBrightness = fBrightness;
-            pImpl->nLasColorTemp = nTemperature;
-            g_free (sCommand);
-            gint nUid = 0;
+                GAction *pAction = g_action_map_lookup_action (G_ACTION_MAP (pImpl->m_action_group), "color-temp");
+                GVariant *pTemperature = g_variant_new_double (nTemperature);
+                g_action_change_state (pAction, pTemperature);
 
-            if (!pImpl->bGreeter)
-            {
-                nUid = geteuid ();
-            }
-            else if (pImpl->sUser)
-            {
-                const struct passwd *pPasswd = getpwnam (pImpl->sUser);
+                GError *pError = NULL;
+                gchar *sCommand = g_strdup_printf ("xsct %u %f", nTemperature, fBrightness);
+                gboolean bSuccess = g_spawn_command_line_sync (sCommand, NULL, NULL, NULL, &pError);
 
-                if (pPasswd)
+                if (!bSuccess)
                 {
-                    nUid = pPasswd->pw_uid;
+                    g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+                    g_error_free (pError);
                 }
-            }
 
-            if (nUid)
-            {
-                gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
-                GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
-                g_free (sPath);
-                GVariant *pBrightnessValue = g_variant_new ("d", pImpl->fLastBrightness);
-                GVariant *pBrightnessParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "brightness", pBrightnessValue);
-                g_dbus_proxy_call (pProxy, "Set", pBrightnessParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-                GVariant *pColorTempValue = g_variant_new ("q", pImpl->nLasColorTemp);
-                GVariant *pColorTempParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp", pColorTempValue);
-                g_dbus_proxy_call (pProxy, "Set", pColorTempParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-                GVariant *pProfileValue = g_variant_new ("q", nProfile);
-                GVariant *pProfileParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp-profile", pProfileValue);
-                g_dbus_proxy_call (pProxy, "Set", pProfileParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                pImpl->fLastBrightness = fBrightness;
+                pImpl->nLasColorTemp = nTemperature;
+                g_free (sCommand);
+                gint nUid = 0;
+
+                if (!pImpl->bGreeter)
+                {
+                    nUid = geteuid ();
+                }
+                else if (pImpl->sUser)
+                {
+                    const struct passwd *pPasswd = getpwnam (pImpl->sUser);
+
+                    if (pPasswd)
+                    {
+                        nUid = pPasswd->pw_uid;
+                    }
+                }
+
+                if (nUid)
+                {
+                    gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
+                    GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
+                    g_free (sPath);
+                    GVariant *pBrightnessValue = g_variant_new ("d", pImpl->fLastBrightness);
+                    GVariant *pBrightnessParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "brightness", pBrightnessValue);
+                    g_dbus_proxy_call (pProxy, "Set", pBrightnessParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                    GVariant *pColorTempValue = g_variant_new ("q", pImpl->nLasColorTemp);
+                    GVariant *pColorTempParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp", pColorTempValue);
+                    g_dbus_proxy_call (pProxy, "Set", pColorTempParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                    GVariant *pProfileValue = g_variant_new ("q", nProfile);
+                    GVariant *pProfileParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp-profile", pProfileValue);
+                    g_dbus_proxy_call (pProxy, "Set", pProfileParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                }
             }
         }
 
@@ -880,36 +978,39 @@ private:
 #ifdef COLOR_TEMP_ENABLED
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
-        pVariantType = g_variant_type_new ("d");
-        guint nTemperature = 0;
-        g_settings_get (this->m_settings, "color-temp", "q", &nTemperature);
-        action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (nTemperature));
-        g_variant_type_free (pVariantType);
-        g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
-        g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTempSettings), this);
-        g_signal_connect (action, "change-state", G_CALLBACK (onColorTempState), this);
-        g_object_unref(G_OBJECT (action));
+        if (!this->bVirtualX)
+        {
+            pVariantType = g_variant_type_new ("d");
+            guint nTemperature = 0;
+            g_settings_get (this->m_settings, "color-temp", "q", &nTemperature);
+            action = g_simple_action_new_stateful ("color-temp", pVariantType, g_variant_new_double (nTemperature));
+            g_variant_type_free (pVariantType);
+            g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+            g_signal_connect (m_settings, "changed::color-temp", G_CALLBACK (onColorTempSettings), this);
+            g_signal_connect (action, "change-state", G_CALLBACK (onColorTempState), this);
+            g_object_unref(G_OBJECT (action));
 
-        pVariantType = g_variant_type_new ("s");
-        guint nProfile = 0;
-        g_settings_get (this->m_settings, "color-temp-profile", "q", &nProfile);
-        gchar *sProfile = g_strdup_printf ("%i", nProfile);
-        action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string (sProfile));
-        g_free (sProfile);
-        g_variant_type_free (pVariantType);
-        g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
-        g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
-        g_object_unref(G_OBJECT(action));
-        g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColor), this);
+            pVariantType = g_variant_type_new ("s");
+            guint nProfile = 0;
+            g_settings_get (this->m_settings, "color-temp-profile", "q", &nProfile);
+            gchar *sProfile = g_strdup_printf ("%i", nProfile);
+            action = g_simple_action_new_stateful ("profile", pVariantType, g_variant_new_string (sProfile));
+            g_free (sProfile);
+            g_variant_type_free (pVariantType);
+            g_settings_bind_with_mapping (this->m_settings, "color-temp-profile", action, "state", G_SETTINGS_BIND_DEFAULT, settingsIntToActionStateString, actionStateStringToSettingsInt, NULL, NULL);
+            g_action_map_add_action(G_ACTION_MAP(group), G_ACTION(action));
+            g_object_unref(G_OBJECT(action));
+            g_signal_connect_swapped (m_settings, "changed::color-temp-profile", G_CALLBACK (updateColor), this);
 
-        pVariantType = g_variant_type_new("d");
-        gdouble fBrightness = g_settings_get_double (this->m_settings, "brightness");
-        action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (fBrightness));
-        g_variant_type_free(pVariantType);
-        g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
-        g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
-        g_object_unref (G_OBJECT (action));
-        g_signal_connect_swapped (m_settings, "changed::brightness", G_CALLBACK (updateColor), this);
+            pVariantType = g_variant_type_new("d");
+            gdouble fBrightness = g_settings_get_double (this->m_settings, "brightness");
+            action = g_simple_action_new_stateful ("brightness", pVariantType, g_variant_new_double (fBrightness));
+            g_variant_type_free(pVariantType);
+            g_settings_bind_with_mapping (m_settings, "brightness", action, "state", G_SETTINGS_BIND_DEFAULT, settings_to_action_state, action_state_to_settings, NULL, NULL);
+            g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
+            g_object_unref (G_OBJECT (action));
+            g_signal_connect_swapped (m_settings, "changed::brightness", G_CALLBACK (updateColor), this);
+        }
 
         if (!this->bGreeter)
         {
@@ -1003,69 +1104,72 @@ private:
 #ifdef COLOR_TEMP_ENABLED
         section = g_menu_new ();
 
-        GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-low");
-        GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-high");
-        GVariant *pIconMinSerialised = g_icon_serialize (pIconMin);
-        GVariant *pIconMaxSerialised = g_icon_serialize (pIconMax);
-        menu_item = g_menu_item_new (_("Brightness"), "indicator.brightness");
-        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
-        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
-        g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
-        g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
-        g_menu_item_set_attribute (menu_item, "min-value", "d", 0.5);
-        g_menu_item_set_attribute (menu_item, "max-value", "d", 1.0);
-        g_menu_item_set_attribute (menu_item, "step", "d", 0.01);
-        g_menu_item_set_attribute (menu_item, "digits", "y", 2);
-        g_menu_append_item (section, menu_item);
-
-        pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
-        pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
-        pIconMinSerialised = g_icon_serialize (pIconMin);
-        pIconMaxSerialised = g_icon_serialize (pIconMax);
-        menu_item = g_menu_item_new (_("Color temperature"), "indicator.color-temp");
-        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
-        g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
-        g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
-        g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
-        g_menu_item_set_attribute (menu_item, "min-value", "d", 3000.0);
-        g_menu_item_set_attribute (menu_item, "max-value", "d", 6500.0);
-        g_menu_item_set_attribute (menu_item, "step", "d", 100.0);
-        g_menu_item_set_attribute (menu_item, "digits", "y", 0);
-        g_menu_append_item (section, menu_item);
-
-        GMenu *pMenuProfiles = g_menu_new ();
-        GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profile"), G_MENU_MODEL (pMenuProfiles));
-        guint nProfile = 0;
-
-        while (m_lTempProfiles[nProfile].sName != NULL)
+        if (!this->bVirtualX)
         {
-            gchar *sAction = g_strdup_printf ("indicator.profile::%u", nProfile);
-            gchar *sName = gettext (m_lTempProfiles[nProfile].sName);
-            GMenuItem *pItemProfile = g_menu_item_new (sName, sAction);
-            g_free(sAction);
-            g_menu_append_item (pMenuProfiles, pItemProfile);
-            g_object_unref (pItemProfile);
+            GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-low");
+            GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-high");
+            GVariant *pIconMinSerialised = g_icon_serialize (pIconMin);
+            GVariant *pIconMaxSerialised = g_icon_serialize (pIconMax);
+            menu_item = g_menu_item_new (_("Brightness"), "indicator.brightness");
+            g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+            g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+            g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
+            g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
+            g_menu_item_set_attribute (menu_item, "min-value", "d", 0.5);
+            g_menu_item_set_attribute (menu_item, "max-value", "d", 1.0);
+            g_menu_item_set_attribute (menu_item, "step", "d", 0.01);
+            g_menu_item_set_attribute (menu_item, "digits", "y", 2);
+            g_menu_append_item (section, menu_item);
 
-            nProfile++;
+            pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-on");
+            pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-colortemp-off");
+            pIconMinSerialised = g_icon_serialize (pIconMin);
+            pIconMaxSerialised = g_icon_serialize (pIconMax);
+            menu_item = g_menu_item_new (_("Color temperature"), "indicator.color-temp");
+            g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+            g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
+            g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
+            g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
+            g_menu_item_set_attribute (menu_item, "min-value", "d", 3000.0);
+            g_menu_item_set_attribute (menu_item, "max-value", "d", 6500.0);
+            g_menu_item_set_attribute (menu_item, "step", "d", 100.0);
+            g_menu_item_set_attribute (menu_item, "digits", "y", 0);
+            g_menu_append_item (section, menu_item);
+
+            GMenu *pMenuProfiles = g_menu_new ();
+            GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Color temperature profile"), G_MENU_MODEL (pMenuProfiles));
+            guint nProfile = 0;
+
+            while (m_lTempProfiles[nProfile].sName != NULL)
+            {
+                gchar *sAction = g_strdup_printf ("indicator.profile::%u", nProfile);
+                gchar *sName = gettext (m_lTempProfiles[nProfile].sName);
+                GMenuItem *pItemProfile = g_menu_item_new (sName, sAction);
+                g_free(sAction);
+                g_menu_append_item (pMenuProfiles, pItemProfile);
+                g_object_unref (pItemProfile);
+
+                nProfile++;
+            }
+
+            g_menu_append_item (section, pItemProfiles);
+            g_object_unref (pItemProfiles);
+            g_object_unref (pMenuProfiles);
+
+            g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
+            g_object_unref (pIconMin);
+            g_object_unref (pIconMax);
+            g_variant_unref (pIconMinSerialised);
+            g_variant_unref (pIconMaxSerialised);
+            g_object_unref (section);
+            g_object_unref (menu_item);
         }
-
-        g_menu_append_item (section, pItemProfiles);
-        g_object_unref (pItemProfiles);
-        g_object_unref (pMenuProfiles);
-
-        g_menu_append_section (menu, NULL, G_MENU_MODEL (section));
-        g_object_unref (pIconMin);
-        g_object_unref (pIconMax);
-        g_variant_unref (pIconMinSerialised);
-        g_variant_unref (pIconMaxSerialised);
-        g_object_unref (section);
-        g_object_unref (menu_item);
 
         if (!this->bGreeter)
         {
             section = g_menu_new ();
-            pMenuProfiles = g_menu_new ();
-            pItemProfiles = g_menu_item_new_submenu (_("Theme profile"), G_MENU_MODEL (pMenuProfiles));
+            GMenu *pMenuProfiles = g_menu_new ();
+            GMenuItem *pItemProfiles = g_menu_item_new_submenu (_("Theme profile"), G_MENU_MODEL (pMenuProfiles));
             GMenuItem *pItemProfile = g_menu_item_new (_("Light"), "indicator.theme::light");
             g_menu_append_item (pMenuProfiles, pItemProfile);
             g_object_unref (pItemProfile);
@@ -1108,13 +1212,13 @@ private:
     m_phone->header().set(h);
   }
 
-  void update_desktop_header()
+  void update_desktop_header(gboolean bVisible)
   {
     Header h;
     h.title = _("Display");
     h.tooltip = _("Display settings and features");
     h.a11y = h.title;
-    h.is_visible = TRUE;
+    h.is_visible = bVisible;
     h.icon = m_icon;
     m_desktop->header().set(h);
   }
@@ -1149,6 +1253,7 @@ private:
   GSList *lUsers = NULL;
   gboolean bReadingAccountsService = FALSE;
   GDBusConnection *pAccountsServiceConnection = NULL;
+  gboolean bVirtualX = FALSE;
 #endif
 };
 
