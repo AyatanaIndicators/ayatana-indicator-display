@@ -17,6 +17,9 @@ requires:
     - geoclue
     - gnome-desktop
     - accountsservice
+    - libx11
+    - libxrandr
+    - librda
 #    - libayatana-common (AUR)
 #    - xsct  (AUR)
 
@@ -51,9 +54,9 @@ requires:
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
     - libaccountsservice-dev
-# For xsct
     - libx11-dev
     - libxrandr-dev
+    - librda-dev
 
   ubuntu:
     - clang
@@ -85,9 +88,9 @@ requires:
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
     - libaccountsservice-dev
-# For xsct
     - libx11-dev
     - libxrandr-dev
+    - librda-dev
 
   ubuntu:focal:
     - clang
@@ -119,9 +122,9 @@ requires:
     - libgeoclue-2-dev
     - gsettings-desktop-schemas
     - libaccountsservice-dev
-# For xsct
     - libx11-dev
     - libxrandr-dev
+    - librda-dev
 
 variables:
   - 'CHECKERS="
