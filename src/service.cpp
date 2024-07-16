@@ -77,66 +77,74 @@ public:
 
     if (!this->bTest)
     {
+        // Check if we are on Wayland
+        const gchar *sWayland = g_getenv ("WAYLAND_DISPLAY");
+        this->bXsctUnsupported = (sWayland != NULL);
+        //~Check if we are on Wayland
+
         // Check if we are in a virtual environment
-        Display *pDisplay = XOpenDisplay (NULL);
-
-        if (!pDisplay)
+        if (!this->bXsctUnsupported)
         {
-            g_warning ("Panic: Failed to open X display while checking for virtual environment");
-        }
-        else
-        {
-            guint nScreen = DefaultScreen (pDisplay);
-            Window pWindow = RootWindow (pDisplay, nScreen);
-            XRRScreenResources *pResources = XRRGetScreenResources (pDisplay, pWindow);
+            Display *pDisplay = XOpenDisplay (NULL);
 
-            if (!pResources)
+            if (!pDisplay)
             {
-                g_warning ("Panic: Failed to get screen resources while checking for virtual environment");
-                XCloseDisplay (pDisplay);
+                g_warning ("Panic: Failed to open X display while checking for virtual environment");
             }
             else
             {
-                RROutput nOutputPrimary = XRRGetOutputPrimary (pDisplay, pWindow);
-                XRROutputInfo *pOutputInfo = XRRGetOutputInfo (pDisplay, pResources, nOutputPrimary);
-                GRegex *pRegex = NULL;
-                GError *pError = NULL;
+                guint nScreen = DefaultScreen (pDisplay);
+                Window pWindow = RootWindow (pDisplay, nScreen);
+                XRRScreenResources *pResources = XRRGetScreenResources (pDisplay, pWindow);
 
-                #if GLIB_CHECK_VERSION(2, 73, 0)
-                    pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, G_REGEX_MATCH_DEFAULT, &pError);
-                #else
-                    pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, (GRegexMatchFlags) 0, &pError);
-                #endif
-
-                if (!pError)
+                if (!pResources)
                 {
-                    #if GLIB_CHECK_VERSION(2, 73, 0)
-                        gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, G_REGEX_MATCH_DEFAULT, NULL);
-                    #else
-                        gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, (GRegexMatchFlags) 0, NULL);
-                    #endif
-
-                    if (bMatch)
-                    {
-                        this->bXsctUnsupported = TRUE;
-                    }
-
-                    g_regex_unref (pRegex);
+                    g_warning ("Panic: Failed to get screen resources while checking for virtual environment");
+                    XCloseDisplay (pDisplay);
                 }
                 else
                 {
-                    g_warning ("PANIC: Failed to compile regex: %s", pError->message);
-                    g_error_free (pError);
+                    RROutput nOutputPrimary = XRRGetOutputPrimary (pDisplay, pWindow);
+                    XRROutputInfo *pOutputInfo = XRRGetOutputInfo (pDisplay, pResources, nOutputPrimary);
+                    GRegex *pRegex = NULL;
+                    GError *pError = NULL;
+
+                    #if GLIB_CHECK_VERSION(2, 73, 0)
+                        pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, G_REGEX_MATCH_DEFAULT, &pError);
+                    #else
+                        pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, (GRegexMatchFlags) 0, &pError);
+                    #endif
+
+                    if (!pError)
+                    {
+                        #if GLIB_CHECK_VERSION(2, 73, 0)
+                            gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, G_REGEX_MATCH_DEFAULT, NULL);
+                        #else
+                            gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, (GRegexMatchFlags) 0, NULL);
+                        #endif
+
+                        if (bMatch)
+                        {
+                            this->bXsctUnsupported = TRUE;
+                        }
+
+                        g_regex_unref (pRegex);
+                    }
+                    else
+                    {
+                        g_warning ("PANIC: Failed to compile regex: %s", pError->message);
+                        g_error_free (pError);
+                    }
+
+                    XRRFreeOutputInfo (pOutputInfo);
+                    XRRFreeScreenResources (pResources);
+                    XCloseDisplay (pDisplay);
+
+                    #ifdef RDA_ENABLED
+                        gboolean bRemote = rda_session_is_remote ();
+                        this->bXsctUnsupported = this->bXsctUnsupported || bRemote;
+                    #endif
                 }
-
-                XRRFreeOutputInfo (pOutputInfo);
-                XRRFreeScreenResources (pResources);
-                XCloseDisplay (pDisplay);
-
-                #ifdef RDA_ENABLED
-                    gboolean bRemote = rda_session_is_remote ();
-                    this->bXsctUnsupported = this->bXsctUnsupported || bRemote;
-                #endif
             }
         }
         //~Check if we are in a virtual environment
