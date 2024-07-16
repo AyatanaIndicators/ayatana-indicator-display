@@ -77,72 +77,69 @@ public:
 
     if (!this->bTest)
     {
+        // Check if we are in a virtual environment
         Display *pDisplay = XOpenDisplay (NULL);
 
         if (!pDisplay)
         {
-            g_error ("Panic: Failed to open X display");
-
-            return;
-        }
-
-        guint nScreen = DefaultScreen (pDisplay);
-        Window pWindow = RootWindow (pDisplay, nScreen);
-        XRRScreenResources *pResources = XRRGetScreenResources (pDisplay, pWindow);
-
-        if (!pResources)
-        {
-            g_error ("Panic: Failed to get screen resources");
-            XCloseDisplay (pDisplay);
-
-            return;
-        }
-
-        RROutput nOutputPrimary = XRRGetOutputPrimary (pDisplay, pWindow);
-        XRROutputInfo *pOutputInfo = XRRGetOutputInfo (pDisplay, pResources, nOutputPrimary);
-        GRegex *pRegex = NULL;
-        GError *pError = NULL;
-
-        #if GLIB_CHECK_VERSION(2, 73, 0)
-            pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, G_REGEX_MATCH_DEFAULT, &pError);
-        #else
-            pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, (GRegexMatchFlags) 0, &pError);
-        #endif
-
-        if (!pError)
-        {
-            #if GLIB_CHECK_VERSION(2, 73, 0)
-                gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, G_REGEX_MATCH_DEFAULT, NULL);
-            #else
-                gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, (GRegexMatchFlags) 0, NULL);
-            #endif
-
-            if (bMatch)
-            {
-                this->bVirtualX = TRUE;
-            }
-
-            g_regex_unref (pRegex);
+            g_warning ("Panic: Failed to open X display while checking for virtual environment");
         }
         else
         {
-            g_error ("PANIC: Failed to compile regex: %s", pError->message);
-            g_error_free (pError);
-            XRRFreeOutputInfo (pOutputInfo);
-            XRRFreeScreenResources (pResources);
-            XCloseDisplay (pDisplay);
+            guint nScreen = DefaultScreen (pDisplay);
+            Window pWindow = RootWindow (pDisplay, nScreen);
+            XRRScreenResources *pResources = XRRGetScreenResources (pDisplay, pWindow);
 
-            return;
+            if (!pResources)
+            {
+                g_warning ("Panic: Failed to get screen resources while checking for virtual environment");
+                XCloseDisplay (pDisplay);
+            }
+            else
+            {
+                RROutput nOutputPrimary = XRRGetOutputPrimary (pDisplay, pWindow);
+                XRROutputInfo *pOutputInfo = XRRGetOutputInfo (pDisplay, pResources, nOutputPrimary);
+                GRegex *pRegex = NULL;
+                GError *pError = NULL;
+
+                #if GLIB_CHECK_VERSION(2, 73, 0)
+                    pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, G_REGEX_MATCH_DEFAULT, &pError);
+                #else
+                    pRegex = g_regex_new (".*virtual.*", G_REGEX_CASELESS, (GRegexMatchFlags) 0, &pError);
+                #endif
+
+                if (!pError)
+                {
+                    #if GLIB_CHECK_VERSION(2, 73, 0)
+                        gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, G_REGEX_MATCH_DEFAULT, NULL);
+                    #else
+                        gboolean bMatch = g_regex_match (pRegex, pOutputInfo->name, (GRegexMatchFlags) 0, NULL);
+                    #endif
+
+                    if (bMatch)
+                    {
+                        this->bXsctUnsupported = TRUE;
+                    }
+
+                    g_regex_unref (pRegex);
+                }
+                else
+                {
+                    g_warning ("PANIC: Failed to compile regex: %s", pError->message);
+                    g_error_free (pError);
+                }
+
+                XRRFreeOutputInfo (pOutputInfo);
+                XRRFreeScreenResources (pResources);
+                XCloseDisplay (pDisplay);
+
+                #ifdef RDA_ENABLED
+                    gboolean bRemote = rda_session_is_remote ();
+                    this->bXsctUnsupported = this->bXsctUnsupported || bRemote;
+                #endif
+            }
         }
-
-        XRRFreeOutputInfo (pOutputInfo);
-        XRRFreeScreenResources (pResources);
-        XCloseDisplay (pDisplay);
-
-        #ifdef RDA_ENABLED
-            gboolean bRemote = rda_session_is_remote ();
-            this->bVirtualX = this->bVirtualX || bRemote;
-        #endif
+        //~Check if we are in a virtual environment
     }
 #endif
     const char *sUserName = g_get_user_name();
@@ -162,9 +159,8 @@ public:
             }
             else
             {
-                g_error("No schema could be found");
+                g_error ("Panic: No com.lomiri.touch.system schema could be found");
             }
-
         }
         else {
 
@@ -177,7 +173,7 @@ public:
             }
             else
             {
-                g_error("No schema could be found");
+                g_error ("Panic: No org.ayatana.indicator.display schema could be found");
             }
 
 #ifdef COLOR_TEMP_ENABLED
@@ -216,11 +212,11 @@ public:
                 if (pSchema != NULL)
                 {
                     g_settings_schema_unref (pSchema);
-                    pThemeSettings = g_settings_new (sSchema);
+                    this->pThemeSettings = g_settings_new (sSchema);
                 }
                 else
                 {
-                    g_error("No %s schema could be found", sSchema);
+                    g_warning ("Panic: No %s schema could be found", sSchema);
                 }
 
                 pSchema = g_settings_schema_source_lookup (pSource, sCursorSchema, TRUE);
@@ -228,11 +224,11 @@ public:
                 if (pSchema != NULL)
                 {
                     g_settings_schema_unref (pSchema);
-                    pCursorSettings = g_settings_new (sCursorSchema);
+                    this->pCursorSettings = g_settings_new (sCursorSchema);
                 }
                 else
                 {
-                    g_error("No %s schema could be found", sCursorSchema);
+                    g_warning ("Panic: No %s schema could be found", sCursorSchema);
                 }
 
                 pSchema = g_settings_schema_source_lookup (pSource, sMetacitySchema, TRUE);
@@ -240,11 +236,11 @@ public:
                 if (pSchema != NULL)
                 {
                     g_settings_schema_unref (pSchema);
-                    pMetacitySettings = g_settings_new (sMetacitySchema);
+                    this->pMetacitySettings = g_settings_new (sMetacitySchema);
                 }
                 else
                 {
-                    g_error("No %s schema could be found", sMetacitySchema);
+                    g_warning ("Panic: No %s schema could be found", sMetacitySchema);
                 }
 
                 if (this->bTest)
@@ -265,7 +261,7 @@ public:
 
                     if (bColorScheme)
                     {
-                        pColorSchemeSettings = g_settings_new (sSchema);
+                        this->pColorSchemeSettings = g_settings_new (sSchema);
                     }
                     else
                     {
@@ -274,7 +270,7 @@ public:
                 }
                 else
                 {
-                    g_error("No %s schema could be found", sSchema);
+                    g_warning ("Panic: No %s schema could be found", sSchema);
                 }
             }
             else
@@ -320,7 +316,7 @@ public:
     gboolean bVisible = !this->bGreeter;
 
     #ifdef COLOR_TEMP_ENABLED
-        bVisible = bVisible || !this->bVirtualX;
+        bVisible = bVisible || !this->bXsctUnsupported;
     #endif
 
     update_desktop_header(bVisible);
@@ -368,25 +364,10 @@ public:
         g_free (sLastTheme);
     }
 
-    if (pThemeSettings)
-    {
-        g_clear_object (&pThemeSettings);
-    }
-
-    if (pCursorSettings)
-    {
-        g_clear_object (&pCursorSettings);
-    }
-
-    if (pMetacitySettings)
-    {
-        g_clear_object (&pMetacitySettings);
-    }
-
-    if (pColorSchemeSettings)
-    {
-        g_clear_object (&pColorSchemeSettings);
-    }
+    g_clear_object (&pThemeSettings);
+    g_clear_object (&pCursorSettings);
+    g_clear_object (&pMetacitySettings);
+    g_clear_object (&pColorSchemeSettings);
 
     if (this->pAccountsServiceConnection)
     {
@@ -424,7 +405,7 @@ private:
 
     static void getAccountsService (DisplayIndicator::Impl *pImpl, gint nUid)
     {
-        if (!pImpl->bVirtualX)
+        if (!pImpl->bXsctUnsupported)
         {
             pImpl->bReadingAccountsService = TRUE;
             gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
@@ -545,7 +526,7 @@ private:
         guint nProfile = 0;
         gdouble fBrightness = 0.0;
 
-        if (!pImpl->bVirtualX)
+        if (!pImpl->bXsctUnsupported)
         {
             g_settings_get (pImpl->m_settings, "color-temp-profile", "q", &nProfile);
             fBrightness = g_settings_get_double (pImpl->m_settings, "brightness");
@@ -566,7 +547,7 @@ private:
         gint64 nNow = g_get_real_time ();
         gdouble fElevation = solar_elevation((gdouble) nNow / 1000000.0, pImpl->fLatitude, pImpl->fLongitude);
 
-        if (!pImpl->bVirtualX)
+        if (!pImpl->bXsctUnsupported)
         {
             if (nProfile == 0)
             {
@@ -624,7 +605,7 @@ private:
             }
         }
 
-        if (!pImpl->bVirtualX)
+        if (!pImpl->bXsctUnsupported)
         {
             if (pImpl->fLastBrightness != fBrightness || pImpl->nLasColorTemp != nTemperature)
             {
@@ -640,44 +621,47 @@ private:
 
                 if (!bSuccess)
                 {
-                    g_error ("The call to '%s' failed: %s", sCommand, pError->message);
+                    g_warning ("Panic: The call to '%s' failed: %s", sCommand, pError->message);
                     g_error_free (pError);
                 }
-
-                pImpl->fLastBrightness = fBrightness;
-                pImpl->nLasColorTemp = nTemperature;
-                g_free (sCommand);
-                gint nUid = 0;
-
-                if (!pImpl->bGreeter)
+                else
                 {
-                    nUid = geteuid ();
-                }
-                else if (pImpl->sUser)
-                {
-                    const struct passwd *pPasswd = getpwnam (pImpl->sUser);
+                    pImpl->fLastBrightness = fBrightness;
+                    pImpl->nLasColorTemp = nTemperature;
+                    gint nUid = 0;
 
-                    if (pPasswd)
+                    if (!pImpl->bGreeter)
                     {
-                        nUid = pPasswd->pw_uid;
+                        nUid = geteuid ();
+                    }
+                    else if (pImpl->sUser)
+                    {
+                        const struct passwd *pPasswd = getpwnam (pImpl->sUser);
+
+                        if (pPasswd)
+                        {
+                            nUid = pPasswd->pw_uid;
+                        }
+                    }
+
+                    if (nUid)
+                    {
+                        gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
+                        GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
+                        g_free (sPath);
+                        GVariant *pBrightnessValue = g_variant_new ("d", pImpl->fLastBrightness);
+                        GVariant *pBrightnessParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "brightness", pBrightnessValue);
+                        g_dbus_proxy_call (pProxy, "Set", pBrightnessParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                        GVariant *pColorTempValue = g_variant_new ("q", pImpl->nLasColorTemp);
+                        GVariant *pColorTempParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp", pColorTempValue);
+                        g_dbus_proxy_call (pProxy, "Set", pColorTempParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+                        GVariant *pProfileValue = g_variant_new ("q", nProfile);
+                        GVariant *pProfileParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp-profile", pProfileValue);
+                        g_dbus_proxy_call (pProxy, "Set", pProfileParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
                     }
                 }
 
-                if (nUid)
-                {
-                    gchar *sPath = g_strdup_printf ("/org/freedesktop/Accounts/User%i", nUid);
-                    GDBusProxy *pProxy = g_dbus_proxy_new_sync (pImpl->pAccountsServiceConnection, G_DBUS_PROXY_FLAGS_NONE, NULL, "org.freedesktop.Accounts", sPath, "org.freedesktop.DBus.Properties", NULL, NULL);
-                    g_free (sPath);
-                    GVariant *pBrightnessValue = g_variant_new ("d", pImpl->fLastBrightness);
-                    GVariant *pBrightnessParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "brightness", pBrightnessValue);
-                    g_dbus_proxy_call (pProxy, "Set", pBrightnessParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-                    GVariant *pColorTempValue = g_variant_new ("q", pImpl->nLasColorTemp);
-                    GVariant *pColorTempParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp", pColorTempValue);
-                    g_dbus_proxy_call (pProxy, "Set", pColorTempParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-                    GVariant *pProfileValue = g_variant_new ("q", nProfile);
-                    GVariant *pProfileParams = g_variant_new ("(ssv)", "org.ayatana.indicator.display.AccountsService", "color-temp-profile", pProfileValue);
-                    g_dbus_proxy_call (pProxy, "Set", pProfileParams, G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-                }
+                g_free (sCommand);
             }
         }
 
@@ -706,7 +690,11 @@ private:
             {
                 g_debug ("Changing theme to %s", sTheme);
 
-                g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+                if (pImpl->pThemeSettings)
+                {
+                    g_settings_set_string (pImpl->pThemeSettings, "gtk-theme", sTheme);
+                }
+
                 gchar *sThemePath = g_strdup_printf ("/usr/share/themes/%s/index.theme", sTheme);
                 gboolean bThemePath = g_file_test (sThemePath, G_FILE_TEST_EXISTS);
 
@@ -737,7 +725,12 @@ private:
                             if (bMatch)
                             {
                                 gchar *sIconTheme = g_match_info_fetch (pMatchInfo, 1);
-                                g_settings_set_string (pImpl->pThemeSettings, "icon-theme", sIconTheme);
+
+                                if (pImpl->pThemeSettings)
+                                {
+                                    g_settings_set_string (pImpl->pThemeSettings, "icon-theme", sIconTheme);
+                                }
+
                                 g_free (sIconTheme);
                             }
                             else
@@ -750,7 +743,7 @@ private:
                         }
                         else
                         {
-                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_warning ("Panic: Failed to compile regex: %s", pError->message);
                             g_error_free (pError);
                         }
 
@@ -773,7 +766,12 @@ private:
                             if (bMatch)
                             {
                                 gchar *sMetacityTheme = g_match_info_fetch (pMatchInfo, 1);
-                                g_settings_set_string (pImpl->pMetacitySettings, "theme", sMetacityTheme);
+
+                                if (pImpl->pMetacitySettings)
+                                {
+                                    g_settings_set_string (pImpl->pMetacitySettings, "theme", sMetacityTheme);
+                                }
+
                                 g_free (sMetacityTheme);
                             }
                             else
@@ -786,7 +784,7 @@ private:
                         }
                         else
                         {
-                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_warning ("Panic: Failed to compile regex: %s", pError->message);
                             g_error_free (pError);
                         }
 
@@ -809,7 +807,12 @@ private:
                             if (bMatch)
                             {
                                 gchar *sCursorTheme = g_match_info_fetch (pMatchInfo, 1);
-                                g_settings_set_string (pImpl->pCursorSettings, "cursor-theme", sTheme);
+
+                                if (pImpl->pCursorSettings)
+                                {
+                                    g_settings_set_string (pImpl->pCursorSettings, "cursor-theme", sTheme);
+                                }
+
                                 g_free (sCursorTheme);
                             }
                             else
@@ -822,7 +825,7 @@ private:
                         }
                         else
                         {
-                            g_error ("PANIC: Failed to compile regex: %s", pError->message);
+                            g_warning ("Panic: Failed to compile regex: %s", pError->message);
                             g_error_free (pError);
                         }
 
@@ -830,7 +833,7 @@ private:
                     }
                     else
                     {
-                        g_error ("PANIC: Failed to get index.theme contents: %s", pError->message);
+                        g_warning ("Panic: Failed to get index.theme contents: %s", pError->message);
                         g_error_free (pError);
                     }
                 }
@@ -978,7 +981,7 @@ private:
 #ifdef COLOR_TEMP_ENABLED
     if (ayatana_common_utils_is_lomiri() == FALSE)
     {
-        if (!this->bVirtualX)
+        if (!this->bXsctUnsupported)
         {
             pVariantType = g_variant_type_new ("d");
             guint nTemperature = 0;
@@ -1104,7 +1107,7 @@ private:
 #ifdef COLOR_TEMP_ENABLED
         section = g_menu_new ();
 
-        if (!this->bVirtualX)
+        if (!this->bXsctUnsupported)
         {
             GIcon *pIconMin = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-low");
             GIcon *pIconMax = g_themed_icon_new_with_default_fallbacks ("ayatana-indicator-display-brightness-high");
@@ -1253,7 +1256,7 @@ private:
   GSList *lUsers = NULL;
   gboolean bReadingAccountsService = FALSE;
   GDBusConnection *pAccountsServiceConnection = NULL;
-  gboolean bVirtualX = FALSE;
+  gboolean bXsctUnsupported = FALSE;
 #endif
 };
 
