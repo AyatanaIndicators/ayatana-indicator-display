@@ -1138,7 +1138,6 @@ private:
             pIconMaxSerialised = g_icon_serialize (pIconMax);
             menu_item = g_menu_item_new (_("Color temperature"), "indicator.color-temp");
             g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
-            g_menu_item_set_attribute (menu_item, "x-ayatana-type", "s", "org.ayatana.indicator.slider");
             g_menu_item_set_attribute_value (menu_item, "min-icon", pIconMinSerialised);
             g_menu_item_set_attribute_value (menu_item, "max-icon", pIconMaxSerialised);
             g_menu_item_set_attribute (menu_item, "min-value", "d", 3000.0);
