@@ -8,144 +8,150 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2017-11-28 08:50+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-09 09:00+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/ayatana-indicators/"
+"display-applet/ta/>\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
-msgstr ""
+msgstr "பூட்டு சுழற்சி"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
-msgstr ""
+msgstr "தானியங்கி காட்சி சுழற்சியைப் பூட்டு."
 
 #: data/org.ayatana.indicator.display.gschema.xml:3
 msgid "Orientation lock"
-msgstr ""
+msgstr "நோக்குநிலை பூட்டு"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr ""
+msgstr "ஒரு குறிப்பிட்ட மதிப்புக்கு நோக்குநிலையை பூட்டுகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
-msgstr ""
+msgstr "வண்ண வெப்பநிலை"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"உங்கள் திரையின் வண்ண வெப்பநிலையை அமைக்கிறது. மதிப்பைக் குறைத்து, காட்சிக்கு பயன்படுத்தப்படும் சிவத்தல் விளைவின் தீவிரம்."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "வண்ண வெப்பநிலை சுயவிவரம்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "தற்போதைய வண்ண வெப்பநிலை சுயவிவரம் காட்டி மூலம் பயன்படுத்தப்படுகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "திரை ஒளி"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "உங்கள் திரையின் தற்போதைய பிரகாச மதிப்பை சேமிக்கிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "ஒளி கருப்பொருளின் பெயர்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "\"ஒளி\" தேர்ந்தெடுக்கப்படும்போது காட்டி அமைக்கும் கருப்பொருள் இதுதான்."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "இருண்ட கருப்பொருளின் பெயர்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
 msgstr ""
+"\"இருண்ட\" தேர்ந்தெடுக்கப்படும்போது காட்டி அமைக்கும் கருப்பொருள் இதுதான்."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "கருப்பொருள் சுயவிவரம்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "தற்போதைய கருப்பொருள் சுயவிவரம் காட்டி பயன்படுத்துகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "தற்போதைய புவியியல் அட்சரேகை"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "சாதனத்தின் கடைசியாக பதிவு செய்யப்பட்ட புவியியல் அட்சரேகையை சேமிக்கிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "தற்போதைய புவியியல் தீர்க்கரேகை"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
 msgstr ""
+"சாதனத்தின் கடைசியாக பதிவு செய்யப்பட்ட புவியியல் தீர்க்கரேகையை சேமிக்கிறது."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "கையேடு"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "தகவமைப்பு (குளிர்)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "தகவமைப்பு"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "தகவமைப்பு (வெப்பமானது)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
-msgstr ""
+msgstr "சுழற்சி பூட்டு"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "ஒளி"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "ஒளி"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "இருண்ட"
 
 #: src/service.cpp:667
 msgid "Display settings…"
-msgstr ""
+msgstr "அமைப்புகளைக் காண்பி…"
 
 #: src/service.cpp:680
 msgid "Rotation"
-msgstr ""
+msgstr "சுழற்சி"
 
 #: src/service.cpp:691
 msgid "Display"
-msgstr ""
+msgstr "காட்சி"
 
 #: src/service.cpp:692
 msgid "Display settings and features"
-msgstr ""
+msgstr "அமைப்புகள் மற்றும் அம்சங்களைக் காண்பி"
 
 #: src/usb-snap.cpp:109
 #, c-format
