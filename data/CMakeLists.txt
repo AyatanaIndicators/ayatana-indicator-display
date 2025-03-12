@@ -82,8 +82,4 @@ if (ENABLE_COLOR_TEMP)
 
     install (FILES 50-org.ayatana.indicator.display.AccountsService.rules DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/polkit-1/rules.d")
 
-    # 50-org.ayatana.indicator.display.AccountsService.pkla
-
-    install (FILES 50-org.ayatana.indicator.display.AccountsService.pkla DESTINATION "${CMAKE_INSTALL_FULL_LOCALSTATEDIR}/lib/polkit-1/localauthority/10-vendor.d")
-
 endif ()
