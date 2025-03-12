@@ -1,6 +1,66 @@
+2025-03-12 Mike Gabriel
+
+        * release 24.5.1 (HEAD -> main, tag: 24.5.1)
+        * Merge branch 'tari01-pr/drop-pkla' (fba80533)
+
+2025-01-15 Robert Tari
+
+        * Drop the deprecated PolicyKit *.pkla file (1d4e1f48)fixes:
+          https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1093060
+
+2024-11-08 தமிழ்நேரம்
+
+        * Translated using Weblate (Tamil) (b3f407b1)
+
+2024-09-27 Remus-Gabriel Chelu
+
+        * Translated using Weblate (Romanian) (c213f18e)
+
+2024-08-22 Mike Gabriel
+
+        * Merge branch 'tari01-pr/duplicate-code' (0fdd09d6)
+
+2024-07-18 Robert Tari
+
+        * service.cpp: Remove duplicate line (9a324475)
+
+2024-08-08 umesaburo sagawa
+
+        * Translated using Weblate (Japanese) (01181a50)
+
+2024-07-16 Mike Gabriel
+
+        * Merge branch 'tari01-pr/panic-warning' (d99008b2)
+
+2024-07-16 Robert Tari
+
+        * src/service.cpp: Disable Xsct for Wayland (362422ca)
+        * src/service.cpp: If possible, replace errors with more descriptive
+          warnings when facing a panic (43843508)
+
+2024-07-15 Mike Gabriel
+
+        * Merge branch 'tari01-pr/virtual-display' (490a62b1)
+
+2024-06-25 Robert Tari
+
+        * .build.yml: Add libx11, libxrandr and librda dependencies
+          (41915b25)
+        * debian/control: Add libx11-dev, libxrandr-dev and librda-dev
+          dependencies (cbff4ee4)
+        * Hide xsct features if not supported by server/driver (34ef083e)
+
+2024-06-13 Robert Tari
+
+        * Merge branch 'sunweaver-pr/drop-dbus-names' (ede1f56b)
+
+2024-06-12 Mike Gabriel
+
+        * src/dbus-names.h: Drop file. Not needed anymore. (70018019)
+
 2024-05-22 Mike Gabriel
 
-        * release 24.5.0 (HEAD -> main, tag: 24.5.0)
+        * release 24.5.0 (d1bcf8f3) (tag: 24.5.0)
 
 2024-05-22 Robert Tari
 
