@@ -1,6 +1,20 @@
+2025-05-04 Mike Gabriel
+
+        * release 24.5.2 (HEAD -> main, tag: 24.5.2)
+        * Merge branch 'tari01-pr/rename-panel-icon' (217d17fd)
+
+2025-05-04 Robert Tari
+
+        * src/service.cpp: Use standard video-display fallback for panel icon
+          (57c03b47)
+
+2025-04-27 தமிழ்நேரம்
+
+        * Translated using Weblate (Tamil) (34851c31)
+
 2025-03-12 Mike Gabriel
 
-        * release 24.5.1 (HEAD -> main, tag: 24.5.1)
+        * release 24.5.1 (3676a29f) (tag: 24.5.1)
         * Merge branch 'tari01-pr/drop-pkla' (fba80533)
 
 2025-01-15 Robert Tari
