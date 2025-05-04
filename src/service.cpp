@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Canonical Ltd.
- * Copyright 2023-2024 Robert Tari
+ * Copyright 2023-2025 Robert Tari
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -305,7 +305,7 @@ public:
 
     if (!ayatana_common_utils_is_lomiri())
     {
-        icon_name = "display-panel";
+        icon_name = "video-display-panel";
     }
 
     auto icon = g_themed_icon_new_with_default_fallbacks(icon_name);
