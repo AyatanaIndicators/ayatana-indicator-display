@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2022-10-20 11:02+0000\n"
-"Last-Translator: Kristjan Räts <kristjanrats@gmail.com>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/et/>\n"
+"PO-Revision-Date: 2025-05-08 11:02+0000\n"
+"Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -124,15 +124,15 @@ msgstr "Pööramise lukustus"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "Eredus"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Hele"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Tume"
 
 #: src/service.cpp:667
 msgid "Display settings…"
