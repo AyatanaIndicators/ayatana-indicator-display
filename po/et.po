@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2025-05-08 11:02+0000\n"
-"Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
+"PO-Revision-Date: 2025-09-06 07:02+0000\n"
+"Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/"
 "ayatana-indicators/display-applet/et/>\n"
 "Language: et\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13.1-rc\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -37,86 +37,88 @@ msgstr "Lukustab orientatsiooni kindlale väärtusele."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
-msgstr ""
+msgstr "Värvustemperatuur"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Määrab süsteemi värvustemperatuuri. Mida madalam on väärtus seda "
+"intensiivsem puna on nähtav ekraanil."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "Värvustemperatuuri profiil"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "Hetkel kasutuselolev värvustemperatuuri profiil."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Ekraani eredus"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Salvestab hetkel kasutatava ekraani ereduse."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Heleda kujunduse nimi"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "See on kujunduse tunnus, kui „Hele kujundus“ on valitud."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Tumeda kujunduse nimi"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "See on kujunduse tunnus, kui „Tume kujundus“ on valitud."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Kujunduse profiil"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "Hetkel kasutatava kujundusprofiili tunnus."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Praeguse asukoha laiuskraad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Salvestab seadme viimase teadaoleva asukoha pikkuskraadi."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Praeguse asukoha pikkuskraad"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Salvestab seadme viimase teadaoleva asukoha laiuskraadi."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Käsitsi"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Kohanduv (külmem)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "Kohanduv"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Kohanduv (soojem)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
@@ -136,7 +138,7 @@ msgstr "Tume"
 
 #: src/service.cpp:667
 msgid "Display settings…"
-msgstr "Kuva seaded…"
+msgstr "Ekraani seadistused…"
 
 #: src/service.cpp:680
 msgid "Rotation"
@@ -148,7 +150,7 @@ msgstr "Kuva"
 
 #: src/service.cpp:692
 msgid "Display settings and features"
-msgstr "Kuva seaded ja funktsioonid"
+msgstr "Ekraani seadistused ja funktsioonid"
 
 #: src/usb-snap.cpp:109
 #, c-format
