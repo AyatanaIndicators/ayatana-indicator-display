@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2023-05-21 19:50+0000\n"
+"PO-Revision-Date: 2025-09-15 20:01+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/ayatana-"
-"indicators/display-applet/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
@@ -66,45 +66,44 @@ msgstr "Sprema trenutačnu vrijednost svjetline tvog ekrana."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "Ime svijetle teme"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Ovo je tema koju će indikator postaviti kada se odabere „Svijetla”."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "Ime tamne teme"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Ovo je tema koju će indikator postaviti kada se odabere „Tamna”."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Profil teme"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
-#, fuzzy
 msgid "The current theme profile being used by the indicator."
-msgstr "Trenutačni profil temperature boja koji koristi indikator."
+msgstr "Profil trenutačne teme koju koristi indikator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Trenutačna geografska širina"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Sprema zadnju zabilježenu geografsku širinu uređaja."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Trenutačna geografska dužina"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Sprema zadnju zabilježenu geografsku dužinu uređaja."
 
 #: src/service.cpp:48
 msgid "Manual"
@@ -132,11 +131,11 @@ msgstr "Svjetlina"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Svijetlo"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Tamno"
 
 #: src/service.cpp:667
 msgid "Display settings…"
