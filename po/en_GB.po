@@ -8,115 +8,117 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2017-11-28 08:50+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-03-19 11:09+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
+"Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
+"ayatana-indicators/display-applet/en_GB/>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
-#, fuzzy
 msgid "Lock rotation"
-msgstr "Rotation"
+msgstr "Lock rotation"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
-msgstr ""
+msgstr "Lock automatic display rotation."
 
 #: data/org.ayatana.indicator.display.gschema.xml:3
-#, fuzzy
 msgid "Orientation lock"
-msgstr "Rotation Lock"
+msgstr "Orientation lock"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr ""
+msgstr "Locks orientation to a specific value."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
-msgstr ""
+msgstr "Colour temperature"
 
 #: data/org.ayatana.indicator.display.gschema.xml:6
 msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Sets the colour temperature of your screen. The lower the value, the higher "
+"the intensity of the redness effect applied to the display."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr ""
+msgstr "Colour temperature profile"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "The current colour temperature profile being used by the indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Screen brightness"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Stores the current brightness value of your screen."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "The name of the light theme"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "This is the theme the indicator will set when \"Light\" is selected."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "The name of the dark theme"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "This is the theme the indicator will set when \"Dark\" is selected."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Theme profile"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "The current theme profile being used by the indicator."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Current geographic latitude"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Stores the last recorded geographic latitude of the device."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Current geographic longitude"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Stores the last recorded geographic longitude of the device."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptive (Colder)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptive"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptive (Warmer)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
@@ -124,19 +126,19 @@ msgstr "Rotation Lock"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "Brightness"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Light"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Dark"
 
 #: src/service.cpp:667
 msgid "Display settings…"
-msgstr ""
+msgstr "Display settings…"
 
 #: src/service.cpp:680
 msgid "Rotation"
@@ -144,11 +146,11 @@ msgstr "Rotation"
 
 #: src/service.cpp:691
 msgid "Display"
-msgstr ""
+msgstr "Display"
 
 #: src/service.cpp:692
 msgid "Display settings and features"
-msgstr ""
+msgstr "Display settings and features"
 
 #: src/usb-snap.cpp:109
 #, c-format
