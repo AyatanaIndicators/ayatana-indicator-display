@@ -1058,7 +1058,7 @@ private:
     static_cast<Impl*>(gself)->update_phone_header();
   }
 
-  GMenuModel* create_phone_menu()
+  static GMenuModel* create_phone_menu()
   {
     GMenu* menu;
     GMenu* section;
