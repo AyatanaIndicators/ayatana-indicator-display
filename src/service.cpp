@@ -50,9 +50,9 @@ extern "C"
 
     typedef struct
     {
-       guint nTempLow;
-       guint nTempHigh;
-       const gchar *sName;
+       guint nTempLow{};
+       guint nTempHigh{};
+       const gchar *sName = nullptr;
     } TempProfile;
 
     TempProfile m_lTempProfiles[] =
