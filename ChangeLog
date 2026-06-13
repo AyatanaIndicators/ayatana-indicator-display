@@ -1,6 +1,33 @@
+2026-06-13 Mike Gabriel
+
+        * Release 26.6.0 (HEAD -> main, tag: 26.6.0)
+
+2026-06-13 Lorenzo Torracchi
+
+        * Translated using Weblate (Italian) (8b007ff)
+
 2026-06-11 Mike Gabriel
 
-        * Release 24.5.3 (HEAD -> main, tag: 24.5.3)
+        * Merge branch 'fliiiix-fix-cppcheck-failure' (7973357)
+
+2026-06-09 fliiiix
+
+        * Fix cppcheck warning has no initializer (9f93661)
+
+2026-06-11 Mike Gabriel
+
+        * Merge branch 'jbicha-personal/jbicha/fix-cppcheck-failure'
+          (7818a66)
+
+2026-03-29 Jeremy Bícha
+
+        * cppcheck: Workaround undefined function-like macro for
+          GLIB_CHECK_VERSION (ce6e21c)
+        * service.cpp: Mark create_phone_menu as static (654452b)
+
+2026-06-11 Mike Gabriel
+
+        * Release 24.5.3 (b76877d) (tag: 24.5.3)
 
 2026-03-18 Andi Chandler
 
