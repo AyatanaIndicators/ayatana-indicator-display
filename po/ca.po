@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:45+0200\n"
-"PO-Revision-Date: 2023-06-23 20:34+0000\n"
-"Last-Translator: Joan CiberSheep <cibersheep@gmail.com>\n"
+"PO-Revision-Date: 2026-07-24 15:01+0000\n"
+"Last-Translator: Walter Garcia-Fontes <walter.garcia@upf.edu>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/ayatana-"
 "indicators/display-applet/ca/>\n"
 "Language: ca\n"
@@ -17,21 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 2026.8.dev0\n"
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
-#, fuzzy
 msgid "Lock rotation"
-msgstr "Gir"
+msgstr "Bloqueja la rotació"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
-msgstr "Bloqueja la rotació automàtica de la pantalla"
+msgstr "Bloqueja la rotació automàtica de la pantalla."
 
 #: data/org.ayatana.indicator.display.gschema.xml:3
-#, fuzzy
 msgid "Orientation lock"
-msgstr "Blocatge del gir"
+msgstr "Blocatge de l'orientació"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
@@ -46,6 +44,9 @@ msgid ""
 "Sets the color temperature of your screen. The lower the value, the higher "
 "the intensity of the redness effect applied to the display."
 msgstr ""
+"Estableix la temperatura de color de la pantalla. Com més baix sigui el "
+"valor, més alta serà la intensitat de l'efecte vermellós aplicat a la "
+"pantalla."
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
@@ -53,72 +54,72 @@ msgstr "Perfil de temperatura de color"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr ""
+msgstr "El perfil de temperatura de color actual que utilitza l'indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
-msgstr ""
+msgstr "Brillantor de la pantalla"
 
 #: data/org.ayatana.indicator.display.gschema.xml:10
 msgid "Stores the current brightness value of your screen."
-msgstr ""
+msgstr "Emmagatzema el valor de brillantor actual de la pantalla."
 
 #: data/org.ayatana.indicator.display.gschema.xml:11
 msgid "The name of the light theme"
-msgstr ""
+msgstr "El nom del tema clar"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr ""
+msgstr "Aquest és el tema que l'indicador establirà quan se seleccioni «Clar»."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr ""
+msgstr "El nom del tema fosc"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr ""
+msgstr "Aquest és el tema que l'indicador establirà quan se seleccioni «Fosc»."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr ""
+msgstr "Perfil del tema"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr ""
+msgstr "El perfil del tema actual que està usant l'indicador."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
-msgstr ""
+msgstr "Latitud geogràfica actual"
 
 #: data/org.ayatana.indicator.display.gschema.xml:18
 msgid "Stores the last recorded geographic latitude of the device."
-msgstr ""
+msgstr "Emmagatzema l'última latitud geogràfica registrada del dispositiu."
 
 #: data/org.ayatana.indicator.display.gschema.xml:19
 msgid "Current geographic longitude"
-msgstr ""
+msgstr "Longitud geogràfica actual"
 
 #: data/org.ayatana.indicator.display.gschema.xml:20
 msgid "Stores the last recorded geographic longitude of the device."
-msgstr ""
+msgstr "Emmagatzema l'última longitud geogràfica registrada del dispositiu."
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
-msgstr ""
+msgstr "Adaptatiu (més fred)"
 
 #: src/service.cpp:50 src/service.cpp:657
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptatiu"
 
 #: src/service.cpp:51
 msgid "Adaptive (Warmer)"
-msgstr ""
+msgstr "Adaptatiu (més càlid)"
 
 #: src/service.cpp:544 src/service.cpp:581
 msgid "Rotation Lock"
@@ -126,19 +127,19 @@ msgstr "Blocatge del gir"
 
 #: src/service.cpp:597
 msgid "Brightness"
-msgstr ""
+msgstr "Brillantor"
 
 #: src/service.cpp:651
 msgid "Light"
-msgstr ""
+msgstr "Clar"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr ""
+msgstr "Fosc"
 
 #: src/service.cpp:667
 msgid "Display settings…"
-msgstr ""
+msgstr "Configuració de la pantalla…"
 
 #: src/service.cpp:680
 msgid "Rotation"
@@ -146,11 +147,11 @@ msgstr "Gir"
 
 #: src/service.cpp:691
 msgid "Display"
-msgstr ""
+msgstr "Pantalla"
 
 #: src/service.cpp:692
 msgid "Display settings and features"
-msgstr ""
+msgstr "Configuració i característiques de la pantalla"
 
 #: src/usb-snap.cpp:109
 #, c-format
