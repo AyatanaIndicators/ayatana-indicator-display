@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-12 23:46+0200\n"
-"PO-Revision-Date: 2026-08-14 17:51+0000\n"
+"PO-Revision-Date: 2026-08-21 17:51+0000\n"
 "Last-Translator: Alagirisamy Rengaraj <radhaalagirisamy@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/ayatana-indicators/"
 "display-applet/ta/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/org.ayatana.indicator.display.gschema.xml:1
 msgid "Lock rotation"
-msgstr "சுழற்சியை பூட்டு"
+msgstr "சுழற்சியைப் பூட்டு"
 
 #: data/org.ayatana.indicator.display.gschema.xml:2
 msgid "Lock automatic display rotation."
@@ -33,7 +33,7 @@ msgstr "திசையமைவு பூட்டு"
 
 #: data/org.ayatana.indicator.display.gschema.xml:4
 msgid "Locks orientation to a specific value."
-msgstr "ஒரு வரையறுக்கப்பட்ட மதிப்புக்கு திசையமைவை பூட்டுகிறது."
+msgstr "ஒரு குறிப்பிட்ட மதிப்புக்கு திசையமைவை பூட்டுகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:5 src/service.cpp:611
 msgid "Color temperature"
@@ -49,11 +49,11 @@ msgstr ""
 
 #: data/org.ayatana.indicator.display.gschema.xml:7 src/service.cpp:622
 msgid "Color temperature profile"
-msgstr "வண்ண வெப்பநிலை சுயவிவரம்"
+msgstr "வண்ண வெப்பநிலை விவரம்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:8
 msgid "The current color temperature profile being used by the indicator."
-msgstr "தற்போதைய வண்ண வெப்பநிலை சுயவிவரத்தை குறியீடு பயன்படுத்துகிறது."
+msgstr "தற்போதைய வண்ண வெப்பநிலை விவரத்தை குறியீடு பயன்படுத்துகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:9
 msgid "Screen brightness"
@@ -69,24 +69,24 @@ msgstr "வெளிர் தோற்றத்தின்பெயர்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:12
 msgid "This is the theme the indicator will set when \"Light\" is selected."
-msgstr "\"வெளிர்\" தேர்வு செய்தால் இதுதான் குறியீடு அமைக்கும் தோற்றம்."
+msgstr "\"வெளிர்\" தேர்வு செய்தால் குறியீடு அமைக்கும் தோற்றம் இதுதான்."
 
 #: data/org.ayatana.indicator.display.gschema.xml:13
 msgid "The name of the dark theme"
-msgstr "கருத்த தோற்றத்தின் பெயர்"
+msgstr "அடர் தோற்றத்தின் பெயர்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:14
 msgid "This is the theme the indicator will set when \"Dark\" is selected."
-msgstr "\"கருத்த \" தேர்வு செய்தால் குறியீடுஅமைக்கும் தோற்றம் இதுதான்."
+msgstr "\"அடர் \" தேர்வு செய்தால் குறியீடுஅமைக்கும் தோற்றம் இதுதான்."
 
 #: data/org.ayatana.indicator.display.gschema.xml:15
 #: src/service.cpp:650
 msgid "Theme profile"
-msgstr "தோற்றம் சுயவிவரம்"
+msgstr "தோற்றம் விவரம்"
 
 #: data/org.ayatana.indicator.display.gschema.xml:16
 msgid "The current theme profile being used by the indicator."
-msgstr "தற்போதைய தோற்ற சுயவிவரத்தை குறியீடுபயன்படுத்துகிறது."
+msgstr "தற்போதைய தோற்ற விவரத்தை குறியீடு பயன்படுத்துகிறது."
 
 #: data/org.ayatana.indicator.display.gschema.xml:17
 msgid "Current geographic latitude"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: src/service.cpp:48
 msgid "Manual"
-msgstr "கைவழி"
+msgstr "கையேடு"
 
 #: src/service.cpp:49
 msgid "Adaptive (Colder)"
@@ -135,7 +135,7 @@ msgstr "வெளிர்"
 
 #: src/service.cpp:654
 msgid "Dark"
-msgstr "கருத்த"
+msgstr "அடர்"
 
 #: src/service.cpp:667
 msgid "Display settings…"
