@@ -1,14 +1,86 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: indicator-display
-Source: http://launchpad.net/indicator-display
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Source: https://github.com/AyatanaIndicators/ayatana-indicator-display
+Upstream-Name: ayatana-indicator-display
 
-Files: *
+Files: po/*.po
+ po/ayatana-indicator-display.pot
+Copyright: 2017, THE PACKAGE'S COPYRIGHT HOLDER
+  YEAR, THE PACKAGE'S COPYRIGHT HOLDER
+License: GPL-3
+
+Files: .build.yml
+ .travis.yml
+ AUTHORS
+ CMakeLists.txt
+ ChangeLog
+ INSTALL.md
+ NEWS
+ README
+ README.md
+ data/50-org.ayatana.indicator.display.AccountsService.rules
+ data/CMakeLists.txt
+ data/ayatana-indicator-display.conf.in
+ data/ayatana-indicator-display.desktop.in
+ data/ayatana-indicator-display.service.in
+ data/icons/ayatana-indicator-display-brightness-high.svg
+ data/icons/ayatana-indicator-display-brightness-low.svg
+ data/icons/ayatana-indicator-display-colortemp-off.svg
+ data/icons/ayatana-indicator-display-colortemp-on.svg
+ data/org.ayatana.indicator.display
+ data/org.ayatana.indicator.display.AccountsService.policy
+ data/org.ayatana.indicator.display.AccountsService.xml
+ data/org.ayatana.indicator.display.gschema.xml
+ po/CMakeLists.txt
+ po/LINGUAS
+ po/POTFILES.in
+ src/CMakeLists.txt
+ tests/CMakeLists.txt
+ tests/ayatana.cfg
+ tests/manual
+ tests/unit/CMakeLists.txt
+Copyright: 2013-2016, Canonical Ltd.
+  2021-2024, Robert Tari <robert@tari.in>
+License: GPL-3
+Comment:
+ Assuming same license and copyright holdership as found in the
+ project files containing a license header.
+
+Files: src/exporter.h
+ src/indicator.cpp
+ tests/unit/rotation-lock-test.cpp
+ tests/utils/glib-fixture.h
+ tests/utils/test-dbus-fixture.h
+Copyright: 2013, Canonical Ltd.
+  2014, Canonical Ltd.
+  2016, Canonical Ltd.
+License: GPL-3
+
+Files: src/exporter.cpp
+ src/indicator.h
+ src/main.cpp
+ src/service.cpp
+ src/service.h
 Copyright: 2014, Canonical Ltd.
+  2014-2016, Canonical Ltd.
+  2022-2023, Robert Tari
+  2023, Robert Tari
+  2023-2025, Robert Tari
+License: GPL-3
+
+Files: src/solar.c
+ src/solar.h
+Copyright: 2010, Jon Lund Steffensen
+  2023, Robert Tari
+License: GPL-3
+
+Files: update-po.sh
+ update-pot.sh
+Copyright: 2017, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 License: GPL-3
 
 Files: debian/*
 Copyright: 2014, Canonical Ltd.
-  2017, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+  2017-2026, Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
 License: GPL-3
 
 License: GPL-3

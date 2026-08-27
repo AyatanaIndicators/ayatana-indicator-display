@@ -1,49 +1,47 @@
 Source: ayatana-indicator-display
-Section: x11
-Priority: optional
-Maintainer: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
-Build-Depends: cmake,
-               cmake-extras (>= 0.10),
-               dbus,
-               intltool,
-               libayatana-common-dev (>= 0.9.3),
-               libglib2.0-dev (>= 2.36),
-               libgtest-dev,
-               libproperties-cpp-dev,
-               libgeoclue-2-dev,
-               libaccountsservice-dev,
-               libx11-dev,
-               libxrandr-dev,
-               librda-dev,
-# for coverage reports
-               gcovr,
-               lcov,
-# Ubuntu B-Ds, if on Ubuntu
-               gsettings-ubuntu-schemas (>= 0.0.2+14.10.20140813) | hello,
-# for tests
-               qtbase5-dev,
-               libqtdbusmock1-dev,
-               libqtdbustest1-dev,
-               cppcheck,
-               googletest | google-mock (>= 1.6.0+svn437),
-# for packaging
-               debhelper (>= 10),
-               dh-systemd | hello,
-# for systemd unit
-               systemd [linux-any],
-Standards-Version: 4.1.1
-Homepage: http://github.com/AyatanaIndicators/ayatana-indicator-display
-Vcs-Git: http://github.com/AyatanaIndicators/ayatana-indicator-display
+Standards-Version: 4.7.4
+Maintainer: Ayatana Packagers <pkg-ayatana-devel@lists.alioth.debian.org>
+Uploaders:
+ Mike Gabriel <sunweaver@debian.org>,
+ Debian UBports Team <team+ubports@tracker.debian.org>,
+Section: misc
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ cmake-extras,
+ cppcheck <!nocheck>,
+ dbus,
+ googletest <!nocheck>,
+ intltool,
+ libaccountsservice-dev,
+ libayatana-common-dev,
+ libgeoclue-2-dev,
+ libglib2.0-dev,
+ libgtest-dev <!nocheck>,
+ libgudev-1.0-dev,
+ libproperties-cpp-dev,
+ libqtdbusmock1-dev <!nocheck>,
+ libqtdbustest1-dev <!nocheck>,
+ librda-dev,
+ libxrandr-dev,
+ qtbase5-dev <!nocheck>,
+ systemd-dev [linux-any],
+ xsct <!nocheck>,
 Vcs-Browser: http://github.com/AyatanaIndicators/ayatana-indicator-display
+Vcs-Git: http://github.com/AyatanaIndicators/ayatana-indicator-display.git
+Homepage: https://github.com/AyatanaIndicators/ayatana-indicator-display
 
 Package: ayatana-indicator-display
 Architecture: any
-Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         ayatana-indicator-common,
-         libglib2.0-bin,
-         libgeoclue-2-0,
-         xsct (>= 1.9),
+Depends:
+ ayatana-indicator-common,
+ xsct,
+ ${misc:Depends},
+ ${shlibs:Depends},
 Description: Ayatana Indicator for Display configuration
  This Ayatana Indicator is designed to be placed on the right side of a
  panel and give the user easy control for changing their display settings.
+ .
+ Ayatana Indicators are only available on desktop environments that
+ provide a renderer for system indicators (such as MATE, Xfce, Lomiri,
+ etc.).
